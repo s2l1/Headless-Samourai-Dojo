@@ -1,5 +1,5 @@
 # Headless-Samourai-Dojo
-#H1Headless Samourai Dojo  ODROID N2
+**Headless Samourai Dojo  ODROID N2**
 
 @GuerraMoneta
 
@@ -14,13 +14,13 @@ MyDojo is a set of Docker containers providing a full Samourai backend composed 
 
 This setup will be running bitcoind externally, versus leaving the default option enabled where bitcoind runs inside Dojo. I have chosen this setup which requires a little more work because it is faster than waiting for a full blockchain sync with ODROID N2. First I must say thanks to @hashamadeus @laurentmt @PuraVlda from the Dojo Telegram chat. Also thank you to @stadicus and Burcak Baskan for the Raspibolt guide and the Dojo Pi4 guide. This is a compiled trial and error effort of myself trying to chop together guides, and a lot of help from the Dojo chat. 
 
-__NEWBIE TIPS:__ Each command has $ before it, and the outputs of the command are marked > to avoid confusion. Do not enter these as part of a command. If you are not sure about commands, stuck, learning, etc. try visiting the information links and doing the Optional Reading. Look up terms that you do not know. The Dojo Telegram chat is also very active and helpful. I am trying my best to educate anyone new throughout this guide.
+**NEWBIE TIPS:** Each command has $ before it, and the outputs of the command are marked > to avoid confusion. Do not enter these as part of a command. If you are not sure about commands, stuck, learning, etc. try visiting the information links and doing the Optional Reading. Look up terms that you do not know. The Dojo Telegram chat is also very active and helpful. I am trying my best to educate anyone new throughout this guide.
 
-1. [HARDWARE] ODROID N2:
+**1. [HARDWARE] ODROID N2:**
 - https://forum.odroid.com/viewtopic.php?f=176&t=33781
 I am using this with a 500gb Samsung Portable SSD + USB3.0 and SD card. I reccommend quality SD card. I am also using hardline internet connection. Before this I have tried to get running on a Pi3b+ but had a problem. Hypothesis for problem "nodejs can communicate with bitcoind but it doesn't get a response fast enough." If you get Dojo running on Pi3b+ please contact or post a guide.
 
-2. [OS] Debian Stretch for ODROID N2:
+**2. [OS] Debian Stretch for ODROID N2:**
 - https://forum.odroid.com/viewtopic.php?f=179&t=33865
 By meveric » Tue Feb 19, 2019 8:29 AM:
 This is the first version of my Debian Stretch image for the ODROID N2. It is uses the 4.9 LTS Kernel from Hardkernel. It's a headless server image only with user root. It has all my repositories included, which allows for easy installation and updates of packages such as Kernel and Headers and other packages. The image has my usual setup: means on first boot it's resizing the rootfs partition and configures SSH. It will automatically reboot after the initial setup after which this image is ready to use. Kernel and headers are already installed if you need to build your own drivers. A few basic tools such as htop, mc, vim and bash-completion are already installed.
@@ -51,11 +51,9 @@ https://www.lifewire.com/validate-md5-checksum-file-4037391
 ```
 It's ready to be used as a server image. Flash the image on to an SD card and boot up. Give the ODROID some time. As mentioned by meveric above "it will automatically reboot" then it is ready for use.
 
-2. [BLOCKCHAIN DATA]
+**3. [BLOCKCHAIN DATA]**
 
-The Bitcoin blockchain records all transactions and basically defines who owns how many bitcoin. This is the most crucial of all information and we should not rely on someone else to provide this data. To set up our Bitcoin Full Node on mainnet, we need to download the whole blockchain (~ 250 GB), verify every Bitcoin transaction that ever occurred, every block ever mined,
-create an index database for all transactions, so that we can query it later on,
-calculate all bitcoin address balances (called the UTXO set).
+The Bitcoin blockchain records all transactions and basically defines who owns how many bitcoin. This is the most crucial of all information and we should not rely on someone else to provide this data. To set up our Bitcoin Full Node on mainnet, we need to download the whole blockchain (~ 250 GB), verify every Bitcoin transaction that ever occurred, every block ever mined, create an index database for all transactions, so that we can query it later on, calculate all bitcoin address balances (called the UTXO set).
 
 Look up Running a Full Node for additional information.
 
@@ -70,15 +68,15 @@ Now download the Bitcoin Core installer from bitcoincore.org/en/download and sto
 In Windows, I’ll preface all commands you need to enter with $, so with the command $ cd bitcoin just type cd bitcoin and hit enter.
 
 Open the Windows command prompt (Win+R, enter cmd, hit Enter), navigate to the bitcoin directory (for me, it’s on drive D:, check in Windows Explorer) and create the new directory bitcoin_mainnet. Then calculate the checksum of the already downloaded program.
-
+```
 $ D:
 $ cd \bitcoin
 $ mkdir bitcoin_mainnet
 $ dir
 $ certutil -hashfile bitcoin-0.17.0.1-win64-setup.exe sha256
 a624de6c915871fed12cbe829d54474e3c8a1503b6d703ba168d32d3dd8ac0d3
-
-3. [DHCP LEASE]
+```
+**4. [DHCP LEASE]**
 
 The ODROID got a new IP address from your home network. This address can change over time. To make the ODROID reachable from the internet, we assign it a fixed address.
 
@@ -94,7 +92,7 @@ We now need to set the fixed (static) IP address for the Pi. Normally, you can f
 
 Apply changes. 
 
-3. [SSH.] Secure Shell.
+**5. [SSH.] Secure Shell.**
 
 Take note of the of your ODROID on your local network. 
 
@@ -114,7 +112,7 @@ Now you are connected to your ODROID and can use the terminal.
 Optional Reading: https://www.raspberrypi.org/documentation/installation/installing-images/
 Optional Reading: https://www.raspberrypi.org/magpi/back-up-raspberry-pi/
 
-4. [CONFIGURE]
+**6. [CONFIGURE]**
 
 There's constantly new development for this image and ODROIDs in general. The first thing you should do after the image is up and running is to install all updates.
 
@@ -135,6 +133,7 @@ Install fail2ban.
 $ apt-get install fail2ban
 
 Mount external hard disk. Use ext4 format NTFS will not work! Move the Swapfile to your SSD.
+
 Optional Reading - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#mounting-external-hard-disk 
 Optional Reading - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#moving-the-swap-file
 
@@ -142,7 +141,7 @@ As mentoined before we want to be running "headless" so you will SSH in from ano
 machine on your local network. We also want to harden the ODROID's defences.
 The Raspibolt guide is a great help to explain things for those who are not familiar with Linux/SSH during these steps.
 
-3. [UFW] Uncomplicated Firewall.
+**7. [UFW] Uncomplicated Firewall.**
 
 Enable the Uncomplicated Firewall which controls what traffic is permitted and closes possible security holes. 
 
@@ -162,7 +161,7 @@ Optional Reading:  Connecting to ODROID - https://stadicus.github.io/RaspiBolt/r
 Optional Reading:  Access restricted for local LAN - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#enabling-the-uncomplicated-firewall
 Optional Reading: Login with SSH keys - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#login-with-ssh-keys
 
-4. [BITCOIN]
+**8. [BITCOIN]**
 
 We will download the software directly from bitcoin.org, verify its signature to make sure that we use an official release, and then install it.
 
@@ -184,34 +183,37 @@ $ sha256sum --check SHA256SUMS.asc --ignore-missing
 > bitcoin-0.18.1-aarch64-linux-gnu.tar.gz: OK
 
 Import the public key of Wladimir van der Laan, verify the signed  checksum file.  Check the fingerprint again in case of malicious keys.
-
+```
 $ gpg --import ./laanwj-releases.asc
 $ gpg --refresh-keys
 $ gpg --verify SHA256SUMS.asc
 > gpg: Good signature from "Wladimir J. van der Laan ..."
 > Primary key fingerprint: 01EA 5486 DE18 A882 D4C2 6845 90C8 019E 36C2 E964
-
+```
 Now we know that the keys from bitcoin.org are valid. Extract the Bitcoin Core binaries, install them and check the version.
-
+```
 tar -xvf bitcoin-0.18.1-aarch64-linux-gnu.tar.gz
 $ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.18.1/bin/*
 $ bitcoind --version
 > Bitcoin Core Daemon version v0.18.1
-
+```
 Now prepare Bitcoin Core directory.
 
 We use the Bitcoin daemon, called “bitcoind”, that runs in the background without user interface and stores all data in a the directory ~/.bitcoin. Instead of creating a real directory, we create a link that points to a directory on the external hard disk.
 
 We add a symbolic link that points to the SSD hard disk.
+```
 $ ln -s SSD_mount_path/bitcoin ~/.bitcoin
-
+```
 Navigate to the home directory an d check the symbolic link (the target must not be red). The content of this directory will actually be on the external hard disk.
-
+```
 $ ls -la
-
+```
 Now, the configuration file for bitcoind needs to be created. Open it with Nano and paste the configuration below. Save and exit.
+```
 $ nano ~/.bitcoin/bitcoin.conf
-
+```
+```
 # RaspiBolt: bitcoind configuration
 # ~/.bitcoin/bitcoin.conf
 
@@ -229,24 +231,16 @@ rpcpassword=XXX
 onlynet=ipv4
 zmqpubrawblock=tcp://127.0.0.1:28332
 zmqpubrawtx=tcp://127.0.0.1:28333
-
-# Raspberry Pi optimizations
-dbcache=100
-maxorphantx=10
-maxmempool=50
-maxconnections=40
-maxuploadtarget=5000
-:warning: Change rpcpassword to your secure password [B], otherwise your funds might get stolen.
-
-:point_right: additional information: configuration options in Bitcoin Wiki
+```
 
 Start bitcoind
 Still logged in as user “bitcoin”, let’s start “bitcoind” manually. Monitor the log file a few minutes to see if it works fine (it may stop at “dnsseed thread exit”, that’s ok). Exit the logfile monitoring with Ctrl-C, check the blockchain info and, if there are no errors, stop “bitcoind” again.
-
+```
 $ bitcoind
 $ tail -f /home/bitcoin/.bitcoin/testnet3/debug.log
 $ bitcoin-cli getblockchaininfo
 $ bitcoin-cli stop
+```
 Autostart bitcoind
 The system needs to run the bitcoin daemon automatically in the background, even when nobody is logged in. We use “systemd“, a daemon that controls the startup process using configuration files.
 
@@ -258,7 +252,7 @@ $ sudo nano /etc/systemd/system/bitcoind.service
 
 # systemd unit for bitcoind
 # /etc/systemd/system/bitcoind.service
-
+```
 [Unit]
 Description=Bitcoin daemon
 After=network.target
@@ -277,7 +271,9 @@ RestartSec=30
 
 [Install]
 WantedBy=multi-user.target
+```
 Save and exit
+
 Enable the configuration file
 $ sudo systemctl enable bitcoind.service
 Copy bitcoin.conf to user “admin” home directory for RPC credentials
