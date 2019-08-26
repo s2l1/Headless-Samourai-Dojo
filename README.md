@@ -14,7 +14,7 @@ MyDojo is a set of Docker containers providing a full Samourai backend composed 
 
 This setup will be running bitcoind externally, versus leaving the default option enabled where bitcoind runs inside Dojo. I have chosen this setup which requires a little more work because it is faster than waiting for a full blockchain sync with ODROID N2. First I must say thanks to @hashamadeus @laurentmt @PuraVlda from the Dojo Telegram chat. Also thank you to @stadicus and Burcak Baskan for the Raspibolt guide and the Dojo Pi4 guide. This is a compiled trial and error effort of myself trying to chop together guides, and a lot of help from the Dojo chat. 
 
-**NEWBIE TIPS:** Each command has $ before it, and the outputs of the command are marked > to avoid confusion. Do not enter these as part of a command. If you are not sure about commands, stuck, learning, etc. try visiting the information links and doing the Optional Reading. Look up terms that you do not know. The Dojo Telegram chat is also very active and helpful. I am trying my best to educate anyone new throughout this guide.
+**NEWBIE TIPS:** Each command has $ before it, and the outputs of the command are marked > to avoid confusion. # is a comment. Do not enter these as part of a command. If you are not sure about commands, stuck, learning, etc. try visiting the information links and doing the Optional Reading. Look up terms that you do not know. The Dojo Telegram chat is also very active and helpful. I am trying my best to educate anyone new throughout this guide.
 
 **1. [HARDWARE] ODROID N2:**
 - https://forum.odroid.com/viewtopic.php?f=176&t=33781
@@ -96,7 +96,7 @@ Apply changes.
 
 Take note of the of your ODROID on your local network. 
 
-Go ahead and SSH into your ODROID by opening terminal on any Linux machine connected to your local network, and typing the following.
+Go ahead and SSH into your ODROID by opening terminal on any Linux machine connected to your local network.
 
 Windows: 
 Download - https://www.putty.org/
@@ -116,17 +116,17 @@ Optional Reading: https://www.raspberrypi.org/magpi/back-up-raspberry-pi/
 
 There's constantly new development for this image and ODROIDs in general. The first thing you should do after the image is up and running is to install all updates.
 
-$ apt update && apt upgrade && apt dist-upgrade
+`$ apt update && apt upgrade && apt dist-upgrade`
 
 Setup tool can be accessed by using the following command.
 
-$ setup-odroid
+`$ setup-odroid`
 
 Here you can change root password, language, hostname, etc. This tool will usually ask you to reboot to apply the changes.
 
 Set your timezone.
 
-$ dpkg-reconfigure tzdata
+`$ dpkg-reconfigure tzdata`
 
 Install fail2ban.
 
@@ -146,7 +146,7 @@ The Raspibolt guide is a great help to explain things for those who are not fami
 Enable the Uncomplicated Firewall which controls what traffic is permitted and closes possible security holes. 
 
 The line "ufw allow from 192.168.0.0/24…" below assumes that the IP address of your ODROID is something like 192.168.0.???, the ??? being any number from 0 to 255. If your IP address is 12.34.56.78, you must adapt this line to "ufw allow from 12.34.56.0/24…"
-
+```
 $ apt-get install ufw
 $ ufw default deny incoming
 $ ufw default allow outgoing
@@ -155,7 +155,7 @@ $ ufw enable
 $ systemctl enable ufw
 $ ufw status
 $ exit
-
+```
 Optional Reading: Connecting to the Network - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#connecting-to-the-network
 Optional Reading:  Connecting to ODROID - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#connecting-to-the-pi
 Optional Reading:  Access restricted for local LAN - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#enabling-the-uncomplicated-firewall
@@ -164,24 +164,26 @@ Optional Reading: Login with SSH keys - https://stadicus.github.io/RaspiBolt/ras
 **8. [BITCOIN]**
 
 We will download the software directly from bitcoin.org, verify its signature to make sure that we use an official release, and then install it.
-
+``
 $ mkdir ~/download
 $ cd ~/download
-
+``
 We download the latest Bitcoin Core binaries (the application) and compare the file with the signed checksum. This is a precaution to make sure that this is an official release and not a malicious version trying to steal our money.
 
 Get the latest download links at bitcoincore.org/en/download (ARM Linux 32 bit), they change with each update. Then run the following commands (with adjusted filenames) and check the output where indicated:
+```
 # download Bitcoin Core binary
+
 $ wget https://bitcoincore.org/bin/bitcoin-core-0.18.1/bitcoin-0.18.1-aarch64-linux-gnu.tar.gz
 $ wget https://bitcoincore.org/bin/bitcoin-core-0.18.1/SHA256SUMS.asc
 $ wget https://bitcoin.org/laanwj-releases.asc
-
+```
 Check that the reference checksum matches the real checksum. 
 Ignore the "lines are improperly formatted" warning.
-
+```
 $ sha256sum --check SHA256SUMS.asc --ignore-missing
 > bitcoin-0.18.1-aarch64-linux-gnu.tar.gz: OK
-
+```
 Import the public key of Wladimir van der Laan, verify the signed  checksum file.  Check the fingerprint again in case of malicious keys.
 ```
 $ gpg --import ./laanwj-releases.asc
@@ -244,15 +246,13 @@ $ bitcoin-cli stop
 Autostart bitcoind
 The system needs to run the bitcoin daemon automatically in the background, even when nobody is logged in. We use “systemd“, a daemon that controls the startup process using configuration files.
 
-Exit the “bitcoin” user session back to user “admin”
-$ exit
-
 Create the configuration file in the Nano text editor and copy the following paragraph.
-$ sudo nano /etc/systemd/system/bitcoind.service
+`$ sudo nano /etc/systemd/system/bitcoind.service`
 
+```
 # systemd unit for bitcoind
 # /etc/systemd/system/bitcoind.service
-```
+
 [Unit]
 Description=Bitcoin daemon
 After=network.target
@@ -272,40 +272,37 @@ RestartSec=30
 [Install]
 WantedBy=multi-user.target
 ```
-Save and exit
+Save and exit.
 
 Enable the configuration file
-$ sudo systemctl enable bitcoind.service
+`$ sudo systemctl enable bitcoind.service`
 Copy bitcoin.conf to user “admin” home directory for RPC credentials
-$ mkdir /home/admin/.bitcoin
+`$ mkdir /home/admin/.bitcoin`
 $ sudo cp /home/bitcoin/.bitcoin/bitcoin.conf /home/admin/.bitcoin/
 Restart the Raspberry Pi
-$ sudo shutdown -r now
-Verification of bitcoind operations
-After rebooting, the bitcoind should start and begin to sync and validate the Bitcoin blockchain.
+`$ sudo shutdown -r now`
+
+After rebooting, the bitcoind should start and begin to sync and validate the Bitcoin blockchain. 
 
 Wait a bit, reconnect via SSH.
 
-Check the status of the bitcoin daemon that was started by systemd (exit with Ctrl-C)
+Check the status of the bitcoin daemon that was started by systemd (exit with Ctrl-C).
 
-$ systemctl status bitcoind.service
+`$ systemctl status bitcoind.service`
 
 See bitcoind in action by monitoring its log file (exit with Ctrl-C)
-$ sudo tail -f /home/bitcoin/.bitcoin/testnet3/debug.log
+`$ sudo tail -f /home/bitcoin/.bitcoin/testnet3/debug.log`
 
 Use the Bitcoin Core client bitcoin-cli to get information about the current blockchain
-$ bitcoin-cli getblockchaininfo
+`$ bitcoin-cli getblockchaininfo`
 
 Please note:
-
 When “bitcoind” is still starting, you may get an error message like “verifying blocks”. That’s normal, just give it a few minutes.
 Among other infos, the “verificationprogress” is shown. Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated.
 Explore bitcoin-cli
 If everything is running smoothly, this is the perfect time to familiarize yourself with Bitcoin Core and play around with bitcoin-cli until the blockchain is up-to-date.
 
 A great point to start is the book Mastering Bitcoin by Andreas Antonopoulos - which is open source - and in this regard especially chapter 3 (ignore the first part how to compile from source code):
-
-Copy the mainnet blockchain
 
 Right at the beginning, however, we started downloading the Bitcoin mainnet blockchain on your regular computer. Check the verification progress directly in Bitcoin Core on this computer. To proceed, it should be fully synced (see status bar).
 
@@ -315,11 +312,12 @@ Temporarily enable password login
 In order to copy the data with the user “bitcoin”, we need to temporarily enable the password login.
 
 Edit the SSH config file and put a # in front of “PasswordAuthentication no” to disable the whole line. Save and exit.
+```
 $ sudo nano /etc/ssh/sshd_config
 # PasswordAuthentication no
-
+```
 Restart the SSH daemon.
-$ sudo systemctl restart ssh
+`$ sudo systemctl restart ssh`
 
 Copy using WinSCP
 We are using “Secure Copy” (SCP), so download and install WinSCP, a free open-source program.
@@ -328,28 +326,18 @@ With WinSCP, you can now connect to your Pi with the user “bitcoin”.
 
 Accept the server certificate and navigate to the local and remote bitcoin directories:
 Local: d:\bitcoin\bitcoin_mainnet\
-Remote: \mnt\hdd\bitcoin\
+Remote: PATH_TO_SSD\bitcoin\
 
-You can now copy the two subdirectories blocks and chainstate from Local to Remote. This will take about 6 hours. The transfer must not be interupted. Make sure your computer does not go to sleep.
+You can now copy the two subdirectories (folders) blocks and chainstate from Local to Remote. This will take about 6 hours. The transfer must not be interupted. Make sure your computer does not go to sleep.
 
 Disable password login again.
 
 As user “admin”, remove the # in front of “PasswordAuthentication no” to enable the line. Save and exit.
-$ sudo nano /etc/ssh/sshd_config
+`$ sudo nano /etc/ssh/sshd_config`
 PasswordAuthentication no
 
 Restart the SSH daemon.
-$ sudo systemctl restart ssh
-
-Bonus guide: Anonymous node with Tor
-Difficulty: medium
-
-What is Tor?
-Tor is a free software that allows you to anonymize internet traffic by routing it through a network of nodes to hide the location and usage profile of end points.
-
-It is called “Tor” for “The Onion Router”: information is encrypted multiple times with the public keys of the nodes it passes through. Each node decrypts the layer of information that corresponds to its own private key, pretty much like peeling an onion, until the last that will reveal the clear message.
-
-:point_right: Learn more on Wikipedia.
+`$ sudo systemctl restart ssh`
 
 Why do you want to run Tor?
 Tor is mainly useful as a way to impede traffic analysis, which means analyzing your internet activity (logging you IP address on websites you’re browsing and services you’re using) to learn about you and your interests. Traffic analysis is useful for advertisement and you might want to hide this kind of information merely out of privacy concerns. But it might also be used by outright malevolent actors, criminals or governments to harm you in a lot of possible ways.
@@ -364,7 +352,8 @@ Coupled with other privacy methods like CoinJoin you can gain more privacy for y
 All the above mentioned arguments are also relevant when using Lightning, as someone that sees a Lightning node running on your home IP address could easily infer that there’s a Bitcoin node at the same location.
 
 Installing Tor
-This guide assumes that you’re running a Raspberry Pi 3 or better. If your RaspiBolt is built on an earlier version, it won’t work as described below and you might want to look at these instructions instead.
+
+This guide assumes that you’re running an ODROID N2 or better.
 
 Also, this guide builds on top of the RaspiBolt guide that runs with Raspbian Buster Lite. If you run a different operating system, you may need to build Tor from source and paths may vary.
 
@@ -373,53 +362,56 @@ For additional reference, the original instructions are available on the Tor pro
 Connect to the RaspiBolt via SSH as user “admin”, as described in the main guide.
 
 Add the following two lines to sources.list to add the torproject repository.
-$ sudo nano /etc/apt/sources.list
-deb https://deb.torproject.org/torproject.org buster main
-deb-src https://deb.torproject.org/torproject.org buster main
+
+`$ sudo nano /etc/apt/sources.list`
+```
+deb https://deb.torproject.org/torproject.org stretch main
+deb-src https://deb.torproject.org/torproject.org stretch main
+```
 In order to verify the integrity of the Tor files, download and add the signing keys of the torproject using the network certificate management service (dirmngr).
+```
 $ sudo apt install dirmngr apt-transport-https
 $ curl https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | gpg --import
 $ gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | sudo apt-key add -
+```
 The latest version of Tor can now be installed. While not required, tor-arm provides a dashboard that you might find useful.
-$ sudo apt update
-$ sudo apt install tor tor-arm
-Check the version of Tor (it should be 0.3.3.6 or newer) and that the service is up and running.
+`$ sudo apt update`
+`$ sudo apt install tor tor-arm`
+Check the version of Tor and that the service is up and running.
+```
 $ tor --version
-Tor version 0.3.4.9 (git-074ca2e0054fded1).
+> Tor version 0.3.4.9 (git-074ca2e0054fded1).
 $ systemctl status tor
-Check that within the “tor-service-defaults-torrc” file the “User” name is “debian-tor”.
-$ cat /usr/share/tor/tor-service-defaults-torrc
-User debian-tor
-Check which users belong to the debian-tor group. If “bitcoin” is not there, which is most likely the case, you will need to add it and check again.
-$ cat /etc/group | grep debian-tor
-debian-tor:x:113:
-$ sudo usermod -a -G debian-tor bitcoin
-$ cat /etc/group | grep debian-tor
-debian-tor:x:123:bitcoin
+```
 Modify the Tor configuration by uncommenting (removing the #) or adding the following lines.
 $ sudo nano /etc/tor/torrc
+```
 # uncomment:
 ControlPort 9051
 CookieAuthentication 1
 
 # add:
 CookieAuthFileGroupReadable 1
-Restart Tor to activate modifications
-$ sudo systemctl restart tor
+```
+Restart Tor to activate modifications.
+
+`$ sudo systemctl restart tor`
+
 Setup Tor for Bitcoin Core
 CONFIGURATION
 In the “admin” user session, stop Bitcoin and LND.
 $ sudo systemctl stop lnd
 $ sudo systemctl stop bitcoind
 Open the Bitcoin configuration and add the following lines. The argument onlynet should not be specified (delete this line if present).
-$ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
+`$ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf`
+```
 # add / change:
 proxy=127.0.0.1:9050
 bind=127.0.0.1
 listenonion=1
-Archive the current logfile and restart Bitcoin Core to use the adjusted configuration.
-$ sudo mv /home/bitcoin/.bitcoin/debug.log /home/bitcoin/.bitcoin/debug.log.old
-$ sudo systemctl start bitcoind
+```
+`$ sudo systemctl start bitcoind`
+
 VALIDATION
 Bitcoin Core is starting and we now need to check if all connections are truly routed over Tor.
 
@@ -437,129 +429,139 @@ addlocal([YOUR_ID].onion:8333,4)
 Display the Bitcoin network info to verify that the different network protocols are bound to proxy 127.0.0.1:9050, which is Tor on your localhost. Note the onion network is now reachable: true.
 $ bitcoin-cli getnetworkinfo
 
-5. [PIP] Install the Python Package Installer. 
+**9. [PIP] Install the Python Package Installer.**
 
 Change to the home directory of the root user.
-
+```
 $ cd ~
 
-$ apt-get install python3-dev libffi-dev libssl-dev build-essential
-
+`$ apt-get install python3-dev libffi-dev libssl-dev build-essential
+```
 Tip: You will also need these libs if you wanted to install bitcoind standalone. Useful to have them in the system.
 
 Optional Reading - https://pip.pypa.io/en/stable/installing/
 
 To install pip, securely download get-pip.py. “Secure” in this context means using a modern browser or a tool like curl that verifies SSL certificates when downloading from https URLs.
 
-$ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+`$ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py`
 
 Then run the following.
 
-$ python get-pip.py
+`$ python get-pip.py`
 
 5. [DOCKER]
 
 Use pip to install docker-compose.
 
-$ python3 -m pip install --upgrade docker-compose
+`$ python3 -m pip install --upgrade docker-compose`
 
 Optional Reading - https://docs.docker.com/compose/install/
 
 Now check your docker version. An old version can cause problems.
 
-$ docker -v
+`$ docker -v`
 
 Take a look at what PIP has installed on your system.
 
-$ python3 -m pip list
+`$ python3 -m pip list`
 
 Now to configure docker to use the external SSD. Create a new file in text editor. 
 
-$ nano /etc/docker/daemon.json 
+`$ nano /etc/docker/daemon.json`
 
 Add the following 3 lines.
-
+```
 { 
                   "data-root": "/PUT_SSD_MOUNT_POINT_HERE/docker" 
 } 
-
+```
 Save and exit Nano text editor.
 
 Restart docker to accept changes.
 
-$ sudo systemctl daemon-reload 
+`$ sudo systemctl daemon-reload`
 
-$ sudo systemctl start docker
+`$ sudo systemctl start docker`
 
 Check that docker is using the SSD.
-
+```
 $ sudo docker info | grep "Docker Root Dir:" 
-Example: "data-root": "/mnt/ssd/docker/"
-
+> "data-root": "PATH_TO_SSD/docker/"
+```
 Try rebooting if you do not see your external SSD listed.
-$ shutdown -r now
 
-$ cd ~
+`$ shutdown -r now`
 
 6. [DOJO] Download and unzip latest Dojo release.
-
+```
+$ cd ~
 $ curl -fsSL https://github.com/Samourai-Wallet/samourai-dojo/archive/master.zip -o master.zip
 $ unzip master.zip
-
+```
 Create a directory for Dojo (named dojo_dir in this doc)
 
-$ mkdir dojo_dir
+`$ mkdir dojo_dir`
 
 Copy samourai-dojo-master directory contents to dojo_dir directory. 
 
-$ cp -rv samourai-dojo-master/* dojo_dir/
+`$ cp -rv samourai-dojo-master/* dojo_dir/`
 
 Remove what will no longer be used.
 
-$ rm -rvf samourai-dojo-master/ master.zip
+`$ rm -rvf samourai-dojo-master/ master.zip`
 
 Open Bitcoin Dockerfile in text editor. We are going to use the "aarch64-linux-gnu.tar.gz" source.
 
-$ nano ~/dojo_dir/docker/my-dojo/bitcoin/Dockerfile
+`$ nano ~/dojo_dir/docker/my-dojo/bitcoin/Dockerfile`
+```
          Change line #9 to: 
             ENV     BITCOIN_URL        https://bitcoincore.org/bin/bitcoin-core-0.18.1/bitcoin-0.18.1-aarch64-linux-gnu.tar.gz
 
          Change line #10 to:
             ENV     BITCOIN_SHA256     88f343af72803b851c7da13874cc5525026b0b55e63e1b5e1298390c4688adc6
-
+```
 Edit mysql Dockerfile to use a compatible database.
 
-$ nano ~/dojo_dir/docker/my-dojo/mysql/Dockerfile
+`$ nano ~/dojo_dir/docker/my-dojo/mysql/Dockerfile`
+```
          Change line #1 to:
             FROM    mariadb:latest
-
+```
 Go to the ~/dojo_dir/docker/my-dojo/conf directory.
 
 Configure your dojo installation by editing all 3 .conf.tpl files.
 
-$ nano docker-bitcoind.conf.tpl
-Edit docker-bitcoind.conf.tpl and provide a new value for the following parameters:
+Edit docker-bitcoind.conf.tpl and provide a new value for the following parameters.
+
+`$ nano docker-bitcoind.conf.tpl`
+```
 BITCOIND_RPC_USER = login protecting the access to the RPC API of your full node,
 BITCOIND_RPC_PASSWORD = password protecting the access to the RPC API of your full node.
 If your machine has a lot of RAM, it's recommended that you increase the value of BITCOIND_DB_CACHE for a faster Initial Block Download. This file also provides a few additional settings for advanced setups like static onion address for your full node, bitcoind RPC API exposed to external apps, use of an external full node.
-
-$ nano docker-mysql.conf.tpl
+```
+`$ nano docker-mysql.conf.tpl`
+```
 Edit docker-mysql.conf.tpl and provide a new value for the following parameters:
 MYSQL_ROOT_PASSWORD = password protecting the root account of MySQL,
 MYSQL_USER = login of the account used to access the database of your Dojo,
 MYSQL_PASSWORD = password of the account used to access the database of your Dojo.
-
-$ nano docker-node.conf.tpl
+```
+`$ nano docker-node.conf.tpl`
+```
 Edit docker-node.conf.tpl and provide a new value for the following parameters:
 NODE_API_KEY = API key which will be required from your Samourai Wallet / Sentinel for its interactions with the API of your Dojo,
 NODE_ADMIN_KEY = API key which will be required from the maintenance tool for accessing a set of advanced features provided by the API of your Dojo,
 NODE_JWT_SECRET = secret used by your Dojo for the initialization of a cryptographic key signing Json Web Tokens. These parameters will protect the access to your Dojo. Be sure to provide alphanumeric values with enough entropy.
-
+```
 Open the docker quickstart terminal or a terminal console and go to the ~/dojo_dir/docker/my-dojo directory. This directory contains a script named dojo.sh which will be your entrypoint for all operations related to the management of your Dojo.
-
+```
 $ cd ~/dojo_dir/docker/my-dojo
 $ ./dojo.sh install
-
+```
 After successful install the following command should show containers as up.
-$ docker-compose ps
+`$ docker-compose ps`
+
 Dojo Docs - https://github.com/Samourai-Wallet/samourai-dojo/blob/master/doc/DOCKER_setup.md#first-time-setup
+Advanced Setups - https://github.com/Samourai-Wallet/samourai-dojo/blob/master/doc/DOCKER_advanced_setups.md
+Raspibolt - https://stadicus.github.io/RaspiBolt/
+Pi 4 Dojo Guide - https://burcak-baskan.gitbook.io/workspace/
