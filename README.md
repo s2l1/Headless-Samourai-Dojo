@@ -1,5 +1,5 @@
 # Headless-Samourai-Dojo
-__Headless Samourai Dojo  ODROID N2__
+#H1 Headless Samourai Dojo  ODROID N2
 
 @GuerraMoneta
 
@@ -12,9 +12,9 @@ MyDojo is a set of Docker containers providing a full Samourai backend composed 
      a backend modules with an API accessible as a static Tor hidden service,
      a maintenance tool accessible through a Tor web browser.
 
-We will be running bitcoind externally, versus leaving the default option enabled where bitcoind runs inside Dojo. I have chosen this setup which requires a little more work because it is faster than waiting for a full blockchain sync with ODROID N2. First I must say thanks to @hashamadeus @laurentmt @PuraVlda from the Dojo Telegram chat. Also thank you to @stadicus and Burcak Baskan for the Raspibolt guide and the Dojo Pi4 guide. This is a compiled trial and error effort of myself trying to chop together guides, and a lot of help from the Dojo chat. 
+This setup will be running bitcoind externally, versus leaving the default option enabled where bitcoind runs inside Dojo. I have chosen this setup which requires a little more work because it is faster than waiting for a full blockchain sync with ODROID N2. First I must say thanks to @hashamadeus @laurentmt @PuraVlda from the Dojo Telegram chat. Also thank you to @stadicus and Burcak Baskan for the Raspibolt guide and the Dojo Pi4 guide. This is a compiled trial and error effort of myself trying to chop together guides, and a lot of help from the Dojo chat. 
 
-NEWBIE TIPS: Each command has $ before it, and the outputs of the command are marked > to avoid confusion. Do not enter these as part of a command. If you are not sure about commands, stuck, learning, etc. try visiting the information links and doing the Optional Reading. Look up terms that you do not know. The Dojo Telegram chat is also very active and helpful. I am trying my best to educate anyone new throughout this guide.
+__NEWBIE TIPS:__ Each command has $ before it, and the outputs of the command are marked > to avoid confusion. Do not enter these as part of a command. If you are not sure about commands, stuck, learning, etc. try visiting the information links and doing the Optional Reading. Look up terms that you do not know. The Dojo Telegram chat is also very active and helpful. I am trying my best to educate anyone new throughout this guide.
 
 1. [HARDWARE] ODROID N2:
 - https://forum.odroid.com/viewtopic.php?f=176&t=33781
