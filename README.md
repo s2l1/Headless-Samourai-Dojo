@@ -2,6 +2,8 @@
 **for  ODROID N2**
 <sub><sup>by @GuerraMoneta</sup></sub>
 
+*** WORK IN PROGRESS***
+
 This guide is for Samourai Dojo on a headless server. Samourai Dojo is the backing server for Samourai Wallet. It provides HD account, loose addresses (BIP47) balances, and transactions lists. Also provides unspent output lists to the wallet. PushTX endpoint broadcasts transactions through the backing bitcoind node. 
 
 MyDojo is a set of Docker containers providing a full Samourai backend composed of:
@@ -290,28 +292,46 @@ Now, the configuration file for bitcoind needs to be created. Open it with Nano 
 ```
 # bitcoind configuration
 # ~/.bitcoin/bitcoin.conf
+# delete comment lines that explain things if youd like
 
-rpcbind=127.0.0.1 (needed for other services)
-rpcbind=10.0.1.95 (local ip of where bitcoind is)
-rpcport=8332 (port used to access rpc)
-rpcuser=xxxxxxxx (username for rpc access)
-rpcpassword=xxxxxx (password for rpc access)
-rpcallowip=127.0.0.1 (may not be but was there already so left)
-rpcallowip=10.0.1.2 (local ip of where Dojo is)
+rpcbind=127.0.0.1 
+# needed for other services
 
-txindex=1 (builds bitcoin transaction index)
-server=1 (force bitcoind to accept JSON-RPC commands)
+rpcbind=10.0.1.95
+# local ip of where bitcoind is
+
+rpcport=8332 
+# port used to access rpc
+
+rpcuser=xxxxxxxx 
+# username for rpc access
+
+rpcpassword=xxxxxx 
+# password for rpc access
+
+rpcallowip=127.0.0.1 
+# may not be but was there already so left
+
+rpcallowip=10.0.1.2 
+#local ip of where Dojo is
+
+txindex=1 
+#builds bitcoin transaction index)
+
+server=1 
+#force bitcoind to accept JSON-RPC commands
 
 zmqpubrawblock=tcp://127.0.0.1:28332
 zmqpubrawtx=tcp://127.0.0.1:28333
 zmqpubhashblock=tcp://127.0.0.1:28334
 
-# tor:
+# tor settings
 proxy=127.0.0.1:9050
 bind=127.0.0.1
 listenonion=1
 
 ```
+
 Let’s start “bitcoind” manually. Monitor the log file a few minutes to see if it works fine It may stop at “dnsseed thread exit”, that’s ok. Exit the logfile monitoring with Ctrl-C, check the blockchain info, if there are no errors, then stop “bitcoind” again.
 ```
 $ bitcoind
