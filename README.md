@@ -291,25 +291,26 @@ Now, the configuration file for bitcoind needs to be created. Open it with Nano 
 # bitcoind configuration
 # ~/.bitcoin/bitcoin.conf
 
-rpcbind=127.0.0.1 (needed for other services running on nodl)
+rpcbind=127.0.0.1 (needed for other services)
 rpcbind=10.0.1.95 (local ip of where bitcoind is)
-rpcport=8332(port used to access rpc)
-rpcuser=xxxxxxxx(username for rpc access)
-rpcpassword=xxxxxx(password for rpc access)
-rpcallowip=127.0.0.1(may not be but was there already so left)
+rpcport=8332 (port used to access rpc)
+rpcuser=xxxxxxxx (username for rpc access)
+rpcpassword=xxxxxx (password for rpc access)
+rpcallowip=127.0.0.1 (may not be but was there already so left)
 rpcallowip=10.0.1.2 (local ip of where Dojo is)
 
 txindex=1 (builds bitcoin transaction index)
+server=1 (force bitcoind to accept JSON-RPC commands)
 
-zmqpubhashblock=tcp://0.0.0.0:29000 (no idea what any of these mean). Needed per Dojo guides
-zmqpubrawblock=tcp://0.0.0.0:29000 (existing from nodl for services)
-zmqpubrawtx=tcp://0.0.0.0:29001 (same)
+zmqpubrawblock=tcp://127.0.0.1:28332
+zmqpubrawtx=tcp://127.0.0.1:28333
+zmqpubhashblock=tcp://127.0.0.1:28334
 
-$ nano ~/.bitcoin/bitcoin.conf
-# add / change:
+# tor:
 proxy=127.0.0.1:9050
 bind=127.0.0.1
 listenonion=1
+
 ```
 Let’s start “bitcoind” manually. Monitor the log file a few minutes to see if it works fine It may stop at “dnsseed thread exit”, that’s ok. Exit the logfile monitoring with Ctrl-C, check the blockchain info, if there are no errors, then stop “bitcoind” again.
 ```
