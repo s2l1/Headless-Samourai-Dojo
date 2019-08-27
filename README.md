@@ -14,11 +14,11 @@ This setup will be running bitcoind externally, versus leaving the default optio
 
 **NEWBIE TIPS:** Each command has $ before it, and the outputs of the command are marked > to avoid confusion. # is a comment. Do not enter these as part of a command. If you are not sure about commands, stuck, learning, etc. try visiting the information links and doing the Optional Reading. Look up terms that you do not know. The Dojo Telegram chat is also very active and helpful. I am trying my best to educate anyone new throughout this guide.
 
-**1. [HARDWARE] ODROID N2:**
+## 1. [HARDWARE REQUIREMENT] ODROID N2:
 - https://forum.odroid.com/viewtopic.php?f=176&t=33781
-I am using this with a 500gb Samsung Portable SSD + USB3.0 and SD card. I reccommend quality SD card. I am also using hardline internet connection. Before this I have tried to get running on a Pi3b+ but had a problem. Hypothesis for problem "nodejs can communicate with bitcoind but it doesn't get a response fast enough." If you get Dojo running on Pi3b+ please contact or post a guide.
+I am using this with a 500gb Samsung Portable SSD + USB3.0 and SD card. I reccommend quality SD card. I am also using hardline internet connection. You will also need a Windows / Linux / Mac with decent specs that is on the same network as the ODROID. Before this I have tried to get running on a Pi3b+ but had a problem. Hypothesis for problem "nodejs can communicate with bitcoind but it doesn't get a response fast enough." If you get Dojo running on Pi3b+ please contact or post a guide.
 
-**2. [OS] Debian Stretch for ODROID N2:**
+**2. [OPERATING SYSTEM] Debian Stretch for ODROID N2:**
 - https://forum.odroid.com/viewtopic.php?f=179&t=33865
 By meveric » Tue Feb 19, 2019 8:29 AM:
 This is the first version of my Debian Stretch image for the ODROID N2. It is uses the 4.9 LTS Kernel from Hardkernel. It's a headless server image only with user root. It has all my repositories included, which allows for easy installation and updates of packages such as Kernel and Headers and other packages. The image has my usual setup: means on first boot it's resizing the rootfs partition and configures SSH. It will automatically reboot after the initial setup after which this image is ready to use. Kernel and headers are already installed if you need to build your own drivers. A few basic tools such as htop, mc, vim and bash-completion are already installed.
