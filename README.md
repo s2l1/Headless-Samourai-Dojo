@@ -329,14 +329,17 @@ We are using “Secure Copy” (SCP), so download and install WinSCP, a free ope
 With WinSCP, you can now connect to your ODROID.
 
 Accept the server certificate and navigate to the local and remote bitcoin directories:
+```
 Local: C:\bitcoin\bitcoin_mainnet\
 Remote: PATH_TO_SSD\bitcoin\
-
-You can now copy the two subdirectories (folders) blocks and chainstate from Local to Remote. This will take about 6 hours. The transfer must not be interupted. Make sure your computer does not go to sleep.
+```
+You can now copy the two subdirectories (folders) named blocks and chainstate from Local to Remote. This will take about 6 hours. The transfer must not be interupted. Make sure your computer does not go to sleep.
 
 !!!ADD LINUX INSTRUCTIONS HERE!!!
 
 ## 11. [AUTOSTART BITCOIND]
+
+
 The system needs to run the bitcoin daemon automatically in the background, even when nobody is logged in. We use “systemd“, a daemon that controls the startup process using configuration files.
 
 Create the configuration file in the Nano text editor and copy the following paragraph.
