@@ -561,6 +561,7 @@ After successful install the following command should show containers as up.
 `$ docker-compose ps`
 
 `./dojo.sh logs bitcoind`
+
 `./dojo.sh logs tor`
 
 ADD END: SSH Key Login https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#login-with-ssh-keys
