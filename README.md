@@ -30,7 +30,7 @@ MyDojo is a set of Docker containers providing a full Samourai backend composed 
 * a backend modules with an API accessible as a static Tor hidden service,
 * a maintenance tool accessible through a Tor web browser.
 
-This setup will be running bitcoind externally, versus leaving the default option enabled where bitcoind runs inside Dojo. I have chosen this setup which requires a little more work because it is faster than waiting for a full blockchain sync with ODROID N2. First I must say thanks to @hashamadeus @laurentmt @PuraVlda from the Dojo Telegram chat. Also thank you to @stadicus and Burcak Baskan for the Raspibolt guide and the Dojo Pi4 guide. This is a compiled trial and error effort of myself trying to chop together guides, and a lot of help from the Dojo chat. 
+This setup will be running bitcoind externally, versus leaving the default option enabled where Bitcoin runs in Docker. I have chosen this setup which requires a little more work because it is faster than waiting for a full blockchain sync with ODROID N2. First I must say thanks to @hashamadeus @laurentmt @PuraVlda from the Dojo Telegram chat. Also thank you to @stadicus and Burcak Baskan for the Raspibolt guide and the Dojo Pi4 guide. This is a compiled trial and error effort of myself trying to chop together guides, and a lot of help from the Dojo chat. 
 ```
 Sources:
 Dojo Docs - https://github.com/Samourai-Wallet/samourai-dojo/blob/master/doc/DOCKER_setup.md#first-time-setup
@@ -590,9 +590,10 @@ Edit mysql Dockerfile to use a compatible database.
          #Change line #1 to:
             FROM    mariadb:latest
 ```
-Go to the ~/dojo_dir/docker/my-dojo/conf directory.
 
 Configure your dojo installation by editing all 3 .conf.tpl files.
+
+Go to the ~/dojo_dir/docker/my-dojo/conf directory.
 
 `$ nano docker-bitcoind.conf.tpl`
 ```
