@@ -333,10 +333,10 @@ rpcport=8332
 # port used to access rpc
 
 rpcuser=xxxxxxxx 
-# username for rpc access
+# put any username you prefer for rpc access, please make sure this is the same as BITCOIND_RPC_USER in Section 15.
 
 rpcpassword=xxxxxx 
-# password for rpc access
+# put any password you prefer for rpc access, please make sure is the same as BITCOIND_RPC_PASSWORD in Section 15.
 
 rpcallowip=127.0.0.1 
 # may not be but was there already so left
@@ -614,10 +614,11 @@ Edit mysql Dockerfile to use a compatible database.
          #Change line #1 to:
             FROM    mariadb:latest
 ```
+Configure your dojo installation by editing all 3 .conf.tpl files. For each line USER, PASSWORD, KEY, and SECRET type in whatever you'd like. Make it secure like any other password. Also please keep in mind that BITCOIND_RPC_USER and BITCOIND_RPC_PASSWORD need to match what is in the bitcoin.conf in Section 9 above.
 
-Configure your dojo installation by editing all 3 .conf.tpl files.
+`$ cd ~/dojo_dir/docker/my-dojo/conf`
 
-Go to the ~/dojo_dir/docker/my-dojo/conf directory.
+
 
 `$ nano docker-bitcoind.conf.tpl`
 ```
