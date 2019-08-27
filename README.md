@@ -204,7 +204,7 @@ In order to verify the integrity of the Tor files, download and add the signing 
 ```
 $ apt install dirmngr apt-transport-https
 $ curl https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | gpg --import
-$ gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | sudo apt-key add -
+$ gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | apt-key add -
 ```
 The latest version of Tor can now be installed. While not required, tor-arm provides a dashboard that you might find useful.
 
@@ -267,7 +267,7 @@ $ gpg --verify SHA256SUMS.asc
 Now we know that the keys from bitcoin.org are valid. Extract the Bitcoin Core binaries, install them and check the version.
 ```
 tar -xvf bitcoin-0.18.1-aarch64-linux-gnu.tar.gz
-$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.18.1/bin/*
+$ install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.18.1/bin/*
 $ bitcoind --version
 > Bitcoin Core Daemon version v0.18.1
 ```
@@ -306,7 +306,7 @@ zmqpubhashblock=tcp://0.0.0.0:29000 (no idea what any of these mean). Needed per
 zmqpubrawblock=tcp://0.0.0.0:29000 (existing from nodl for services)
 zmqpubrawtx=tcp://0.0.0.0:29001 (same)
 
-$ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
+$ nano ~/.bitcoin/bitcoin.conf
 # add / change:
 proxy=127.0.0.1:9050
 bind=127.0.0.1
