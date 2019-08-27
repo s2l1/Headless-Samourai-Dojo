@@ -141,10 +141,10 @@ Install fail2ban.
 $ apt-get install fail2ban
 
 Mount external hard disk. Use ext4 format NTFS will not work!
-
+```
 Optional Reading - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#mounting-external-hard-disk 
 Optional Reading - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#moving-the-swap-file
-
+```
 As mentoined before we want to be running "headless" so you will SSH in from another
 machine on your local network. We also want to harden the ODROID. The Raspibolt guide is a great help to explain things for those who are not familiar with Linux/SSH during these steps.
 
@@ -164,10 +164,15 @@ $ systemctl enable ufw
 $ ufw status
 $ exit
 ```
+```
 Optional Reading: Connecting to the Network - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#connecting-to-the-network
 Optional Reading:  Connecting to ODROID - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#connecting-to-the-pi
 Optional Reading:  Access restricted for local LAN - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#enabling-the-uncomplicated-firewall
 Optional Reading: Login with SSH keys - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#login-with-ssh-keys
+```
+
+
+## 8. [TOR]
 
 Why run Tor?
 
@@ -182,16 +187,7 @@ In the eventuality of a full fledged ban and crackdown on Bitcoin owners in the 
 Coupled with other privacy methods like CoinJoin you can gain more privacy for your transactions, as it eliminates the risk of someone being able to snoop on your node traffic, analyze which transactions you relay and try to figure out which UTXOs are yours, for example.
 All the above mentioned arguments are also relevant when using Lightning, as someone that sees a Lightning node running on your home IP address could easily infer that there’s a Bitcoin node at the same location.
 
-
-## 8. [TOR]
-
-This guide assumes that you’re running an ODROID N2 or better.
-
-Also, this guide builds on top of the RaspiBolt guide that runs with Raspbian Buster Lite. If you run a different operating system, you may need to build Tor from source and paths may vary.
-
-For additional reference, the original instructions are available on the Tor project website.
-
-Connect via SSH.
+If you run a different operating system, you may need to build Tor from source and paths may vary. For additional reference, the original instructions are available on the Tor project website.
 
 Add the following two lines to sources.list to add the torproject repository.
 
@@ -216,7 +212,7 @@ $ tor --version
 $ systemctl status tor
 ```
 Modify the Tor configuration by uncommenting (removing the #) or adding the following lines.
-$ sudo nano /etc/tor/torrc
+`$ sudo nano /etc/tor/torrc`
 ```
 # uncomment:
 ControlPort 9051
