@@ -1,8 +1,16 @@
 # Headless-Samourai-Dojo
 **for  ODROID N2**
 <sub><sup>by @GuerraMoneta</sup></sub>
+```
+!!!WORK IN PROGRESS!!!
+               O
+       /~~~|#|]|=\|---\__
+     |-=_____________  |\\ ,             O       O
+    I|_/,-.-.-.-.-,-.\_|='(             T/\     /\=,---.
+       ( o )( o )( o )     \            U /\   /\   `O'    cww
+        `-'-'-'-'-`-'
+```
 
-*** WORK IN PROGRESS***
 
 This guide is for Samourai Dojo on a headless server. Samourai Dojo is the backing server for Samourai Wallet. It provides HD account, loose addresses (BIP47) balances, and transactions lists. Also provides unspent output lists to the wallet. PushTX endpoint broadcasts transactions through the backing bitcoind node. 
 
@@ -516,16 +524,17 @@ Then run the following.
 
 ## 14. [DOCKER]
 
-!!!TEST THIS SETUP!!!
-
+!!!TEST THIS ON FRESH MINIMAL SETUP!!!
 Use pip to install docker-compose, apt-get can install an old version. Better to use the docker-compose install instructions which you can look at in Optional Reading. I will walk you through the pip install approach, there are a few ways to install the latest version.
-```
-$ python3 -m pip install --upgrade docker-compose`
-# Let the install finish
 
+```
 $ curl -fsSL https://get.docker.com -o get-docker.sh
 $ sudo sh get-docker.sh
 # Let the install finish
+
+$ python3 -m pip install --upgrade docker-compose`
+# Let the install finish
+
 ```
 
 `Optional Reading - https://docs.docker.com/compose/install/`
