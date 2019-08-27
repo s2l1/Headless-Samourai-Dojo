@@ -472,7 +472,7 @@ We now need to check if all connections are truly routed over Tor.
 
 Verify operations in the debug.log file. You should see your onion address after about one minute.
 ```
-$ tail ~/.bitcoin/debug.log -f -n 200
+$ cat ~/.bitcoin/debug.log -f -n 200
 
 > InitParameterInteraction: parameter interaction: -proxy set -> setting -upnp=0
 > InitParameterInteraction: parameter interaction: -proxy set -> setting -discover=0
@@ -482,7 +482,10 @@ $ tail ~/.bitcoin/debug.log -f -n 200
 > tor: Got service ID [YOUR_ID] advertising service [YOUR_ID].onion:8333
 > addlocal([YOUR_ID].onion:8333,4)
 ```
-Use CTRL + C to exit logs.
+
+Clear away the wall of text once you are done viewing.
+
+`$ clear`
 
 Display the Bitcoin network info to verify that the different network protocols are bound to proxy 127.0.0.1:9050, which is Tor on your localhost. Note the onion network is now reachable: true.
 
