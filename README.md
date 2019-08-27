@@ -475,13 +475,13 @@ Save and exit Nano text editor.
 
 Restart docker to accept changes.
 
-`$ sudo systemctl daemon-reload`
+`$ systemctl daemon-reload`
 
-`$ sudo systemctl start docker`
+`$ systemctl start docker`
 
 Check that docker is using the SSD.
 ```
-$ sudo docker info | grep "Docker Root Dir:" 
+$ docker info | grep "Docker Root Dir:" 
 > "data-root": "/PATH_TO_SSD/docker/"
 ```
 Try rebooting if you do not see your external SSD listed.
@@ -559,5 +559,6 @@ After successful install the following command should show containers as up.
 `$ docker-compose ps`
 
 `./dojo.sh logs bitcoind`
+`./dojo.sh logs tor`
 
 ADD END: SSH Key Login https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#login-with-ssh-keys
