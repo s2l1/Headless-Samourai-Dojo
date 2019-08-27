@@ -85,7 +85,7 @@ Check this hash 3bac067... against the file SHA256SUMS.asc once you are on step 
 
 ## 4. [NETWORK]
 
-!!!ADD PORTFORWARD 8333 FOR MAINNET!!!
+!!!ADD PORTFORWARD 8333 FOR MAINNET SECTION!!!
 
 The ODROID got a new IP address from your home network. This address can change over time. To make the ODROID reachable from the internet, we assign it a fixed address.
 
