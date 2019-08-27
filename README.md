@@ -535,6 +535,15 @@ Configure your dojo installation by editing all 3 .conf.tpl files.
 BITCOIND_RPC_USER = login protecting the access to the RPC API of your full node,
 BITCOIND_RPC_PASSWORD = password protecting the access to the RPC API of your full node.
 If your machine has a lot of RAM, it's recommended that you increase the value of BITCOIND_DB_CACHE for a faster Initial Block Download. This file also provides a few additional settings for advanced setups like static onion address for your full node, bitcoind RPC API exposed to external apps, use of an external full node.
+#
+# Set the value of BITCOIND_INSTALL to "off"
+# Set the value of BITCOIND_IP with the IP address of you bitcoin full node
+# Set the value of BITCOIND_RPC_PORT with the port used by your bitcoin full node for the RPC API (8332 default)
+# Set the value of BITCOIND_ZMQ_RAWTXS with the port used by your bitcoin full node for ZMQ notifications of raw transactions
+#   (i.e. port defined for -zmqpubrawtx in the bitcoin.conf of your full node)
+# Set the value of BITCOIND_ZMQ_BLK_HASH with the port used by your bitcoin full node for ZMQ notifications of block hashes
+#   (i.e. port defined for -zmqpubhashblock in the bitcoin.conf of your full node)
+#
 ```
 `$ nano docker-mysql.conf.tpl`
 ```
