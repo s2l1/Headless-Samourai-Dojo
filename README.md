@@ -4,6 +4,16 @@
 
 *** WORK IN PROGRESS***
 
+This guide is for Samourai Dojo on a headless server. Samourai Dojo is the backing server for Samourai Wallet. It provides HD account, loose addresses (BIP47) balances, and transactions lists. Also provides unspent output lists to the wallet. PushTX endpoint broadcasts transactions through the backing bitcoind node. 
+
+MyDojo is a set of Docker containers providing a full Samourai backend composed of:
+* a bitcoin full node accessible as an ephemeral Tor hidden service,
+* a backend database,
+* a backend modules with an API accessible as a static Tor hidden service,
+* a maintenance tool accessible through a Tor web browser.
+
+This setup will be running bitcoind externally, versus leaving the default option enabled where Bitcoin runs in Docker. I have chosen this setup which requires a little more work because it is faster than waiting for a full blockchain sync with ODROID N2. First I must say thanks to @hashamadeus @laurentmt @PuraVlda from the Dojo Telegram chat. Also thank you to @stadicus and Burcak Baskan for the Raspibolt guide and the Dojo Pi4 guide. This is a compiled trial and error effort of myself trying to chop together guides, and a lot of help from the Dojo chat. 
+
 # Table of Contents
 * [**HARDWARE REQUIREMENTS**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#1-hardware-requirements) 
 * [**OPERATING SYSTEM**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#2-operating-system)
@@ -21,16 +31,6 @@
 * [**DOCKER**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#14-docker)
 * [**DOJO**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#15-dojo)
 
-
-This guide is for Samourai Dojo on a headless server. Samourai Dojo is the backing server for Samourai Wallet. It provides HD account, loose addresses (BIP47) balances, and transactions lists. Also provides unspent output lists to the wallet. PushTX endpoint broadcasts transactions through the backing bitcoind node. 
-
-MyDojo is a set of Docker containers providing a full Samourai backend composed of:
-* a bitcoin full node accessible as an ephemeral Tor hidden service,
-* a backend database,
-* a backend modules with an API accessible as a static Tor hidden service,
-* a maintenance tool accessible through a Tor web browser.
-
-This setup will be running bitcoind externally, versus leaving the default option enabled where Bitcoin runs in Docker. I have chosen this setup which requires a little more work because it is faster than waiting for a full blockchain sync with ODROID N2. First I must say thanks to @hashamadeus @laurentmt @PuraVlda from the Dojo Telegram chat. Also thank you to @stadicus and Burcak Baskan for the Raspibolt guide and the Dojo Pi4 guide. This is a compiled trial and error effort of myself trying to chop together guides, and a lot of help from the Dojo chat. 
 ```
 Sources:
 Dojo Docs - https://github.com/Samourai-Wallet/samourai-dojo/blob/master/doc/DOCKER_setup.md#first-time-setup
@@ -38,6 +38,7 @@ Advanced Setups - https://github.com/Samourai-Wallet/samourai-dojo/blob/master/d
 Raspibolt - https://stadicus.github.io/RaspiBolt/
 Pi 4 Dojo Guide - https://burcak-baskan.gitbook.io/workspace/
 ```
+
 **NEWBIE TIPS:** Each command has $ before it, and the outputs of the command are marked > to avoid confusion. # is a comment. Do not enter these as part of a command. If you are not sure about commands, stuck, learning, etc. try visiting the information links and doing the Optional Reading. Look up terms that you do not know. The Dojo Telegram chat is also very active and helpful. I am trying my best to educate anyone new throughout this guide. 
 
 
@@ -354,15 +355,16 @@ listenonion=1
 Here is an example of bitcoin.conf without comments.
 ```
 rpcbind=127.0.0.1 
-rpcbind=local ip of where bitcoind is
+rpcbind=192.168.0.70
 rpcport=8332 
 rpcuser=xxxxxxxx 
 rpcpassword=xxxxxx 
 rpcallowip=127.0.0.1 
-rpcallowip=local ip where Dojo is
+
 
 txindex=1 
-server=1 
+server=1
+daemon=1
 
 zmqpubrawblock=tcp://127.0.0.1:28332
 zmqpubrawtx=tcp://127.0.0.1:28333
