@@ -19,9 +19,11 @@ Pi 4 Dojo Guide - https://burcak-baskan.gitbook.io/workspace/
 ```
 **NEWBIE TIPS:** Each command has $ before it, and the outputs of the command are marked > to avoid confusion. # is a comment. Do not enter these as part of a command. If you are not sure about commands, stuck, learning, etc. try visiting the information links and doing the Optional Reading. Look up terms that you do not know. The Dojo Telegram chat is also very active and helpful. I am trying my best to educate anyone new throughout this guide.
 
+
 ## 1. [HARDWARE REQUIREMENT] ODROID N2:
 - https://forum.odroid.com/viewtopic.php?f=176&t=33781
 I am using this with a 500gb Samsung Portable SSD + USB3.0 and SD card. I reccommend quality SD card. I am also using hardline internet connection. You will also need a Windows / Linux / Mac with decent specs that is on the same network as the ODROID. Before this I have tried to get running on a Pi3b+ but had a problem. Hypothesis for problem "nodejs can communicate with bitcoind but it doesn't get a response fast enough." If you get Dojo running on Pi3b+ please contact or post a guide.
+
 
 ## 2. [OPERATING SYSTEM] Debian Stretch for ODROID N2:
 - https://forum.odroid.com/viewtopic.php?f=179&t=33865
@@ -54,6 +56,7 @@ https://www.lifewire.com/validate-md5-checksum-file-4037391
 ```
 It's ready to be used as a server image. Flash the image on to an SD card and boot up. Give the ODROID some time. As mentioned by meveric above "it will automatically reboot" then it is ready for use.
 
+
 ## 3. [BLOCKCHAIN DATA]
 
 The Bitcoin blockchain records all transactions and basically defines who owns how many bitcoin. This is the most crucial of all information and we should not rely on someone else to provide this data. To set up our Bitcoin Full Node on mainnet, we need to download the whole blockchain (~ 250 GB), verify every Bitcoin transaction that ever occurred, every block ever mined, create an index database for all transactions, so that we can query it later on, calculate all bitcoin address balances (called the UTXO set). Look up Running a Full Node for additional information.
@@ -77,6 +80,8 @@ $ dir
 $ certutil -hashfile bitcoin-0.17.0.1-win64-setup.exe sha256
 a624de6c915871fed12cbe829d54474e3c8a1503b6d703ba168d32d3dd8ac0d3
 ```
+
+
 ## 4. [DHCP LEASE]
 
 The ODROID got a new IP address from your home network. This address can change over time. To make the ODROID reachable from the internet, we assign it a fixed address.
@@ -92,6 +97,7 @@ Now open your web browser and access your router by entering the address, like a
 We now need to set the fixed (static) IP address for the Pi. Normally, you can find this setting under “DHCP server”. The manual address should be the same as the current address, just change the last part to a lower number (e.g. 192.168.0.240 → 192.168.0.20).
 
 Apply changes. 
+
 
 ## 5. [SSH.] Secure Shell.
 
@@ -112,6 +118,7 @@ Now you are connected to your ODROID and can use the terminal.
 
 Optional Reading: https://www.raspberrypi.org/documentation/installation/installing-images/
 Optional Reading: https://www.raspberrypi.org/magpi/back-up-raspberry-pi/
+
 
 ## 6. [SYSTEM SETUP]
 
@@ -140,6 +147,7 @@ Optional Reading - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#mov
 
 As mentoined before we want to be running "headless" so you will SSH in from another
 machine on your local network. We also want to harden the ODROID. The Raspibolt guide is a great help to explain things for those who are not familiar with Linux/SSH during these steps.
+
 
 ## 7. [UFW] Uncomplicated Firewall.
 
@@ -173,6 +181,7 @@ By exposing your home IP address with your node, you are literally saying the wh
 In the eventuality of a full fledged ban and crackdown on Bitcoin owners in the country where you live, you will be an obvious target for law enforcement.
 Coupled with other privacy methods like CoinJoin you can gain more privacy for your transactions, as it eliminates the risk of someone being able to snoop on your node traffic, analyze which transactions you relay and try to figure out which UTXOs are yours, for example.
 All the above mentioned arguments are also relevant when using Lightning, as someone that sees a Lightning node running on your home IP address could easily infer that there’s a Bitcoin node at the same location.
+
 
 ## 8. [TOR]
 
@@ -233,6 +242,7 @@ proxy=127.0.0.1:9050
 bind=127.0.0.1
 listenonion=1
 ```
+
 
 # 9. [BITCOIN]
 
@@ -422,7 +432,8 @@ addlocal([YOUR_ID].onion:8333,4)
 Display the Bitcoin network info to verify that the different network protocols are bound to proxy 127.0.0.1:9050, which is Tor on your localhost. Note the onion network is now reachable: true.
 $ bitcoin-cli getnetworkinfo
 
-## 9. [PIP] Install the Python Package Installer.
+
+## 10. [PIP] Install the Python Package Installer.
 
 Change to the home directory of the root user.
 ```
@@ -442,7 +453,8 @@ Then run the following.
 
 `$ python get-pip.py`
 
-## 10. [DOCKER]
+
+## 11. [DOCKER]
 
 Use pip to install docker-compose.
 
@@ -485,7 +497,9 @@ Try rebooting if you do not see your external SSD listed.
 
 `$ shutdown -r now`
 
-## 11. [DOJO] Download and unzip latest Dojo release.
+
+## 12. [DOJO] Download and unzip latest Dojo release.
+
 ```
 $ cd ~
 $ curl -fsSL https://github.com/Samourai-Wallet/samourai-dojo/archive/master.zip -o master.zip
