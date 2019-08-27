@@ -516,6 +516,8 @@ Then run the following.
 
 ## 14. [DOCKER]
 
+!!!TEST THIS SETUP!!!
+
 Use pip to install docker-compose, apt-get can install an old version. Better to use the docker-compose install instructions which you can look at in Optional Reading. I will walk you through the pip install approach, there are a few ways to install the latest version.
 ```
 $ python3 -m pip install --upgrade docker-compose`
