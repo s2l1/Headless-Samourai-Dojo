@@ -366,11 +366,11 @@ WantedBy=multi-user.target
 Save and exit.
 
 Enable the configuration file
+
 `$ systemctl enable bitcoind.service`
-Copy bitcoin.conf to user “admin” home directory for RPC credentials
-`$ mkdir /home/admin/.bitcoin`
-$ sudo cp /home/bitcoin/.bitcoin/bitcoin.conf /home/admin/.bitcoin/
+
 Restart the Raspberry Pi
+
 `$ shutdown -r now`
 
 After rebooting, the bitcoind should start and begin to sync and validate the Bitcoin blockchain. 
@@ -387,14 +387,13 @@ Use the Bitcoin Core client bitcoin-cli to get information about the current blo
 See bitcoind in action by monitoring its log file (exit with Ctrl-C)
 `$ tail -f ~/.bitcoin/debug.log`
 
-When “bitcoind” is still starting, you may get an error message like “verifying blocks”. That’s normal, just give it a few minutes.
-Among other infos, the “verificationprogress” is shown. Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated.
+When “bitcoind” is still starting, you may get an error message like “verifying blocks”. That’s normal, just give it a few minutes. Among other infos, the “verificationprogress” is shown. Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated.
 
 If everything is running smoothly, this is the perfect time to familiarize yourself with Bitcoin Core, try some bitcoin-cli commands, and do some reading or videos until the blockchain is up-to-date.
 
 A great point to start is the book Mastering Bitcoin by Andreas Antonopoulos which is open source.
 
-VALIDATION
+## 13. [VALIDATION]
 
 We now need to check if all connections are truly routed over Tor.
 
@@ -416,9 +415,9 @@ Display the Bitcoin network info to verify that the different network protocols 
 `$ bitcoin-cli getnetworkinfo`
 
 
-## 12. [PIP] Install the Python Package Installer.
+## 12. [PIP] 
 
-Change to the home directory of the root user.
+Install the Python Package Installer. Change to the home directory of the root user.
 ```
 $ cd ~
 
