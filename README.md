@@ -145,7 +145,7 @@ Set your timezone.
 
 Install fail2ban.
 
-`$ apt-get install fail2ban`
+`$ apt-get install fail2ban curl`
 
 Mount external hard disk. Use ext4 format NTFS will not work! See below.
 ```
@@ -432,7 +432,7 @@ Install the Python Package Installer. Change to the home directory of the root u
 
 `$ apt-get install python3-dev libffi-dev libssl-dev build-essential`
 
-TIP: You will also need these libs if you wanted to install bitcoind standalone. Useful to have them in the system.
+TIP: You will also need these libs if you wanted to install bitcoind standalone. Useful to have them in the system. Also python 2 is end of life so we are using python3.
 
 `Optional Reading - https://pip.pypa.io/en/stable/installing/`
 
@@ -442,12 +442,12 @@ To install pip, securely download get-pip.py. “Secure” in this context means
 
 Then run the following.
 
-`$ python get-pip.py`
+`$ python3 get-pip.py`
 
 
 ## 14. [DOCKER]
 
-Use pip to install docker-compose.
+Use pip to install docker-compose, apt-get can install an old version. Better to use the docker-compose install instructions which you can look at in Optional Reading. I will walk you through the pip install approach, there are a few ways to install the latest version.
 
 `$ python3 -m pip install --upgrade docker-compose`
 
