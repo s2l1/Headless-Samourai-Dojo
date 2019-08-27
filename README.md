@@ -23,7 +23,7 @@ Pi 4 Dojo Guide - https://burcak-baskan.gitbook.io/workspace/
 
 ## 1. [HARDWARE REQUIREMENTS]
 - https://forum.odroid.com/viewtopic.php?f=176&t=33781
-I am using this with a 500gb Samsung Portable SSD + USB3.0 and SD card. I reccommend quality SD card. I am also using hardline internet connection. You will also need a Windows / Linux / Mac with decent specs that is on the same network as the ODROID. Before this I have tried to get running on a Pi3b+ but had a problem. Hypothesis for problem "nodejs can communicate with bitcoind but it doesn't get a response fast enough." If you get Dojo running on Pi3b+ please contact or post a guide.
+I am using this with a 500gb Samsung Portable SSD + USB3.0 and SD card. I reccommend quality SD card. I am also using hardline internet connection. You will need a Windows / Linux / Mac with good specs that is on the same network as the ODROID. Before this I have tried to get running on a Pi3b+ but had a problem. Hypothesis for problem "nodejs can communicate with bitcoind but it doesn't get a response fast enough." If you get Dojo running on Pi3b+ please contact or post a guide.
 
 
 ## 2. [OPERATING SYSTEM]
@@ -61,59 +61,63 @@ It's ready to be used as a server image. Flash the image on to an SD card and bo
 
 The Bitcoin blockchain records all transactions and basically defines who owns how many bitcoin. This is the most crucial of all information and we should not rely on someone else to provide this data. To set up our Bitcoin Full Node on mainnet, we need to download the whole blockchain (~ 250 GB), verify every Bitcoin transaction that ever occurred, every block ever mined, create an index database for all transactions, so that we can query it later on, calculate all bitcoin address balances (called the UTXO set). Look up Running a Full Node for additional information.
 
-The ODROID is up to the big task of downloading the blockchain so you may wonder why we are downloading on a faster machine, and copying over the data. The download is not the problem, but to initially process the whole blockchain would take a long time due to its computing power and memory. We need to download and verify the blockchain with Bitcoin Core on a regular computer, and then transfer the data to the ODROID. This needs to be done only once. After that the ODROID can easily keep up with new blocks.
+The ODROID is up to the big task of downloading the blockchain so you may wonder why we are downloading on a faster machine, and copying over the data. The download is not the problem, but to initially process the whole blockchain would take a long time due to its computing power and memory. We need to download and verify the blockchain with Bitcoin Core on your regular computer, and then transfer the data to the ODROID. This needs to be done only once. After that the ODROID can easily keep up with new blocks.
 
 This guide assumes that you will use a Windows machine for this task, but it works with most operating systems. You need to have about 250 GB free disk space available, internally or on an external hard disk (but not the SSD reserved for the ODROID). As indexing creates heavy read/write traffic, the faster your hard disk the better. 
 
 Using SCP, we will copy the blockchain from the Windows computer over the local network later in this guide.
 
-Now download the Bitcoin Core installer from bitcoincore.org/en/download and store it in the directory you want to use to download the blockchain. To check the authenticity of the program, we calculate its checksum and compare it with the checksums provided.
+For now download the Bitcoin Core installer from bitcoincore.org and store it in the directory you want to use to download the blockchain. To check the authenticity of the program, we calculate its checksum and compare it with the checksums provided.
 
 In Windows, I’ll preface all commands you need to enter with $, so with the command $ cd bitcoin just type cd bitcoin and hit enter.
 
-Open the Windows command prompt (Win+R, enter cmd, hit Enter), navigate to the bitcoin directory (for me, it’s on drive D:, check in Windows Explorer) and create the new directory bitcoin_mainnet. Then calculate the checksum of the already downloaded program.
+Open the Windows command prompt (Win+R, enter cmd, hit Enter), navigate to the bitcoin directory (for me, it’s on drive C:, check in Windows Explorer) and create the new directory bitcoin_mainnet. Then calculate the checksum of the already downloaded program.
 ```
-$ D:
-$ cd \bitcoin
+$ cd C:\bitcoin
 $ mkdir bitcoin_mainnet
 $ dir
-$ certutil -hashfile bitcoin-0.17.0.1-win64-setup.exe sha256
-a624de6c915871fed12cbe829d54474e3c8a1503b6d703ba168d32d3dd8ac0d3
+$ certutil -hashfile bitcoin-0.18.1-win64-setup.exe sha256
+>3bac0674c0786689167be2b9f35d2d6e91d5477dee11de753fe3b6e22b93d47c
 ```
+Check this hash 3bac067... against the file SHA256SUMS.asc once you are on step #9 of this guide to verify that it is authentic.
 
-
-## 4. [DHCP LEASE]
+## 4. [STATIC IP]
 
 The ODROID got a new IP address from your home network. This address can change over time. To make the ODROID reachable from the internet, we assign it a fixed address.
 
-The fixed address is configured in your network router, this can be the cable modem or the Wifi access point. So we first need to access the router. To find out its address.
+The fixed address is configured in your network router, this can be the cable modem or the Wifi access point. So we first need to access the router. To find out your routers address start the Command Prompt on a computer that is connected to your home network. 
+```
+#Windows:
+#Click on the Start Menu and type cmd directly or in the search box, and hit Enter).
+$ ipconfig
 
-Start the Command Prompt on a computer that is connected to your home network (in Windows, click on the Start Menu and type cmd directly or in the search box, and hit Enter)
-enter the command ipconfig (or ifconfig on Mac / Linux)
-look for “Default Gateway” and note the address (eg. “192.168.0.1”)
+#Linux/Mac:
+$ ifconfig
 
+#look for “Default Gateway” and note the address (eg. “192.168.0.1”)
+```
 Now open your web browser and access your router by entering the address, like a regular web address. You need to sign in, and now you can look up all network clients in your home network. Your ODROID should be listed here, together with its IP address (eg. “192.168.0.240”).
 
-We now need to set the fixed (static) IP address for the Pi. Normally, you can find this setting under “DHCP server”. The manual address should be the same as the current address, just change the last part to a lower number (e.g. 192.168.0.240 → 192.168.0.20).
+We now need to set the fixed (static) IP address for the ODROID. Normally, you can find this setting under “DHCP server”. The manual address should be the same as the current address, just change the last part to a lower number (e.g. 192.168.0.240 → 192.168.0.20).
 
 Apply changes. 
 
 
 ## 5. [SSH]
 
-Take note of the of your ODROID on your local network. 
+Take note of the of your ODROID's static IP address on your local network. 
 
 Go ahead and SSH into your ODROID by opening terminal on any Linux machine connected to your local network.
-
-Windows: 
-Download - https://www.putty.org/
+```
+#Windows: 
+#Download - https://www.putty.org/
 Enter the ODROID IP and password to connect. 
 
-In Linux Terminal:
+#In Linux Terminal:
 $ ssh root@IP.OF.ODROID.HERE
-Example: root@192.168.0.5
+#Example: root@192.168.0.5
 >Enter password:
-
+```
 Now you are connected to your ODROID and can use the terminal. 
 ```
 Optional Reading: https://www.raspberrypi.org/documentation/installation/installing-images/
@@ -130,7 +134,7 @@ Setup tool can be accessed by using the following command.
 
 `$ setup-odroid`
 
-Here you can change root password, language, hostname, etc. This tool will usually ask you to reboot to apply the changes.
+Here you can change root password, hostname, etc. This tool will usually ask you to reboot to apply the changes.
 
 Set your timezone.
 
@@ -138,15 +142,13 @@ Set your timezone.
 
 Install fail2ban.
 
-$ apt-get install fail2ban
+`$ apt-get install fail2ban`
 
-Mount external hard disk. Use ext4 format NTFS will not work!
+Mount external hard disk. Use ext4 format NTFS will not work! See below.
 ```
 Optional Reading - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#mounting-external-hard-disk 
 Optional Reading - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#moving-the-swap-file
 ```
-As mentoined before we want to be running "headless" so you will SSH in from another
-machine on your local network. We also want to harden the ODROID. The Raspibolt guide is a great help to explain things for those who are not familiar with Linux/SSH during these steps.
 
 
 ## 7. [UFW] Uncomplicated Firewall.
@@ -176,35 +178,34 @@ Optional Reading: Login with SSH keys - https://stadicus.github.io/RaspiBolt/ras
 
 Why run Tor?
 
-Tor is mainly useful as a way to impede traffic analysis, which means analyzing your internet activity (logging you IP address on websites you’re browsing and services you’re using) to learn about you and your interests. Traffic analysis is useful for advertisement and you might want to hide this kind of information merely out of privacy concerns. But it might also be used by outright malevolent actors, criminals or governments to harm you in a lot of possible ways.
+Tor is mainly useful as a way to impede traffic analysis, which means analyzing your internet activity (logging your IP address on websites you’re browsing and services you’re using) to learn about you and your interests. Traffic analysis is useful for advertisement and you might want to hide this kind of information merely out of privacy concerns. But it might also be used by outright malevolent actors, criminals or governments to harm you in a lot of possible ways.
 
 Tor allows you to share data on the internet without revealing your location or identity, which can definitely be useful when running a Bitcoin node.
 
-Out of all the reasons why you should run Tor, here are the most relevant to Bitcoin:
+Out of all the reasons why you should run Tor, here are the most relevant to Bitcoin.
 
-By exposing your home IP address with your node, you are literally saying the whole planet “in this home we run a node”. That’s only one short step from “in this home, we do have bitcoins”, which could potentially turn you and your loved ones into a target for thieves.
-In the eventuality of a full fledged ban and crackdown on Bitcoin owners in the country where you live, you will be an obvious target for law enforcement.
-Coupled with other privacy methods like CoinJoin you can gain more privacy for your transactions, as it eliminates the risk of someone being able to snoop on your node traffic, analyze which transactions you relay and try to figure out which UTXOs are yours, for example.
+By exposing your home IP address with your node, you are literally saying the whole planet “in this home we run a node”. That’s only one short step from “in this home, we do have bitcoins”, which could potentially turn you and your loved ones into a target for thieves. In the eventuality of a full fledged ban and crackdown on Bitcoin owners in the country where you live, you will be an obvious target for law enforcement. Coupled with other privacy methods like CoinJoin you can gain more privacy for your transactions, as it eliminates the risk of someone being able to snoop on your node traffic, analyze which transactions you relay and try to figure out which UTXOs are yours, for example.
+
 All the above mentioned arguments are also relevant when using Lightning, as someone that sees a Lightning node running on your home IP address could easily infer that there’s a Bitcoin node at the same location.
 
 If you run a different operating system, you may need to build Tor from source and paths may vary. For additional reference, the original instructions are available on the Tor project website.
 
 Add the following two lines to sources.list to add the torproject repository.
 
-`$ sudo nano /etc/apt/sources.list`
+`$ nano /etc/apt/sources.list`
 ```
 deb https://deb.torproject.org/torproject.org stretch main
 deb-src https://deb.torproject.org/torproject.org stretch main
 ```
 In order to verify the integrity of the Tor files, download and add the signing keys of the torproject using the network certificate management service (dirmngr).
 ```
-$ sudo apt install dirmngr apt-transport-https
+$ apt install dirmngr apt-transport-https
 $ curl https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | gpg --import
 $ gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | sudo apt-key add -
 ```
 The latest version of Tor can now be installed. While not required, tor-arm provides a dashboard that you might find useful.
-`$ sudo apt update`
-`$ sudo apt install tor tor-arm`
+`$ apt update`
+`$ apt install tor tor-arm`
 Check the version of Tor and that the service is up and running.
 ```
 $ tor --version
@@ -212,7 +213,7 @@ $ tor --version
 $ systemctl status tor
 ```
 Modify the Tor configuration by uncommenting (removing the #) or adding the following lines.
-`$ sudo nano /etc/tor/torrc`
+`$ nano /etc/tor/torrc`
 ```
 # uncomment:
 ControlPort 9051
@@ -223,26 +224,12 @@ CookieAuthFileGroupReadable 1
 ```
 Restart Tor to activate modifications.
 
-`$ sudo systemctl restart tor`
-
-Setup Tor for Bitcoin Core
-CONFIGURATION
-In the “admin” user session, stop Bitcoin and LND.
-$ sudo systemctl stop lnd
-$ sudo systemctl stop bitcoind
-Open the Bitcoin configuration and add the following lines. The argument onlynet should not be specified (delete this line if present).
-`$ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf`
-```
-# add / change:
-proxy=127.0.0.1:9050
-bind=127.0.0.1
-listenonion=1
-```
+`$ systemctl restart tor`
 
 
 # 9. [BITCOIN]
 
-We will download the software directly from bitcoin.org, verify its signature to make sure that we use an official release, and then install it.
+Now download the software directly from bitcoin.org to your ODROID, verify its signature to make sure that we use an official release, and then install it.
 ``
 $ mkdir ~/download
 $ cd ~/download
@@ -312,6 +299,12 @@ txindex=1 (builds bitcoin transaction index)
 zmqpubhashblock=tcp://0.0.0.0:29000 (no idea what any of these mean). Needed per Dojo guides
 zmqpubrawblock=tcp://0.0.0.0:29000 (existing from nodl for services)
 zmqpubrawtx=tcp://0.0.0.0:29001 (same)
+
+$ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
+# add / change:
+proxy=127.0.0.1:9050
+bind=127.0.0.1
+listenonion=1
 ```
 Let’s start “bitcoind” manually. Monitor the log file a few minutes to see if it works fine It may stop at “dnsseed thread exit”, that’s ok. Exit the logfile monitoring with Ctrl-C, check the blockchain info, if there are no errors, then stop “bitcoind” again.
 ```
@@ -337,6 +330,7 @@ Remote: PATH_TO_SSD\bitcoin\
 
 You can now copy the two subdirectories (folders) blocks and chainstate from Local to Remote. This will take about 6 hours. The transfer must not be interupted. Make sure your computer does not go to sleep.
 
+!!!ADD LINUX INSTRUCTIONS HERE!!!
 
 ## 11. [AUTOSTART BITCOIND]
 The system needs to run the bitcoin daemon automatically in the background, even when nobody is logged in. We use “systemd“, a daemon that controls the startup process using configuration files.
