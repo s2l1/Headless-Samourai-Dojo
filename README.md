@@ -470,7 +470,7 @@ We now need to check if all connections are truly routed over Tor.
 
 Verify operations in the debug.log file. You should see your onion address after about one minute.
 ```
-$ tail ~/bitcoin/.bitcoin/debug.log -f -n 200
+$ tail ~/.bitcoin/debug.log -f -n 200
 
 > InitParameterInteraction: parameter interaction: -proxy set -> setting -upnp=0
 > InitParameterInteraction: parameter interaction: -proxy set -> setting -discover=0
