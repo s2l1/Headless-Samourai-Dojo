@@ -382,12 +382,13 @@ $ tail -f ~/.bitcoin/debug.log
 $ bitcoin-cli getblockchaininfo
 $ bitcoin-cli stop
 ```
-Right at the beginning, however, we started downloading the Bitcoin mainnet blockchain on your regular computer. Check the verification progress directly in Bitcoin Core on this computer. To proceed, it should be fully synced (see status bar).
-
-As soon as the verification is finished, shut down Bitcoin Core on Windows. We will now copy the whole data structure to the ODROID. This takes about 6 hours.
 
 
 ## 10. [COPY]
+
+Right at the beginning we started downloading the Bitcoin mainnet blockchain on your regular computer. Check the verification progress directly in Bitcoin Core on this computer. To proceed, it should be fully synced (see status bar).
+
+As soon as the verification is finished, shut down Bitcoin Core on Windows. We will now copy the whole data structure to the ODROID. This takes about 6 hours.
 
 We are using “Secure Copy” (SCP), so download and install WinSCP, a free open-source program.
 
@@ -400,10 +401,12 @@ Remote: PATH_TO_SSD\bitcoin\
 ```
 You can now copy the two subdirectories (folders) named blocks and chainstate from Local to Remote. This will take about 6 hours. The transfer must not be interupted. Make sure your computer does not go to sleep.
 
+Once the data transfer is finished do not start bitcoind again. Continue to step 11.
+
 !!!ADD LINUX INSTRUCTIONS HERE!!!
 
-## 11. [AUTOSTART BITCOIND]
 
+## 11. [AUTOSTART BITCOIND]
 
 The system needs to run the bitcoin daemon automatically in the background, even when nobody is logged in. We use “systemd“, a daemon that controls the startup process using configuration files.
 
@@ -422,7 +425,7 @@ After=network.target
 [Service]
 ExecStartPre=/bin/sh -c 'sleep 30'
 ExecStart=/usr/local/bin/bitcoind -daemon -conf=~/.bitcoin/bitcoin.conf -pid=~/.bitcoin/bitcoind.pid
-PIDFile=/home/bitcoin/.bitcoin/bitcoind.pid
+PIDFile=~/.bitcoin/bitcoind.pid
 User=bitcoin
 Group=bitcoin
 Type=forking
@@ -460,11 +463,9 @@ See bitcoind in action by monitoring its log file (exit with Ctrl-C)
 
 `$ tail -f ~/.bitcoin/debug.log`
 
-When “bitcoind” is still starting, you may get an error message like “verifying blocks”. That’s normal, just give it a few minutes. Among other infos, the “verificationprogress” is shown. Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated.
+When bitcoind is still starting, you may get an error message like “verifying blocks”. That’s normal, just give it a few minutes. Among other infos, the “verificationprogress” is shown. Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated. Since `-txindex` was specified in the `bitcoin.conf` file it will take over 30 minutes for bitcoin to build the transaction index.
 
-If everything is running smoothly, this is the perfect time to familiarize yourself with Bitcoin Core, try some bitcoin-cli commands, and do some reading or videos until the blockchain is up-to-date.
-
-A great point to start is the book Mastering Bitcoin by Andreas Antonopoulos which is open source.
+If everything is running smoothly, this is the perfect time to familiarize yourself with Bitcoin Core, try some bitcoin-cli commands, and do some reading or videos until the blockchain is up-to-date. A great point to start is the book Mastering Bitcoin by Andreas Antonopoulos which is open source.
 
 ## 12. [VALIDATION]
 
@@ -483,7 +484,7 @@ $ cat ~/.bitcoin/debug.log -f -n 200
 > addlocal([YOUR_ID].onion:8333,4)
 ```
 
-Clear away the wall of text once you are done viewing.
+Clear things out once you are done viewing.
 
 `$ clear`
 
