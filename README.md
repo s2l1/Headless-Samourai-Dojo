@@ -376,7 +376,7 @@ listenonion=1
 Let’s start “bitcoind” manually. Monitor the log file a few minutes to see if it works fine It may stop at “dnsseed thread exit”, that’s ok. Exit the logfile monitoring with Ctrl-C, check the blockchain info, if there are no errors, then stop “bitcoind” again.
 ```
 $ bitcoind
-$ tail -f ~/bitcoin/.bitcoin/debug.log
+$ tail -f ~/.bitcoin/debug.log
 $ bitcoin-cli getblockchaininfo
 $ bitcoin-cli stop
 ```
