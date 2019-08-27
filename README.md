@@ -3,9 +3,23 @@
 <sub><sup>by @GuerraMoneta</sup></sub>
 
 *** WORK IN PROGRESS***
+
+# Table of Contents
 1. [HARDWARE REQUIREMENTS](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#1-hardware-requirements) 
 2. [OPERATING SYSTEM]
-!!!LINK TO CHAPTERS!!!
+3. [BLOCKCHAIN DATA]
+4. [NETWORK]
+5. [SSH]
+6. [SYSTEM SETUP]
+7. [UFW] 
+8. [TOR]
+9. [BITCOIN]
+10. [COPY]
+11. [AUTOSTART BITCOIND]
+12. [VALIDATION]
+13. [PIP]
+14. [DOCKER]
+15. [DOJO]
 
 This guide is for Samourai Dojo on a headless server. Samourai Dojo is the backing server for Samourai Wallet. It provides HD account, loose addresses (BIP47) balances, and transactions lists. Also provides unspent output lists to the wallet. PushTX endpoint broadcasts transactions through the backing bitcoind node. 
 
@@ -159,7 +173,7 @@ Optional Reading - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#mov
 ```
 
 
-## 7. [UFW] Uncomplicated Firewall.
+## 7. [UFW]
 
 Enable the Uncomplicated Firewall which controls what traffic is permitted and closes possible security holes. 
 
@@ -515,7 +529,9 @@ Try rebooting if you do not see your external SSD listed.
 `$ shutdown -r now`
 
 
-## 15. [DOJO] Download and unzip latest Dojo release.
+## 15. [DOJO] 
+
+Download and unzip latest Dojo release.
 
 ```
 $ cd ~
