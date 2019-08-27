@@ -3,7 +3,7 @@
 <sub><sup>by @GuerraMoneta</sup></sub>
 
 *** WORK IN PROGRESS***
-1. [HARDWARE REQUIREMENTS]
+1. [HARDWARE REQUIREMENTS] 
 2. [OPERATING SYSTEM]
 !!!LINK TO CHAPTERS!!!
 
