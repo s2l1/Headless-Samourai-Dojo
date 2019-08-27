@@ -172,9 +172,9 @@ Set your timezone.
 
 `$ dpkg-reconfigure tzdata`
 
-Install fail2ban.
+Install fail2ban, curl, and unzip.
 
-`$ apt-get install fail2ban curl`
+`$ apt-get install fail2ban curl unzip`
 
 Mount external hard disk. Use ext4 format NTFS will not work! See below.
 ```
