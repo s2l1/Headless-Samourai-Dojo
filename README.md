@@ -298,7 +298,6 @@ rpcuser=xxxxxxxx(username for rpc access)
 rpcpassword=xxxxxx(password for rpc access)
 rpcallowip=127.0.0.1(may not be but was there already so left)
 rpcallowip=10.0.1.2 (local ip of where Dojo is)
-rpcallowip=192.168.65.0/24 (needed this specifically with Mac as Docker container uses local IP inside)
 
 txindex=1 (builds bitcoin transaction index)
 
