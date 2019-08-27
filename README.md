@@ -231,10 +231,10 @@ Restart Tor to activate modifications.
 # 9. [BITCOIN]
 
 Now download the software directly from bitcoin.org to your ODROID, verify its signature to make sure that we use an official release, and then install it.
-``
+```
 $ mkdir ~/download
 $ cd ~/download
-``
+```
 We download the latest Bitcoin Core binaries (the application) and compare the file with the signed checksum. This is a precaution to make sure that this is an official release and not a malicious version trying to steal our money.
 
 Get the latest download links at bitcoincore.org/en/download (ARM Linux 64 Bit), they change with each update. Then run the following commands (with adjusted filenames where needed).
