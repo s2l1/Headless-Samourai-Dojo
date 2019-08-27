@@ -71,7 +71,7 @@ For now download the Bitcoin Core installer from bitcoincore.org and store it in
 
 In Windows, I’ll preface all commands you need to enter with $, so with the command $ cd bitcoin just type cd bitcoin and hit enter.
 
-Open the Windows command prompt (Win+R, enter cmd, hit Enter), navigate to the bitcoin directory (for me, it’s on drive C:, check in Windows Explorer) and create the new directory bitcoin_mainnet. Then calculate the checksum of the already downloaded program.
+Open the Windows command prompt (Start Menu and type cmd directly and hit Enter), navigate to the bitcoin directory (for me, it’s on drive C:, check in Windows Explorer) and create the new directory bitcoin_mainnet. Then calculate the checksum of the already downloaded program.
 ```
 $ cd C:\bitcoin
 $ mkdir bitcoin_mainnet
@@ -88,10 +88,11 @@ The ODROID got a new IP address from your home network. This address can change 
 The fixed address is configured in your network router, this can be the cable modem or the Wifi access point. So we first need to access the router. To find out your routers address start the Command Prompt on a computer that is connected to your home network. 
 ```
 #Windows:
-#Click on the Start Menu and type cmd directly or in the search box, and hit Enter).
+#Open Start Menu and type cmd directly and hit Enter
 $ ipconfig
 
 #Linux/Mac:
+#Open Terminal
 $ ifconfig
 
 #look for “Default Gateway” and note the address (eg. “192.168.0.1”)
@@ -271,17 +272,17 @@ Now prepare Bitcoin Core directory.
 We use the Bitcoin daemon, called “bitcoind”, that runs in the background without user interface and stores all data in a the directory ~/.bitcoin. Instead of creating a real directory, we create a link that points to a directory on the external hard disk.
 
 We add a symbolic link that points to the SSD hard disk.
-```
-$ ln -s /TYPE_DESIRED_SSD_PATH_HERE/bitcoin ~/.bitcoin
-```
+
+`$ ln -s /TYPE_DESIRED_SSD_PATH_HERE/bitcoin ~/.bitcoin`
+
 Navigate to the home directory an d check the symbolic link (the target must not be red). The content of this directory will actually be on the external hard disk.
-```
-$ ls -la
-```
+
+`$ ls -la`
+
 Now, the configuration file for bitcoind needs to be created. Open it with Nano and paste the configuration below. Save and exit.
-```
-$ nano ~/.bitcoin/bitcoin.conf
-```
+
+`$ nano ~/.bitcoin/bitcoin.conf`
+
 ```
 # bitcoind configuration
 # ~/.bitcoin/bitcoin.conf
