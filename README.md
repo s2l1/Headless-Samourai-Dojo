@@ -514,17 +514,17 @@ Open Bitcoin Dockerfile in text editor. We are going to use the "aarch64-linux-g
 
 `$ nano ~/dojo_dir/docker/my-dojo/bitcoin/Dockerfile`
 ```
-         Change line #9 to: 
+         #Change line #9 to: 
             ENV     BITCOIN_URL        https://bitcoincore.org/bin/bitcoin-core-0.18.1/bitcoin-0.18.1-aarch64-linux-gnu.tar.gz
 
-         Change line #10 to:
+         #Change line #10 to:
             ENV     BITCOIN_SHA256     88f343af72803b851c7da13874cc5525026b0b55e63e1b5e1298390c4688adc6
 ```
 Edit mysql Dockerfile to use a compatible database.
 
 `$ nano ~/dojo_dir/docker/my-dojo/mysql/Dockerfile`
 ```
-         Change line #1 to:
+         #Change line #1 to:
             FROM    mariadb:latest
 ```
 Go to the ~/dojo_dir/docker/my-dojo/conf directory.
