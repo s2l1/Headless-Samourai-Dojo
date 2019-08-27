@@ -593,7 +593,9 @@ Copy samourai-dojo-master directory contents to dojo_dir directory.
 
 Remove what will no longer be used. 
 
-`$ rm -rvf samourai-dojo-master/ bitcoin-0.18.1/master.zip SHA256SUMS.asc laanwj-releases.asc get-pip.py get-docker.sh bitcoin-0.18.1-aarch64-linux-gnu.tar.gz`
+```
+$ rm -rvf samourai-dojo-master/ bitcoin-0.18.1/master.zip SHA256SUMS.asc laanwj-releases.asc get-pip.py get-docker.sh bitcoin-0.18.1-aarch64-linux-gnu.tar.gz
+```
 
 Open Bitcoin Dockerfile in text editor. We are going to use the "aarch64-linux-gnu.tar.gz" source.
 
