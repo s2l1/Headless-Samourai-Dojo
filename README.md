@@ -99,7 +99,7 @@ We now need to set the fixed (static) IP address for the Pi. Normally, you can f
 Apply changes. 
 
 
-## 5. [SSH.] Secure Shell.
+## 5. [SSH]
 
 Take note of the of your ODROID on your local network. 
 
@@ -299,62 +299,50 @@ Now, the configuration file for bitcoind needs to be created. Open it with Nano 
 $ nano ~/.bitcoin/bitcoin.conf
 ```
 ```
-# RaspiBolt: bitcoind configuration
+# bitcoind configuration
 # ~/.bitcoin/bitcoin.conf
 
-# remove the following line to enable Bitcoin mainnet
-testnet=1
+rpcbind=127.0.0.1 (needed for other services running on nodl)
+rpcbind=10.0.1.95 (local ip of where bitcoind is)
+rpcport=8332(port used to access rpc)
+rpcuser=xxxxxxxx(username for rpc access)
+rpcpassword=xxxxxx(password for rpc access)
+rpcallowip=127.0.0.1(may not be but was there already so left)
+rpcallowip=10.0.1.2 (local ip of where Dojo is)
+rpcallowip=192.168.65.0/24 (needed this specifically with Mac as Docker container uses local IP inside)
 
-# Bitcoind options
-server=1
-daemon=1
+txindex=1 (builds bitcoin transaction index)
 
-# Connection settings
-rpcuser=XXX
-rpcpassword=XXX
-
-onlynet=ipv4
-zmqpubrawblock=tcp://127.0.0.1:28332
-zmqpubrawtx=tcp://127.0.0.1:28333
+zmqpubhashblock=tcp://0.0.0.0:29000 (no idea what any of these mean). Needed per Dojo guides
+zmqpubrawblock=tcp://0.0.0.0:29000 (existing from nodl for services)
+zmqpubrawtx=tcp://0.0.0.0:29001 (same)
 ```
-
-Start bitcoind
-Still logged in as user “bitcoin”, let’s start “bitcoind” manually. Monitor the log file a few minutes to see if it works fine (it may stop at “dnsseed thread exit”, that’s ok). Exit the logfile monitoring with Ctrl-C, check the blockchain info and, if there are no errors, stop “bitcoind” again.
+Let’s start “bitcoind” manually. Monitor the log file a few minutes to see if it works fine It may stop at “dnsseed thread exit”, that’s ok. Exit the logfile monitoring with Ctrl-C, check the blockchain info, if there are no errors, then stop “bitcoind” again.
 ```
 $ bitcoind
-$ tail -f /home/bitcoin/.bitcoin/testnet3/debug.log
+$ tail -f ~/bitcoin/.bitcoin/debug.log
 $ bitcoin-cli getblockchaininfo
 $ bitcoin-cli stop
 ```
-
-
 Right at the beginning, however, we started downloading the Bitcoin mainnet blockchain on your regular computer. Check the verification progress directly in Bitcoin Core on this computer. To proceed, it should be fully synced (see status bar).
 
 As soon as the verification is finished, shut down Bitcoin Core on Windows. We will now copy the whole data structure to the ODROID. This takes about 6 hours.
 
-Temporarily enable password login
-In order to copy the data with the user “bitcoin”, we need to temporarily enable the password login.
 
-Edit the SSH config file and put a # in front of “PasswordAuthentication no” to disable the whole line. Save and exit.
-```
-$ sudo nano /etc/ssh/sshd_config
-# PasswordAuthentication no
-```
-Restart the SSH daemon.
-`$ sudo systemctl restart ssh`
+## 10. [COPY]
 
-Copy using WinSCP
 We are using “Secure Copy” (SCP), so download and install WinSCP, a free open-source program.
 
-With WinSCP, you can now connect to your Pi with the user “bitcoin”.
+With WinSCP, you can now connect to your ODROID.
 
 Accept the server certificate and navigate to the local and remote bitcoin directories:
-Local: d:\bitcoin\bitcoin_mainnet\
+Local: C:\bitcoin\bitcoin_mainnet\
 Remote: PATH_TO_SSD\bitcoin\
 
 You can now copy the two subdirectories (folders) blocks and chainstate from Local to Remote. This will take about 6 hours. The transfer must not be interupted. Make sure your computer does not go to sleep.
 
-Autostart bitcoind
+
+## 11. [AUTOSTART BITCOIND]
 The system needs to run the bitcoin daemon automatically in the background, even when nobody is logged in. We use “systemd“, a daemon that controls the startup process using configuration files.
 
 Create the configuration file in the Nano text editor and copy the following paragraph.
@@ -401,39 +389,42 @@ Check the status of the bitcoin daemon that was started by systemd (exit with Ct
 
 `$ systemctl status bitcoind.service`
 
-See bitcoind in action by monitoring its log file (exit with Ctrl-C)
-`$ sudo tail -f /home/bitcoin/.bitcoin/testnet3/debug.log`
-
 Use the Bitcoin Core client bitcoin-cli to get information about the current blockchain
 `$ bitcoin-cli getblockchaininfo`
 
-Please note:
+See bitcoind in action by monitoring its log file (exit with Ctrl-C)
+`$ sudo tail -f ~/.bitcoin/testnet3/debug.log`
+
 When “bitcoind” is still starting, you may get an error message like “verifying blocks”. That’s normal, just give it a few minutes.
 Among other infos, the “verificationprogress” is shown. Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated.
-Explore bitcoin-cli
-If everything is running smoothly, this is the perfect time to familiarize yourself with Bitcoin Core and play around with bitcoin-cli until the blockchain is up-to-date.
 
-A great point to start is the book Mastering Bitcoin by Andreas Antonopoulos - which is open source - and in this regard especially chapter 3 (ignore the first part how to compile from source code):
+If everything is running smoothly, this is the perfect time to familiarize yourself with Bitcoin Core, try some bitcoin-cli commands, and do some reading or videos until the blockchain is up-to-date.
+
+A great point to start is the book Mastering Bitcoin by Andreas Antonopoulos which is open source.
 
 VALIDATION
-Bitcoin Core is starting and we now need to check if all connections are truly routed over Tor.
+
+We now need to check if all connections are truly routed over Tor.
 
 Verify operations in the debug.log file. You should see your onion address after about one minute.
+```
+$ tail ~/bitcoin/.bitcoin/debug.log -f -n 200
 
-$ sudo tail /home/bitcoin/.bitcoin/debug.log -f -n 200
-InitParameterInteraction: parameter interaction: -proxy set -> setting -upnp=0
-InitParameterInteraction: parameter interaction: -proxy set -> setting -discover=0
+> InitParameterInteraction: parameter interaction: -proxy set -> setting -upnp=0
+> InitParameterInteraction: parameter interaction: -proxy set -> setting -discover=0
 ...
-torcontrol thread start
+> torcontrol thread start
 ...
-tor: Got service ID [YOUR_ID] advertising service [YOUR_ID].onion:8333
-addlocal([YOUR_ID].onion:8333,4)
+> tor: Got service ID [YOUR_ID] advertising service [YOUR_ID].onion:8333
+> addlocal([YOUR_ID].onion:8333,4)
+```
 
 Display the Bitcoin network info to verify that the different network protocols are bound to proxy 127.0.0.1:9050, which is Tor on your localhost. Note the onion network is now reachable: true.
+
 $ bitcoin-cli getnetworkinfo
 
 
-## 10. [PIP] Install the Python Package Installer.
+## 12. [PIP] Install the Python Package Installer.
 
 Change to the home directory of the root user.
 ```
@@ -443,7 +434,7 @@ $ cd ~
 ```
 Tip: You will also need these libs if you wanted to install bitcoind standalone. Useful to have them in the system.
 
-Optional Reading - https://pip.pypa.io/en/stable/installing/
+`Optional Reading - https://pip.pypa.io/en/stable/installing/`
 
 To install pip, securely download get-pip.py. “Secure” in this context means using a modern browser or a tool like curl that verifies SSL certificates when downloading from https URLs.
 
@@ -454,13 +445,13 @@ Then run the following.
 `$ python get-pip.py`
 
 
-## 11. [DOCKER]
+## 13. [DOCKER]
 
 Use pip to install docker-compose.
 
 `$ python3 -m pip install --upgrade docker-compose`
 
-Optional Reading - https://docs.docker.com/compose/install/
+`Optional Reading - https://docs.docker.com/compose/install/`
 
 Now check your docker version. An old version can cause problems.
 
@@ -498,7 +489,7 @@ Try rebooting if you do not see your external SSD listed.
 `$ shutdown -r now`
 
 
-## 12. [DOJO] Download and unzip latest Dojo release.
+## 14. [DOJO] Download and unzip latest Dojo release.
 
 ```
 $ cd ~
@@ -538,8 +529,6 @@ Go to the ~/dojo_dir/docker/my-dojo/conf directory.
 
 Configure your dojo installation by editing all 3 .conf.tpl files.
 
-Edit docker-bitcoind.conf.tpl and provide a new value for the following parameters.
-
 `$ nano docker-bitcoind.conf.tpl`
 ```
 BITCOIND_RPC_USER = login protecting the access to the RPC API of your full node,
@@ -568,4 +557,4 @@ $ ./dojo.sh install
 After successful install the following command should show containers as up.
 `$ docker-compose ps`
 
-
+ADD END: SSH Key Login https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#login-with-ssh-keys
