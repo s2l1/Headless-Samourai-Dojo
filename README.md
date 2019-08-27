@@ -11,14 +11,19 @@ MyDojo is a set of Docker containers providing a full Samourai backend composed 
 * a maintenance tool accessible through a Tor web browser.
 
 This setup will be running bitcoind externally, versus leaving the default option enabled where bitcoind runs inside Dojo. I have chosen this setup which requires a little more work because it is faster than waiting for a full blockchain sync with ODROID N2. First I must say thanks to @hashamadeus @laurentmt @PuraVlda from the Dojo Telegram chat. Also thank you to @stadicus and Burcak Baskan for the Raspibolt guide and the Dojo Pi4 guide. This is a compiled trial and error effort of myself trying to chop together guides, and a lot of help from the Dojo chat. 
-
+```
+Dojo Docs - https://github.com/Samourai-Wallet/samourai-dojo/blob/master/doc/DOCKER_setup.md#first-time-setup
+Advanced Setups - https://github.com/Samourai-Wallet/samourai-dojo/blob/master/doc/DOCKER_advanced_setups.md
+Raspibolt - https://stadicus.github.io/RaspiBolt/
+Pi 4 Dojo Guide - https://burcak-baskan.gitbook.io/workspace/
+```
 **NEWBIE TIPS:** Each command has $ before it, and the outputs of the command are marked > to avoid confusion. # is a comment. Do not enter these as part of a command. If you are not sure about commands, stuck, learning, etc. try visiting the information links and doing the Optional Reading. Look up terms that you do not know. The Dojo Telegram chat is also very active and helpful. I am trying my best to educate anyone new throughout this guide.
 
 ## 1. [HARDWARE REQUIREMENT] ODROID N2:
 - https://forum.odroid.com/viewtopic.php?f=176&t=33781
 I am using this with a 500gb Samsung Portable SSD + USB3.0 and SD card. I reccommend quality SD card. I am also using hardline internet connection. You will also need a Windows / Linux / Mac with decent specs that is on the same network as the ODROID. Before this I have tried to get running on a Pi3b+ but had a problem. Hypothesis for problem "nodejs can communicate with bitcoind but it doesn't get a response fast enough." If you get Dojo running on Pi3b+ please contact or post a guide.
 
-**2. [OPERATING SYSTEM] Debian Stretch for ODROID N2:**
+## 2. [OPERATING SYSTEM] Debian Stretch for ODROID N2:
 - https://forum.odroid.com/viewtopic.php?f=179&t=33865
 By meveric » Tue Feb 19, 2019 8:29 AM:
 This is the first version of my Debian Stretch image for the ODROID N2. It is uses the 4.9 LTS Kernel from Hardkernel. It's a headless server image only with user root. It has all my repositories included, which allows for easy installation and updates of packages such as Kernel and Headers and other packages. The image has my usual setup: means on first boot it's resizing the rootfs partition and configures SSH. It will automatically reboot after the initial setup after which this image is ready to use. Kernel and headers are already installed if you need to build your own drivers. A few basic tools such as htop, mc, vim and bash-completion are already installed.
@@ -49,7 +54,7 @@ https://www.lifewire.com/validate-md5-checksum-file-4037391
 ```
 It's ready to be used as a server image. Flash the image on to an SD card and boot up. Give the ODROID some time. As mentioned by meveric above "it will automatically reboot" then it is ready for use.
 
-**3. [BLOCKCHAIN DATA]**
+## 3. [BLOCKCHAIN DATA]
 
 The Bitcoin blockchain records all transactions and basically defines who owns how many bitcoin. This is the most crucial of all information and we should not rely on someone else to provide this data. To set up our Bitcoin Full Node on mainnet, we need to download the whole blockchain (~ 250 GB), verify every Bitcoin transaction that ever occurred, every block ever mined, create an index database for all transactions, so that we can query it later on, calculate all bitcoin address balances (called the UTXO set). Look up Running a Full Node for additional information.
 
@@ -72,7 +77,7 @@ $ dir
 $ certutil -hashfile bitcoin-0.17.0.1-win64-setup.exe sha256
 a624de6c915871fed12cbe829d54474e3c8a1503b6d703ba168d32d3dd8ac0d3
 ```
-**4. [DHCP LEASE]**
+## 4. [DHCP LEASE]
 
 The ODROID got a new IP address from your home network. This address can change over time. To make the ODROID reachable from the internet, we assign it a fixed address.
 
@@ -88,7 +93,7 @@ We now need to set the fixed (static) IP address for the Pi. Normally, you can f
 
 Apply changes. 
 
-**5. [SSH.] Secure Shell.**
+## 5. [SSH.] Secure Shell.
 
 Take note of the of your ODROID on your local network. 
 
@@ -108,7 +113,7 @@ Now you are connected to your ODROID and can use the terminal.
 Optional Reading: https://www.raspberrypi.org/documentation/installation/installing-images/
 Optional Reading: https://www.raspberrypi.org/magpi/back-up-raspberry-pi/
 
-**6. [CONFIGURE]**
+## 6. [SYSTEM SETUP]
 
 There's constantly new development for this image and ODROIDs in general. The first thing you should do after the image is up and running is to install all updates.
 
@@ -128,16 +133,15 @@ Install fail2ban.
 
 $ apt-get install fail2ban
 
-Mount external hard disk. Use ext4 format NTFS will not work! Move the Swapfile to your SSD.
+Mount external hard disk. Use ext4 format NTFS will not work!
 
 Optional Reading - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#mounting-external-hard-disk 
 Optional Reading - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#moving-the-swap-file
 
 As mentoined before we want to be running "headless" so you will SSH in from another
-machine on your local network. We also want to harden the ODROID's defences.
-The Raspibolt guide is a great help to explain things for those who are not familiar with Linux/SSH during these steps.
+machine on your local network. We also want to harden the ODROID. The Raspibolt guide is a great help to explain things for those who are not familiar with Linux/SSH during these steps.
 
-**7. [UFW] Uncomplicated Firewall.**
+## 7. [UFW] Uncomplicated Firewall.
 
 Enable the Uncomplicated Firewall which controls what traffic is permitted and closes possible security holes. 
 
@@ -146,7 +150,7 @@ The line "ufw allow from 192.168.0.0/24…" below assumes that the IP address of
 $ apt-get install ufw
 $ ufw default deny incoming
 $ ufw default allow outgoing
-$ ufw allow from 192.168.0.0/24 to any port 22 comment 'allow SSH from local LAN'
+$ ufw allow from 192.168.0.0/24 to any port 22 comment 'SSH access restricted to local LAN'
 $ ufw enable
 $ systemctl enable ufw
 $ ufw status
@@ -157,7 +161,80 @@ Optional Reading:  Connecting to ODROID - https://stadicus.github.io/RaspiBolt/r
 Optional Reading:  Access restricted for local LAN - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#enabling-the-uncomplicated-firewall
 Optional Reading: Login with SSH keys - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#login-with-ssh-keys
 
-**8. [BITCOIN]**
+Why run Tor?
+
+Tor is mainly useful as a way to impede traffic analysis, which means analyzing your internet activity (logging you IP address on websites you’re browsing and services you’re using) to learn about you and your interests. Traffic analysis is useful for advertisement and you might want to hide this kind of information merely out of privacy concerns. But it might also be used by outright malevolent actors, criminals or governments to harm you in a lot of possible ways.
+
+Tor allows you to share data on the internet without revealing your location or identity, which can definitely be useful when running a Bitcoin node.
+
+Out of all the reasons why you should run Tor, here are the most relevant to Bitcoin:
+
+By exposing your home IP address with your node, you are literally saying the whole planet “in this home we run a node”. That’s only one short step from “in this home, we do have bitcoins”, which could potentially turn you and your loved ones into a target for thieves.
+In the eventuality of a full fledged ban and crackdown on Bitcoin owners in the country where you live, you will be an obvious target for law enforcement.
+Coupled with other privacy methods like CoinJoin you can gain more privacy for your transactions, as it eliminates the risk of someone being able to snoop on your node traffic, analyze which transactions you relay and try to figure out which UTXOs are yours, for example.
+All the above mentioned arguments are also relevant when using Lightning, as someone that sees a Lightning node running on your home IP address could easily infer that there’s a Bitcoin node at the same location.
+
+## 8. [TOR]
+
+This guide assumes that you’re running an ODROID N2 or better.
+
+Also, this guide builds on top of the RaspiBolt guide that runs with Raspbian Buster Lite. If you run a different operating system, you may need to build Tor from source and paths may vary.
+
+For additional reference, the original instructions are available on the Tor project website.
+
+Connect via SSH.
+
+Add the following two lines to sources.list to add the torproject repository.
+
+`$ sudo nano /etc/apt/sources.list`
+```
+deb https://deb.torproject.org/torproject.org stretch main
+deb-src https://deb.torproject.org/torproject.org stretch main
+```
+In order to verify the integrity of the Tor files, download and add the signing keys of the torproject using the network certificate management service (dirmngr).
+```
+$ sudo apt install dirmngr apt-transport-https
+$ curl https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | gpg --import
+$ gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | sudo apt-key add -
+```
+The latest version of Tor can now be installed. While not required, tor-arm provides a dashboard that you might find useful.
+`$ sudo apt update`
+`$ sudo apt install tor tor-arm`
+Check the version of Tor and that the service is up and running.
+```
+$ tor --version
+> Tor version 0.3.4.9 (git-074ca2e0054fded1).
+$ systemctl status tor
+```
+Modify the Tor configuration by uncommenting (removing the #) or adding the following lines.
+$ sudo nano /etc/tor/torrc
+```
+# uncomment:
+ControlPort 9051
+CookieAuthentication 1
+
+# add:
+CookieAuthFileGroupReadable 1
+```
+Restart Tor to activate modifications.
+
+`$ sudo systemctl restart tor`
+
+Setup Tor for Bitcoin Core
+CONFIGURATION
+In the “admin” user session, stop Bitcoin and LND.
+$ sudo systemctl stop lnd
+$ sudo systemctl stop bitcoind
+Open the Bitcoin configuration and add the following lines. The argument onlynet should not be specified (delete this line if present).
+`$ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf`
+```
+# add / change:
+proxy=127.0.0.1:9050
+bind=127.0.0.1
+listenonion=1
+```
+
+# 9. [BITCOIN]
 
 We will download the software directly from bitcoin.org, verify its signature to make sure that we use an official release, and then install it.
 ``
@@ -239,6 +316,34 @@ $ tail -f /home/bitcoin/.bitcoin/testnet3/debug.log
 $ bitcoin-cli getblockchaininfo
 $ bitcoin-cli stop
 ```
+
+
+Right at the beginning, however, we started downloading the Bitcoin mainnet blockchain on your regular computer. Check the verification progress directly in Bitcoin Core on this computer. To proceed, it should be fully synced (see status bar).
+
+As soon as the verification is finished, shut down Bitcoin Core on Windows. We will now copy the whole data structure to the ODROID. This takes about 6 hours.
+
+Temporarily enable password login
+In order to copy the data with the user “bitcoin”, we need to temporarily enable the password login.
+
+Edit the SSH config file and put a # in front of “PasswordAuthentication no” to disable the whole line. Save and exit.
+```
+$ sudo nano /etc/ssh/sshd_config
+# PasswordAuthentication no
+```
+Restart the SSH daemon.
+`$ sudo systemctl restart ssh`
+
+Copy using WinSCP
+We are using “Secure Copy” (SCP), so download and install WinSCP, a free open-source program.
+
+With WinSCP, you can now connect to your Pi with the user “bitcoin”.
+
+Accept the server certificate and navigate to the local and remote bitcoin directories:
+Local: d:\bitcoin\bitcoin_mainnet\
+Remote: PATH_TO_SSD\bitcoin\
+
+You can now copy the two subdirectories (folders) blocks and chainstate from Local to Remote. This will take about 6 hours. The transfer must not be interupted. Make sure your computer does not go to sleep.
+
 Autostart bitcoind
 The system needs to run the bitcoin daemon automatically in the background, even when nobody is logged in. We use “systemd“, a daemon that controls the startup process using configuration files.
 
@@ -300,114 +405,6 @@ If everything is running smoothly, this is the perfect time to familiarize yours
 
 A great point to start is the book Mastering Bitcoin by Andreas Antonopoulos - which is open source - and in this regard especially chapter 3 (ignore the first part how to compile from source code):
 
-Right at the beginning, however, we started downloading the Bitcoin mainnet blockchain on your regular computer. Check the verification progress directly in Bitcoin Core on this computer. To proceed, it should be fully synced (see status bar).
-
-As soon as the verification is finished, shut down Bitcoin Core on Windows. We will now copy the whole data structure to the ODROID. This takes about 6 hours.
-
-Temporarily enable password login
-In order to copy the data with the user “bitcoin”, we need to temporarily enable the password login.
-
-Edit the SSH config file and put a # in front of “PasswordAuthentication no” to disable the whole line. Save and exit.
-```
-$ sudo nano /etc/ssh/sshd_config
-# PasswordAuthentication no
-```
-Restart the SSH daemon.
-`$ sudo systemctl restart ssh`
-
-Copy using WinSCP
-We are using “Secure Copy” (SCP), so download and install WinSCP, a free open-source program.
-
-With WinSCP, you can now connect to your Pi with the user “bitcoin”.
-
-Accept the server certificate and navigate to the local and remote bitcoin directories:
-Local: d:\bitcoin\bitcoin_mainnet\
-Remote: PATH_TO_SSD\bitcoin\
-
-You can now copy the two subdirectories (folders) blocks and chainstate from Local to Remote. This will take about 6 hours. The transfer must not be interupted. Make sure your computer does not go to sleep.
-
-Disable password login again.
-
-As user “admin”, remove the # in front of “PasswordAuthentication no” to enable the line. Save and exit.
-`$ sudo nano /etc/ssh/sshd_config`
-PasswordAuthentication no
-
-Restart the SSH daemon.
-`$ sudo systemctl restart ssh`
-
-Why do you want to run Tor?
-Tor is mainly useful as a way to impede traffic analysis, which means analyzing your internet activity (logging you IP address on websites you’re browsing and services you’re using) to learn about you and your interests. Traffic analysis is useful for advertisement and you might want to hide this kind of information merely out of privacy concerns. But it might also be used by outright malevolent actors, criminals or governments to harm you in a lot of possible ways.
-
-Tor allows you to share data on the internet without revealing your location or identity, which can definitely be useful when running a Bitcoin node.
-
-Out of all the reasons why you should run Tor, here are the most relevant to Bitcoin:
-
-By exposing your home IP address with your node, you are literally saying the whole planet “in this home we run a node”. That’s only one short step from “in this home, we do have bitcoins”, which could potentially turn you and your loved ones into a target for thieves.
-In the eventuality of a full fledged ban and crackdown on Bitcoin owners in the country where you live, you will be an obvious target for law enforcement.
-Coupled with other privacy methods like CoinJoin you can gain more privacy for your transactions, as it eliminates the risk of someone being able to snoop on your node traffic, analyze which transactions you relay and try to figure out which UTXOs are yours, for example.
-All the above mentioned arguments are also relevant when using Lightning, as someone that sees a Lightning node running on your home IP address could easily infer that there’s a Bitcoin node at the same location.
-
-Installing Tor
-
-This guide assumes that you’re running an ODROID N2 or better.
-
-Also, this guide builds on top of the RaspiBolt guide that runs with Raspbian Buster Lite. If you run a different operating system, you may need to build Tor from source and paths may vary.
-
-For additional reference, the original instructions are available on the Tor project website.
-
-Connect to the RaspiBolt via SSH as user “admin”, as described in the main guide.
-
-Add the following two lines to sources.list to add the torproject repository.
-
-`$ sudo nano /etc/apt/sources.list`
-```
-deb https://deb.torproject.org/torproject.org stretch main
-deb-src https://deb.torproject.org/torproject.org stretch main
-```
-In order to verify the integrity of the Tor files, download and add the signing keys of the torproject using the network certificate management service (dirmngr).
-```
-$ sudo apt install dirmngr apt-transport-https
-$ curl https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | gpg --import
-$ gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | sudo apt-key add -
-```
-The latest version of Tor can now be installed. While not required, tor-arm provides a dashboard that you might find useful.
-`$ sudo apt update`
-`$ sudo apt install tor tor-arm`
-Check the version of Tor and that the service is up and running.
-```
-$ tor --version
-> Tor version 0.3.4.9 (git-074ca2e0054fded1).
-$ systemctl status tor
-```
-Modify the Tor configuration by uncommenting (removing the #) or adding the following lines.
-$ sudo nano /etc/tor/torrc
-```
-# uncomment:
-ControlPort 9051
-CookieAuthentication 1
-
-# add:
-CookieAuthFileGroupReadable 1
-```
-Restart Tor to activate modifications.
-
-`$ sudo systemctl restart tor`
-
-Setup Tor for Bitcoin Core
-CONFIGURATION
-In the “admin” user session, stop Bitcoin and LND.
-$ sudo systemctl stop lnd
-$ sudo systemctl stop bitcoind
-Open the Bitcoin configuration and add the following lines. The argument onlynet should not be specified (delete this line if present).
-`$ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf`
-```
-# add / change:
-proxy=127.0.0.1:9050
-bind=127.0.0.1
-listenonion=1
-```
-`$ sudo systemctl start bitcoind`
-
 VALIDATION
 Bitcoin Core is starting and we now need to check if all connections are truly routed over Tor.
 
@@ -425,7 +422,7 @@ addlocal([YOUR_ID].onion:8333,4)
 Display the Bitcoin network info to verify that the different network protocols are bound to proxy 127.0.0.1:9050, which is Tor on your localhost. Note the onion network is now reachable: true.
 $ bitcoin-cli getnetworkinfo
 
-**9. [PIP] Install the Python Package Installer.**
+## 9. [PIP] Install the Python Package Installer.
 
 Change to the home directory of the root user.
 ```
@@ -445,7 +442,7 @@ Then run the following.
 
 `$ python get-pip.py`
 
-5. [DOCKER]
+## 10. [DOCKER]
 
 Use pip to install docker-compose.
 
@@ -488,7 +485,7 @@ Try rebooting if you do not see your external SSD listed.
 
 `$ shutdown -r now`
 
-6. [DOJO] Download and unzip latest Dojo release.
+## 11. [DOJO] Download and unzip latest Dojo release.
 ```
 $ cd ~
 $ curl -fsSL https://github.com/Samourai-Wallet/samourai-dojo/archive/master.zip -o master.zip
@@ -557,7 +554,4 @@ $ ./dojo.sh install
 After successful install the following command should show containers as up.
 `$ docker-compose ps`
 
-Dojo Docs - https://github.com/Samourai-Wallet/samourai-dojo/blob/master/doc/DOCKER_setup.md#first-time-setup
-Advanced Setups - https://github.com/Samourai-Wallet/samourai-dojo/blob/master/doc/DOCKER_advanced_setups.md
-Raspibolt - https://stadicus.github.io/RaspiBolt/
-Pi 4 Dojo Guide - https://burcak-baskan.gitbook.io/workspace/
+
