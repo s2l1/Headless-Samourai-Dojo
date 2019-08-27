@@ -112,7 +112,7 @@ Enter the ODROID IP and password to connect.
 In Linux Terminal:
 $ ssh root@IP.OF.ODROID.HERE
 Example: root@192.168.0.5
-> Enter password:
+>Enter password:
 
 Now you are connected to your ODROID and can use the terminal. 
 ```
@@ -464,7 +464,7 @@ Now to configure docker to use the external SSD. Create a new file in text edito
 Add the following 3 lines.
 ```
 { 
-                  "data-root": "/PUT_SSD_MOUNT_POINT_HERE/docker" 
+                  "data-root": "/PATH_TO_SSD/docker" 
 } 
 ```
 Save and exit Nano text editor.
