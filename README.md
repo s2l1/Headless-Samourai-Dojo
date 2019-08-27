@@ -81,7 +81,9 @@ $ certutil -hashfile bitcoin-0.18.1-win64-setup.exe sha256
 ```
 Check this hash 3bac067... against the file SHA256SUMS.asc once you are on step #9 of this guide to verify that it is authentic.
 
-## 4. [STATIC IP]
+## 4. [NETWORK]
+
+!!!ADD PORTFORWARD 8333 FOR MAINNET!!!
 
 The ODROID got a new IP address from your home network. This address can change over time. To make the ODROID reachable from the internet, we assign it a fixed address.
 
@@ -394,7 +396,7 @@ If everything is running smoothly, this is the perfect time to familiarize yours
 
 A great point to start is the book Mastering Bitcoin by Andreas Antonopoulos which is open source.
 
-## 13. [VALIDATION]
+## 12. [VALIDATION]
 
 We now need to check if all connections are truly routed over Tor.
 
@@ -416,15 +418,15 @@ Display the Bitcoin network info to verify that the different network protocols 
 `$ bitcoin-cli getnetworkinfo`
 
 
-## 12. [PIP] 
+## 13. [PIP] 
 
 Install the Python Package Installer. Change to the home directory of the root user.
-```
-$ cd ~
+
+`$ cd ~`
 
 `$ apt-get install python3-dev libffi-dev libssl-dev build-essential`
-```
-Tip: You will also need these libs if you wanted to install bitcoind standalone. Useful to have them in the system.
+
+TIP: You will also need these libs if you wanted to install bitcoind standalone. Useful to have them in the system.
 
 `Optional Reading - https://pip.pypa.io/en/stable/installing/`
 
@@ -437,7 +439,7 @@ Then run the following.
 `$ python get-pip.py`
 
 
-## 13. [DOCKER]
+## 14. [DOCKER]
 
 Use pip to install docker-compose.
 
@@ -481,7 +483,7 @@ Try rebooting if you do not see your external SSD listed.
 `$ shutdown -r now`
 
 
-## 14. [DOJO] Download and unzip latest Dojo release.
+## 15. [DOJO] Download and unzip latest Dojo release.
 
 ```
 $ cd ~
