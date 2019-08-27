@@ -3,7 +3,7 @@
 <sub><sup>by @GuerraMoneta</sup></sub>
 
 *** WORK IN PROGRESS***
-1. [HARDWARE REQUIREMENTS] 
+1. [HARDWARE REQUIREMENTS](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#1-hardware-requirements) 
 2. [OPERATING SYSTEM]
 !!!LINK TO CHAPTERS!!!
 
