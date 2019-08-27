@@ -351,6 +351,28 @@ bind=127.0.0.1
 listenonion=1
 
 ```
+Here is an example of bitcoin.conf without comments.
+```
+rpcbind=127.0.0.1 
+rpcbind=local ip of where bitcoind is
+rpcport=8332 
+rpcuser=xxxxxxxx 
+rpcpassword=xxxxxx 
+rpcallowip=127.0.0.1 
+rpcallowip=local ip where Dojo is
+
+txindex=1 
+server=1 
+
+zmqpubrawblock=tcp://127.0.0.1:28332
+zmqpubrawtx=tcp://127.0.0.1:28333
+zmqpubhashblock=tcp://127.0.0.1:28334
+
+# tor settings
+proxy=127.0.0.1:9050
+bind=127.0.0.1
+listenonion=1
+```
 Let’s start “bitcoind” manually. Monitor the log file a few minutes to see if it works fine It may stop at “dnsseed thread exit”, that’s ok. Exit the logfile monitoring with Ctrl-C, check the blockchain info, if there are no errors, then stop “bitcoind” again.
 ```
 $ bitcoind
