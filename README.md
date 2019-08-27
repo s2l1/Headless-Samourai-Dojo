@@ -3,6 +3,9 @@
 <sub><sup>by @GuerraMoneta</sup></sub>
 
 *** WORK IN PROGRESS***
+1. [HARDWARE REQUIREMENTS]
+2. [OPERATING SYSTEM]
+!!!LINK TO CHAPTERS!!!
 
 This guide is for Samourai Dojo on a headless server. Samourai Dojo is the backing server for Samourai Wallet. It provides HD account, loose addresses (BIP47) balances, and transactions lists. Also provides unspent output lists to the wallet. PushTX endpoint broadcasts transactions through the backing bitcoind node. 
 
