@@ -12,6 +12,7 @@ MyDojo is a set of Docker containers providing a full Samourai backend composed 
 
 This setup will be running bitcoind externally, versus leaving the default option enabled where bitcoind runs inside Dojo. I have chosen this setup which requires a little more work because it is faster than waiting for a full blockchain sync with ODROID N2. First I must say thanks to @hashamadeus @laurentmt @PuraVlda from the Dojo Telegram chat. Also thank you to @stadicus and Burcak Baskan for the Raspibolt guide and the Dojo Pi4 guide. This is a compiled trial and error effort of myself trying to chop together guides, and a lot of help from the Dojo chat. 
 ```
+Sources:
 Dojo Docs - https://github.com/Samourai-Wallet/samourai-dojo/blob/master/doc/DOCKER_setup.md#first-time-setup
 Advanced Setups - https://github.com/Samourai-Wallet/samourai-dojo/blob/master/doc/DOCKER_advanced_setups.md
 Raspibolt - https://stadicus.github.io/RaspiBolt/
