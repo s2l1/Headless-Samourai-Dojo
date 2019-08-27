@@ -388,9 +388,11 @@ Check the status of the bitcoin daemon that was started by systemd (exit with Ct
 `$ systemctl status bitcoind.service`
 
 Use the Bitcoin Core client bitcoin-cli to get information about the current blockchain
+
 `$ bitcoin-cli getblockchaininfo`
 
 See bitcoind in action by monitoring its log file (exit with Ctrl-C)
+
 `$ tail -f ~/.bitcoin/debug.log`
 
 When “bitcoind” is still starting, you may get an error message like “verifying blocks”. That’s normal, just give it a few minutes. Among other infos, the “verificationprogress” is shown. Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated.
@@ -415,6 +417,7 @@ $ tail ~/bitcoin/.bitcoin/debug.log -f -n 200
 > tor: Got service ID [YOUR_ID] advertising service [YOUR_ID].onion:8333
 > addlocal([YOUR_ID].onion:8333,4)
 ```
+Use `CTRL + C` to exit logs.
 
 Display the Bitcoin network info to verify that the different network protocols are bound to proxy 127.0.0.1:9050, which is Tor on your localhost. Note the onion network is now reachable: true.
 
@@ -479,7 +482,7 @@ Restart docker to accept changes.
 Check that docker is using the SSD.
 ```
 $ sudo docker info | grep "Docker Root Dir:" 
-> "data-root": "PATH_TO_SSD/docker/"
+> "data-root": "/PATH_TO_SSD/docker/"
 ```
 Try rebooting if you do not see your external SSD listed.
 
