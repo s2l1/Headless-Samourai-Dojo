@@ -236,7 +236,7 @@ $ cd ~/download
 ``
 We download the latest Bitcoin Core binaries (the application) and compare the file with the signed checksum. This is a precaution to make sure that this is an official release and not a malicious version trying to steal our money.
 
-Get the latest download links at bitcoincore.org/en/download (ARM Linux 32 bit), they change with each update. Then run the following commands (with adjusted filenames) and check the output where indicated:
+Get the latest download links at bitcoincore.org/en/download (ARM Linux 64 Bit), they change with each update. Then run the following commands (with adjusted filenames where needed).
 ```
 # download Bitcoin Core binary
 
@@ -271,7 +271,7 @@ We use the Bitcoin daemon, called “bitcoind”, that runs in the background wi
 
 We add a symbolic link that points to the SSD hard disk.
 ```
-$ ln -s SSD_mount_path/bitcoin ~/.bitcoin
+$ ln -s /TYPE_DESIRED_SSD_PATH_HERE/bitcoin ~/.bitcoin
 ```
 Navigate to the home directory an d check the symbolic link (the target must not be red). The content of this directory will actually be on the external hard disk.
 ```
@@ -336,7 +336,7 @@ You can now copy the two subdirectories (folders) blocks and chainstate from Loc
 The system needs to run the bitcoin daemon automatically in the background, even when nobody is logged in. We use “systemd“, a daemon that controls the startup process using configuration files.
 
 Create the configuration file in the Nano text editor and copy the following paragraph.
-`$ sudo nano /etc/systemd/system/bitcoind.service`
+`$ nano /etc/systemd/system/bitcoind.service`
 
 ```
 # systemd unit for bitcoind
@@ -364,12 +364,12 @@ WantedBy=multi-user.target
 Save and exit.
 
 Enable the configuration file
-`$ sudo systemctl enable bitcoind.service`
+`$ systemctl enable bitcoind.service`
 Copy bitcoin.conf to user “admin” home directory for RPC credentials
 `$ mkdir /home/admin/.bitcoin`
 $ sudo cp /home/bitcoin/.bitcoin/bitcoin.conf /home/admin/.bitcoin/
 Restart the Raspberry Pi
-`$ sudo shutdown -r now`
+`$ shutdown -r now`
 
 After rebooting, the bitcoind should start and begin to sync and validate the Bitcoin blockchain. 
 
@@ -383,7 +383,7 @@ Use the Bitcoin Core client bitcoin-cli to get information about the current blo
 `$ bitcoin-cli getblockchaininfo`
 
 See bitcoind in action by monitoring its log file (exit with Ctrl-C)
-`$ sudo tail -f ~/.bitcoin/testnet3/debug.log`
+`$ tail -f ~/.bitcoin/debug.log`
 
 When “bitcoind” is still starting, you may get an error message like “verifying blocks”. That’s normal, just give it a few minutes.
 Among other infos, the “verificationprogress” is shown. Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated.
@@ -411,7 +411,7 @@ $ tail ~/bitcoin/.bitcoin/debug.log -f -n 200
 
 Display the Bitcoin network info to verify that the different network protocols are bound to proxy 127.0.0.1:9050, which is Tor on your localhost. Note the onion network is now reachable: true.
 
-$ bitcoin-cli getnetworkinfo
+`$ bitcoin-cli getnetworkinfo`
 
 
 ## 12. [PIP] Install the Python Package Installer.
@@ -420,7 +420,7 @@ Change to the home directory of the root user.
 ```
 $ cd ~
 
-`$ apt-get install python3-dev libffi-dev libssl-dev build-essential
+`$ apt-get install python3-dev libffi-dev libssl-dev build-essential`
 ```
 Tip: You will also need these libs if you wanted to install bitcoind standalone. Useful to have them in the system.
 
