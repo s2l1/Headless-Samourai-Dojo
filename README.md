@@ -5,11 +5,10 @@
 This guide is for Samourai Dojo on a headless server. Samourai Dojo is the backing server for Samourai Wallet. It provides HD account, loose addresses (BIP47) balances, and transactions lists. Also provides unspent output lists to the wallet. PushTX endpoint broadcasts transactions through the backing bitcoind node. 
 
 MyDojo is a set of Docker containers providing a full Samourai backend composed of:
-
-     a bitcoin full node accessible as an ephemeral Tor hidden service,
-     a backend database,
-     a backend modules with an API accessible as a static Tor hidden service,
-     a maintenance tool accessible through a Tor web browser.
+* a bitcoin full node accessible as an ephemeral Tor hidden service,
+* a backend database,
+* a backend modules with an API accessible as a static Tor hidden service,
+* a maintenance tool accessible through a Tor web browser.
 
 This setup will be running bitcoind externally, versus leaving the default option enabled where bitcoind runs inside Dojo. I have chosen this setup which requires a little more work because it is faster than waiting for a full blockchain sync with ODROID N2. First I must say thanks to @hashamadeus @laurentmt @PuraVlda from the Dojo Telegram chat. Also thank you to @stadicus and Burcak Baskan for the Raspibolt guide and the Dojo Pi4 guide. This is a compiled trial and error effort of myself trying to chop together guides, and a lot of help from the Dojo chat. 
 
