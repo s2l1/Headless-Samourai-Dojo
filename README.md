@@ -5,7 +5,7 @@
 *** WORK IN PROGRESS***
 
 # Table of Contents
-* [**HARDWARE REQUIREMENTS](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#1-hardware-requirements) 
+* [**HARDWARE REQUIREMENTS**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#1-hardware-requirements) 
 * [OPERATING SYSTEM](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#2-operating-system)
 * [BLOCKCHAIN DATA](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#3-blockchain-data)
 * [NETWORK](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#4-network)
