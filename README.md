@@ -534,7 +534,6 @@ $ sudo sh get-docker.sh
 
 $ python3 -m pip install --upgrade docker-compose`
 # Let the install finish
-
 ```
 
 `Optional Reading - https://docs.docker.com/compose/install/`
