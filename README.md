@@ -206,6 +206,7 @@ $ gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | sudo apt-key add -
 The latest version of Tor can now be installed. While not required, tor-arm provides a dashboard that you might find useful.
 `$ apt update`
 `$ apt install tor tor-arm`
+
 Check the version of Tor and that the service is up and running.
 ```
 $ tor --version
