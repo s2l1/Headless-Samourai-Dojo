@@ -517,16 +517,22 @@ Then run the following.
 ## 14. [DOCKER]
 
 Use pip to install docker-compose, apt-get can install an old version. Better to use the docker-compose install instructions which you can look at in Optional Reading. I will walk you through the pip install approach, there are a few ways to install the latest version.
+```
+$ python3 -m pip install --upgrade docker-compose`
+# Let the install finish
 
-`$ python3 -m pip install --upgrade docker-compose`
+$ curl -fsSL https://get.docker.com -o get-docker.sh
+$ sudo sh get-docker.sh
+# Let the install finish
+```
 
 `Optional Reading - https://docs.docker.com/compose/install/`
 
-Now check your docker version. An old version can cause problems.
+Now check your docker version. An old version can cause problems. Version 19.03.1 of docker is current as of Aug, 27 2019.
 
 `$ docker -v`
 
-Take a look at what PIP has installed on your system.
+Take a look at what PIP has installed on your system. Version 1.24.1 of docker-compose is current as of Aug, 27 2019.
 
 `$ python3 -m pip list`
 
