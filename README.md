@@ -337,6 +337,7 @@ You can now copy the two subdirectories (folders) blocks and chainstate from Loc
 The system needs to run the bitcoin daemon automatically in the background, even when nobody is logged in. We use “systemd“, a daemon that controls the startup process using configuration files.
 
 Create the configuration file in the Nano text editor and copy the following paragraph.
+
 `$ nano /etc/systemd/system/bitcoind.service`
 
 ```
