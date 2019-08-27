@@ -221,7 +221,9 @@ $ tor --version
 $ systemctl status tor
 ```
 Modify the Tor configuration by uncommenting (removing the #) or adding the following lines.
+
 `$ nano /etc/tor/torrc`
+
 ```
 # uncomment:
 ControlPort 9051
