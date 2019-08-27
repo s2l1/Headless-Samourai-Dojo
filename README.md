@@ -573,4 +573,14 @@ After successful install the following command should show containers as up.
 
 `./dojo.sh logs tor`
 
+Docker and Docker Compose are going to build the images and containers of your Dojo. This operation will take a few minutes (download and setup of all required software components). After completion, your Dojo will be launched and will begin the initialization of the full node (Bitcoin Initial Block Download and syncing of the database). This step will take several hours/days according to the specs of your machine. Be patient. Use CTRL+C to stop the display of the full logs.
+
+Monitor the progress made for the initialization of the database with this command displaying the logs of the tracker
+./dojo.sh logs tracker
+Exit the logs with CTRL+C when the syncing of the database has completed.
+
+Retrieve the Tor onion addresses (v2 and v3) of the API of your Dojo
+./dojo.sh onion
+Restrict the access to your host machine as much as possible by configuring its firewall.
+
 ADD END: SSH Key Login https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#login-with-ssh-keys
