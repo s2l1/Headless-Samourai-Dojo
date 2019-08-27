@@ -371,11 +371,11 @@ WantedBy=multi-user.target
 ```
 Save and exit.
 
-Enable the configuration file
+Enable the configuration file.
 
 `$ systemctl enable bitcoind.service`
 
-Restart the Raspberry Pi
+Restart the ODROID
 
 `$ shutdown -r now`
 
@@ -417,7 +417,7 @@ $ tail ~/bitcoin/.bitcoin/debug.log -f -n 200
 > tor: Got service ID [YOUR_ID] advertising service [YOUR_ID].onion:8333
 > addlocal([YOUR_ID].onion:8333,4)
 ```
-Use `CTRL + C` to exit logs.
+Use CTRL + C to exit logs.
 
 Display the Bitcoin network info to verify that the different network protocols are bound to proxy 127.0.0.1:9050, which is Tor on your localhost. Note the onion network is now reachable: true.
 
