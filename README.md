@@ -33,11 +33,11 @@ This setup will be running bitcoind externally, versus leaving the default optio
 * [**TOR**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#8-tor)
 * [**BITCOIN**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#9-bitcoin)
 * [**COPY**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#10-copy)
-* [**AUTOSTART BITCOIND**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#11-autostart-bitcoind)
-* [**VALIDATION**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#12-validation)
-* [**PIP**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#13-pip)
-* [**DOCKER**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#14-docker)
-* [**DOJO**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#15-dojo)
+* [**VALIDATION**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#11-validation)
+* [**PIP**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#12-pip)
+* [**DOCKER**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#13-docker)
+* [**DOJO**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#14-dojo)
+* [**AUTOSTART BITCOIND**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#15-autostart-bitcoind)
 
 ```
 Sources:
