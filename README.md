@@ -136,7 +136,7 @@ Apply changes.
 
 Next, “Port Forwarding” needs to be configured. Different applications use different network ports, and the router needs to know to which internal network device the traffic of a specific port has to be directed. The port forwarding needs to be set up as follows:
 
-|  Application name |  External port | Internal port | IP address	Protocol (TCP or UDP) |   |
+| Application name | External port | Internal port | IP address	Protocol | TCP or UDP |
 |---|---|---|---|---|
 | bitcoin | 8333 | 8333 | 192.168.0.20 | BOTH |
 
