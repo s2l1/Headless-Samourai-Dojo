@@ -389,14 +389,19 @@ bind=127.0.0.1
 listenonion=1
 
 ```
-Let’s start “bitcoind” manually. Monitor the log file a few minutes to see if it works fine It may stop at “dnsseed thread exit”, that’s ok. Exit the logfile monitoring with Ctrl-C, check the blockchain info, if there are no errors, then stop “bitcoind” again.
+Let’s start “bitcoind” manually. Monitor the log file a while to see if it works fine. Exit the logfile monitoring with Ctrl-C, check the blockchain info. 
 ```
 $ bitcoind
 $ tail -f ~/.bitcoin/debug.log
 $ bitcoin-cli getblockchaininfo
-$ bitcoin-cli stop
 ```
+When bitcoind is still starting, you may get an error message like “verifying blocks”. That’s normal, just give it a few minutes. Among other infos, the “verificationprogress” is shown. Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated. Since `-txindex` was specified in the `bitcoin.conf` file it will take over 45 minutes for bitcoin to build the transaction index.
 
+If everything is running smoothly, this is the perfect time to familiarize yourself with Bitcoin Core, try some bitcoin-cli commands, and do some reading or videos until the blockchain is up-to-date. A great point to start is the book Mastering Bitcoin by Andreas Antonopoulos which is open source. Now is also a great time to backup your system.
+
+Once you are sync'd up.
+
+`$ bitcoin-cli stop`
 
 ## 10. [COPY]
 
@@ -418,13 +423,6 @@ You can now copy the two subdirectories (folders) named blocks and chainstate fr
 Once the data transfer is finished do not start bitcoind again. Continue to step 11.
 
 !!!ADD LINUX INSTRUCTIONS HERE!!!
-
-
-
-
-When bitcoind is still starting, you may get an error message like “verifying blocks”. That’s normal, just give it a few minutes. Among other infos, the “verificationprogress” is shown. Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated. Since `-txindex` was specified in the `bitcoin.conf` file it will take over 30 minutes for bitcoin to build the transaction index.
-
-If everything is running smoothly, this is the perfect time to familiarize yourself with Bitcoin Core, try some bitcoin-cli commands, and do some reading or videos until the blockchain is up-to-date. A great point to start is the book Mastering Bitcoin by Andreas Antonopoulos which is open source.
 
 ## 11. [VALIDATION]
 
@@ -475,7 +473,6 @@ Then run the following.
 
 ## 13. [DOCKER]
 
-!!!TEST THIS ON FRESH MINIMAL SETUP!!!
 Use pip to install docker-compose, apt-get can install an old version. Better to use the docker-compose install instructions which you can look at in Optional Reading. I will walk you through the pip install approach, there are a few ways to install the latest version.
 
 ```
@@ -496,6 +493,7 @@ Use pip to install docker-compose, apt-get can install an old version. Better to
 
 `Optional Reading - https://docs.docker.com/compose/install/`
 
+!!!TEST THIS ON FRESH MINIMAL SETUP!!!
 Now check your docker version. An old version can cause problems. Version 19.03.1 of docker is current as of Aug, 27 2019.
 
 `$ docker -v`
