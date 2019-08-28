@@ -132,7 +132,7 @@ We now need to set the fixed (static) IP address for the ODROID. Normally, you c
 
 Apply changes. 
 
-Next, “Port Forwarding” needs to be configured. Different applications use different network ports, and the router needs to know to which internal network device the traffic of a specific port has to be directed. The port forwarding needs to be set up as follows:
+Next, “Port Forwarding” needs to be configured. Different applications use different network ports, and the router needs to know to which internal network device the traffic of a specific port has to be directed. The port forwarding needs to be set up as follows.
 
 | Application name | External port | Internal port | IP address	Protocol | TCP or UDP |
 |---|---|---|---|---|
