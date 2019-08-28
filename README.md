@@ -414,68 +414,13 @@ Once the data transfer is finished do not start bitcoind again. Continue to step
 !!!ADD LINUX INSTRUCTIONS HERE!!!
 
 
-## 11. [AUTOSTART BITCOIND]
 
-The system needs to run the bitcoin daemon automatically in the background, even when nobody is logged in. We use “systemd“, a daemon that controls the startup process using configuration files.
-
-Create the configuration file in the Nano text editor and copy the following paragraph.
-
-`$ nano /etc/systemd/system/bitcoind.service`
-
-```
-# systemd unit for bitcoind
-# /etc/systemd/system/bitcoind.service
-
-[Unit]
-Description=Bitcoin daemon
-After=network.target
-
-[Service]
-ExecStartPre=/bin/sh -c 'sleep 30'
-ExecStart=/usr/local/bin/bitcoind -daemon -conf=~/.bitcoin/bitcoin.conf -pid=~/.bitcoin/bitcoind.pid
-PIDFile=~/.bitcoin/bitcoind.pid
-User=bitcoin
-Group=bitcoin
-Type=forking
-KillMode=process
-Restart=always
-TimeoutSec=120
-RestartSec=30
-
-[Install]
-WantedBy=multi-user.target
-```
-Save and exit.
-
-Enable the configuration file.
-
-`$ systemctl enable bitcoind.service`
-
-Restart the ODROID
-
-`$ shutdown -r now`
-
-After rebooting, the bitcoind should start and begin to sync and validate the Bitcoin blockchain. 
-
-Wait a bit, reconnect via SSH.
-
-Check the status of the bitcoin daemon that was started by systemd (exit with Ctrl-C).
-
-`$ systemctl status bitcoind.service`
-
-Use the Bitcoin Core client bitcoin-cli to get information about the current blockchain
-
-`$ bitcoin-cli getblockchaininfo`
-
-See bitcoind in action by monitoring its log file (exit with Ctrl-C)
-
-`$ tail -f ~/.bitcoin/debug.log`
 
 When bitcoind is still starting, you may get an error message like “verifying blocks”. That’s normal, just give it a few minutes. Among other infos, the “verificationprogress” is shown. Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated. Since `-txindex` was specified in the `bitcoin.conf` file it will take over 30 minutes for bitcoin to build the transaction index.
 
 If everything is running smoothly, this is the perfect time to familiarize yourself with Bitcoin Core, try some bitcoin-cli commands, and do some reading or videos until the blockchain is up-to-date. A great point to start is the book Mastering Bitcoin by Andreas Antonopoulos which is open source.
 
-## 12. [VALIDATION]
+## 11. [VALIDATION]
 
 We now need to check if all connections are truly routed over Tor.
 
@@ -501,7 +446,7 @@ Display the Bitcoin network info to verify that the different network protocols 
 `$ bitcoin-cli getnetworkinfo`
 
 
-## 13. [PIP] 
+## 12. [PIP] 
 
 Install the Python Package Installer. Change to the home directory of the root user.
 
@@ -522,7 +467,7 @@ Then run the following.
 `$ python3 get-pip.py`
 
 
-## 14. [DOCKER]
+## 13. [DOCKER]
 
 !!!TEST THIS ON FRESH MINIMAL SETUP!!!
 Use pip to install docker-compose, apt-get can install an old version. Better to use the docker-compose install instructions which you can look at in Optional Reading. I will walk you through the pip install approach, there are a few ways to install the latest version.
@@ -574,7 +519,7 @@ Try rebooting if you do not see your external SSD listed.
 `$ shutdown -r now`
 
 
-## 15. [DOJO] 
+## 14. [DOJO] 
 
 Download and unzip latest Dojo release.
 
@@ -649,7 +594,17 @@ NODE_API_KEY = API key which will be required from your Samourai Wallet / Sentin
 NODE_ADMIN_KEY = API key which will be required from the maintenance tool for accessing a set of advanced features provided by the API of your Dojo,
 NODE_JWT_SECRET = secret used by your Dojo for the initialization of a cryptographic key signing Json Web Tokens. These parameters will protect the access to your Dojo. Be sure to provide alphanumeric values with enough entropy.
 ```
-Open the docker quickstart terminal or a terminal console and go to the ~/dojo_dir/docker/my-dojo directory. This directory contains a script named dojo.sh which will be your entrypoint for all operations related to the management of your Dojo.
+Open the docker quickstart terminal or a terminal console and go to the my-dojo/ directory.
+
+`$ ~/dojo_dir/docker/my-dojo`
+
+This directory contains a script named dojo.sh which will be your entrypoint for all operations related to the management of your Dojo.
+
+Docker and Docker Compose are going to build the images and containers of your Dojo. This operation will take a few minutes (download and setup of all required software components). After completion, your Dojo will be launched and will be ready for connection to your "external" bitcoin full node on your ODROID. 
+
+Monitor the progress made for the initialization of the database with this command displaying the logs of the tracker
+./dojo.sh logs tracker
+
 ```
 $ cd ~/dojo_dir/docker/my-dojo
 $ ./dojo.sh install
@@ -658,14 +613,18 @@ After successful install the following command should show containers as up.
 
 `$ docker-compose ps`
 
-`./dojo.sh logs bitcoind`
+Remember that bitcoind is running externally.
+
+```
+$ ./dojo.sh logs bitcoind
+> Command not supported for your setup.
+> Cause: Your Dojo is using an external bitcoind
+```
+Did Tor bootstrap 100%?
 
 `./dojo.sh logs tor`
 
-Docker and Docker Compose are going to build the images and containers of your Dojo. This operation will take a few minutes (download and setup of all required software components). After completion, your Dojo will be launched and will begin the initialization of the full node (Bitcoin Initial Block Download and syncing of the database). This step will take several hours/days according to the specs of your machine. Be patient. Use CTRL+C to stop the display of the full logs.
 
-Monitor the progress made for the initialization of the database with this command displaying the logs of the tracker
-./dojo.sh logs tracker
 Exit the logs with CTRL+C when the syncing of the database has completed.
 
 Retrieve the Tor onion addresses (v2 and v3) of the API of your Dojo
@@ -673,3 +632,60 @@ Retrieve the Tor onion addresses (v2 and v3) of the API of your Dojo
 Restrict the access to your host machine as much as possible by configuring its firewall.
 
 ADD END: SSH Key Login https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#login-with-ssh-keys
+
+## 15. [AUTOSTART BITCOIND]
+
+The system needs to run the bitcoin daemon automatically in the background, even when nobody is logged in. We use “systemd“, a daemon that controls the startup process using configuration files.
+
+Create the configuration file in the Nano text editor and copy the following paragraph.
+
+`$ nano /etc/systemd/system/bitcoind.service`
+
+```
+# systemd unit for bitcoind
+# /etc/systemd/system/bitcoind.service
+
+[Unit]
+Description=Bitcoin daemon
+After=network.target
+
+[Service]
+ExecStartPre=/bin/sh -c 'sleep 30'
+ExecStart=/usr/local/bin/bitcoind -daemon -conf=~/.bitcoin/bitcoin.conf -pid=~/.bitcoin/bitcoind.pid
+PIDFile=~/.bitcoin/bitcoind.pid
+User=bitcoin
+Group=bitcoin
+Type=forking
+KillMode=process
+Restart=always
+TimeoutSec=120
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
+```
+Save and exit.
+
+Enable the configuration file.
+
+`$ systemctl enable bitcoind.service`
+
+Restart the ODROID
+
+`$ shutdown -r now`
+
+After rebooting, the bitcoind should start and begin to sync and validate the Bitcoin blockchain. 
+
+Wait a bit, reconnect via SSH.
+
+Check the status of the bitcoin daemon that was started by systemd (exit with Ctrl-C).
+
+`$ systemctl status bitcoind.service`
+
+Use the Bitcoin Core client bitcoin-cli to get information about the current blockchain
+
+`$ bitcoin-cli getblockchaininfo`
+
+See bitcoind in action by monitoring its log file (exit with Ctrl-C)
+
+`$ tail -f ~/.bitcoin/debug.log`
