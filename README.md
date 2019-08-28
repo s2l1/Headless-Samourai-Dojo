@@ -138,14 +138,9 @@ Next, “Port Forwarding” needs to be configured. Different applications use d
 
 |  Application name |  External port | Internal port | IP address	Protocol (TCP or UDP) |   |
 |---|---|---|---|---|
-|   |   |   |   |   |
-|   |   |   |   |   |
-|   |   |   |   |   |
+| bitcoin | 8333 | 8333 | 192.168.0.20 | BOTH |
 
-Application name	External port	Internal port	Internal IP address	Protocol (TCP or UDP)
-bitcoin	8333	8333	192.168.0.20	BOTH
-bitcoin test	18333	18333	192.168.0.20	BOTH
-:point_right: additional information: setting up port forwarding.
+If you have not changed your router login password from the default, please do so now. Apply and log out of your router. 
 
 ## 5. [SSH]
 
