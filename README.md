@@ -337,6 +337,8 @@ rpcbind=192.168.0.70
 # local ip of your ODROID
 
 rpcbind=172.28.0.1
+# dojo docker network
+# https://github.com/Samourai-Wallet/samourai-dojo/blob/develop/docker/my-dojo/docker-compose.yaml#L92
 
 rpcport=8332 
 # port used to access rpc
@@ -401,7 +403,7 @@ $ bitcoind
 $ tail -f ~/.bitcoin/debug.log
 $ bitcoin-cli getblockchaininfo
 ```
-When bitcoind is still starting, you may get an error message like “verifying blocks”. That’s normal, just give it a few minutes. Among other infos, the “verificationprogress” is shown. Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated. Since `-txindex` was specified in the `bitcoin.conf` file it will take over 45 minutes for bitcoin to build the transaction index.
+When bitcoind is still starting, you may get an error message like “verifying blocks”. That’s normal, just give it a few minutes. Among other infos, the “verificationprogress” is shown. Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated. Since `-txindex` was specified in the `bitcoin.conf` file it will take an hour or more for bitcoin to build the transaction index.
 
 If everything is running smoothly, this is the perfect time to familiarize yourself with Bitcoin Core, try some bitcoin-cli commands, and do some reading or videos until the blockchain is up-to-date. A great point to start is the book Mastering Bitcoin by Andreas Antonopoulos which is open source. Now is also a great time to backup your system.
 
@@ -536,6 +538,8 @@ Try rebooting if you do not see your external SSD listed.
 
 ## 14. [DOJO] 
 
+Please verify bitcoind is not running.
+
 Download and unzip latest Dojo release.
 
 ```
@@ -587,7 +591,7 @@ BITCOIND_RPC_PASSWORD = password protecting the access to the RPC API of your fu
 If your machine has a lot of RAM, it's recommended that you increase the value of BITCOIND_DB_CACHE for a faster Initial Block Download. This file also provides a few additional settings for advanced setups like static onion address for your full node, bitcoind RPC API exposed to external apps, use of an external full node.
 #
 # Set the value of BITCOIND_INSTALL to "off"
-# Set the value of BITCOIND_IP with the IP address of you bitcoin full node
+# Set the value of BITCOIND_IP with the IP address of you bitcoin full node which is 172.28.0.1
 # Set the value of BITCOIND_RPC_PORT with the port used by your bitcoin full node for the RPC API (8332 default)
 # Set the value of BITCOIND_ZMQ_RAWTXS with the port used by your bitcoin full node for ZMQ notifications of raw transactions
 #   (i.e. port defined for -zmqpubrawtx in the bitcoin.conf of your full node)
@@ -617,30 +621,37 @@ This directory contains a script named dojo.sh which will be your entrypoint for
 
 Docker and Docker Compose are going to build the images and containers of your Dojo. This operation will take a few minutes (download and setup of all required software components). After completion, your Dojo will be launched and will be ready for connection to your "external" bitcoin full node on your ODROID. 
 
-Monitor the progress made for the initialization of the database with this command displaying the logs of the tracker
-./dojo.sh logs tracker
+
 
 ```
 $ cd ~/dojo_dir/docker/my-dojo
 $ ./dojo.sh install
 ```
-After successful install the following command should show containers as up.
+After successful install, exit the logs with CTRL+C, and start bitcoind.
+
+`$ bitcoind`
+
+**PLEASE NOTE TO START DOJO BEFORE BITCOIND EVERY TIME** otherwise the docker network is not created by dojo for bitcoind to bind to so it is ignored.
+
+Check that all containers are up.
 
 `$ docker-compose ps`
 
-Remember that bitcoind is running externally.
+Monitor the progress made for the initialization of the database with this command. It is scanning your external bitcoind node. This will take about an hour to complete.
+./dojo.sh logs tracker
 
+Remember that bitcoind is running externally.
 ```
 $ ./dojo.sh logs bitcoind
 > Command not supported for your setup.
 > Cause: Your Dojo is using an external bitcoind
 ```
 Did Tor bootstrap 100%?
-
 `./dojo.sh logs tor`
 
 
-Exit the logs with CTRL+C when the syncing of the database has completed.
+
+ when the syncing of the database has completed.
 
 Retrieve the Tor onion addresses (v2 and v3) of the API of your Dojo
 ./dojo.sh onion
