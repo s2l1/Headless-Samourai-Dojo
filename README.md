@@ -190,6 +190,7 @@ Optional Reading - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#mov
 
 ## 7. [UFW]
 !!!LOCK DOWN DOJO -> BITCOIND FIREWALL RULE RESTRICT TO PORT 8332!!!
+
 Enable the Uncomplicated Firewall which controls what traffic is permitted and closes possible security holes. 
 
 The line "ufw allow from 192.168.0.0/24…" below assumes that the IP address of your ODROID is something like 192.168.0.???, the ??? being any number from 0 to 255. If your IP address is 12.34.56.78, you must adapt this line to "ufw allow from 12.34.56.0/24…"
