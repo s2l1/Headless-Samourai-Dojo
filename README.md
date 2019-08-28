@@ -92,7 +92,7 @@ The Bitcoin blockchain records all transactions and basically defines who owns h
 
 The ODROID is up to the big task of downloading the blockchain so you may wonder why we are downloading on a faster machine, and copying over the data. The download is not the problem, but to initially process the whole blockchain would take a long time due to its computing power and memory. We need to download and verify the blockchain with Bitcoin Core on your regular computer, and then transfer the data to the ODROID. This needs to be done only once. After that the ODROID can easily keep up with new blocks.
 
-This guide assumes that you will use a Windows machine for this task, but it works with most operating systems. You need to have about 250 GB free disk space available, internally or on an external hard disk (but not the SSD reserved for the ODROID). As indexing creates heavy read/write traffic, the faster your hard disk the better. 
+This step of the guide assumes that you will use a Windows machine, but it works with most operating systems. You need to have about 250 GB free disk space available, internally or on an external hard disk (but not the SSD reserved for the ODROID). As indexing creates heavy read/write traffic, the faster your hard disk the better. If you are using linux as a main machine I will assume that you are comfortable lookup up how to download Bitcoin Core.
 
 Using SCP, we will copy the blockchain from the Windows computer over the local network later in this guide.
 
@@ -100,15 +100,18 @@ For now download the Bitcoin Core installer from bitcoincore.org and store it in
 
 In Windows, I’ll preface all commands you need to enter with $, so with the command $ cd bitcoin just type cd bitcoin and hit enter.
 
-Open the Windows command prompt (Start Menu and type cmd directly and hit Enter), navigate to the bitcoin directory (for me, it’s on drive C:, check in Windows Explorer) and create the new directory bitcoin_mainnet. Then calculate the checksum of the already downloaded program.
+Open the Windows command prompt (Start Menu and type cmd directly and hit Enter), navigate to the directory where you downloaded bitcoin setup.exe file. For me, it’s `C:\Users\USERNAME\Desktop` but you can double check in Windows Explorer. Then use certutil calculate the checksum of the already downloaded program.
 ```
-$ cd C:\bitcoin
+$ cd C:\Users\USERNAME\Desktop
 $ mkdir bitcoin_mainnet
 $ dir
 $ certutil -hashfile bitcoin-0.18.1-win64-setup.exe sha256
 >3bac0674c0786689167be2b9f35d2d6e91d5477dee11de753fe3b6e22b93d47c
 ```
-Check this hash 3bac067... against the file SHA256SUMS.asc once you are on step #9 of this guide to verify that it is authentic.
+Save and later on check this hash 3bac067... against the file SHA256SUMS.asc once you are on step #9 of this guide to verify that it is authentic.
+
+Open Bitcoin Core and leave it to sync.
+
 
 ## 4. [NETWORK]
 
@@ -295,7 +298,7 @@ Ignore the "lines are improperly formatted" warning.
 $ sha256sum --check SHA256SUMS.asc --ignore-missing
 > bitcoin-0.18.1-aarch64-linux-gnu.tar.gz: OK
 ```
-Import the public key of Wladimir van der Laan, verify the signed  checksum file.  Check the fingerprint again in case of malicious keys.
+Import the public key of Wladimir van der Laan, which is the key used to sign each release, and verify the signed checksum file. Check the fingerprint again in case of malicious keys.
 ```
 $ gpg --import ./laanwj-releases.asc
 $ gpg --refresh-keys
@@ -303,7 +306,7 @@ $ gpg --verify SHA256SUMS.asc
 > gpg: Good signature from "Wladimir J. van der Laan ..."
 > Primary key fingerprint: 01EA 5486 DE18 A882 D4C2 6845 90C8 019E 36C2 E964
 ```
-Now we know that the keys from bitcoin.org are valid. Extract the Bitcoin Core binaries, install them and check the version.
+Now we know that what we have downloaded from bitcoin.org is authentic. Extract the Bitcoin Core binaries, install them and check the version.
 ```
 tar -xvf bitcoin-0.18.1-aarch64-linux-gnu.tar.gz
 $ install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.18.1/bin/*
@@ -404,6 +407,13 @@ $ tail -f ~/.bitcoin/debug.log
 $ bitcoin-cli getblockchaininfo
 ```
 When bitcoind is still starting, you may get an error message like “verifying blocks”. That’s normal, just give it a few minutes. Among other infos, the “verificationprogress” is shown. Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated. Since `-txindex` was specified in the `bitcoin.conf` file it will take an hour or more for bitcoin to build the transaction index.
+
+Let's take a step back and check on your other computer that is syncing Bitcoind Core. During the 3rd step of this guide you saved a hash that looks like the following. 
+
+`> 3bac0674c0786689167be2b9f35d2d6e91d5477dee11de753fe3b6e22b93d47c`
+
+Let's check that this hash is indeed authentic by taking 
+
 
 If everything is running smoothly, this is the perfect time to familiarize yourself with Bitcoin Core, try some bitcoin-cli commands, and do some reading or videos until the blockchain is up-to-date. A great point to start is the book Mastering Bitcoin by Andreas Antonopoulos which is open source. Now is also a great time to backup your system.
 
