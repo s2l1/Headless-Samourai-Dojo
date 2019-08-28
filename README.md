@@ -413,6 +413,7 @@ Once you are sync'd up.
 
 ## 10. [COPY]
 !!!ADD LINUX INSTRUCTIONS HERE!!!
+
 Right at the beginning we started downloading the Bitcoin mainnet blockchain on your regular computer. Check the verification progress directly in Bitcoin Core on this computer. To proceed, it should be fully synced (see status bar).
 
 As soon as the verification is finished, shut down Bitcoin Core on Windows. We will now copy the whole data structure to the ODROID. This takes about 6 hours.
@@ -662,6 +663,7 @@ ADD END: SSH Key Login https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html
 
 ## 15. [AUTOSTART BITCOIND]
 !!!RETHINK SECTION AS DOJO MUST START PRIOR TO BITCOIND!!!
+
 The system needs to run the bitcoin daemon automatically in the background, even when nobody is logged in. We use “systemd“, a daemon that controls the startup process using configuration files.
 
 Create the configuration file in the Nano text editor and copy the following paragraph.
