@@ -592,6 +592,7 @@ If your machine has a lot of RAM, it's recommended that you increase the value o
 #
 # Set the value of BITCOIND_INSTALL to "off"
 # Set the value of BITCOIND_IP with the IP address of you bitcoin full node which is 172.28.0.1
+# IP address source - https://github.com/Samourai-Wallet/samourai-dojo/blob/develop/docker/my-dojo/docker-compose.yaml#L92
 # Set the value of BITCOIND_RPC_PORT with the port used by your bitcoin full node for the RPC API (8332 default)
 # Set the value of BITCOIND_ZMQ_RAWTXS with the port used by your bitcoin full node for ZMQ notifications of raw transactions
 #   (i.e. port defined for -zmqpubrawtx in the bitcoin.conf of your full node)
