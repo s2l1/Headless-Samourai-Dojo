@@ -183,7 +183,7 @@ Set your timezone.
 
 Install fail2ban, curl, and unzip.
 
-`$ apt-get install fail2ban curl unzip`
+`$ apt-get install fail2ban curl unzip net-tools`
 
 Mount external hard disk. Use ext4 format NTFS will not work! See below.
 ```
