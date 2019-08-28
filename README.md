@@ -623,8 +623,6 @@ This directory contains a script named dojo.sh which will be your entrypoint for
 
 Docker and Docker Compose are going to build the images and containers of your Dojo. This operation will take a few minutes (download and setup of all required software components). After completion, your Dojo will be launched and will be ready for connection to your "external" bitcoin full node on your ODROID. 
 
-
-
 ```
 $ cd ~/dojo_dir/docker/my-dojo
 $ ./dojo.sh install
@@ -649,18 +647,17 @@ $ ./dojo.sh logs bitcoind
 > Cause: Your Dojo is using an external bitcoind
 ```
 Did Tor bootstrap 100%?
-`./dojo.sh logs tor`
+` $ ./dojo.sh logs tor`
 
-
-
- when the syncing of the database has completed.
+when the syncing of the database has completed.
 
 Retrieve the Tor onion addresses (v2 and v3) of the API of your Dojo
 ./dojo.sh onion
 Restrict the access to your host machine as much as possible by configuring its firewall.
 
 ADD END: SSH Key Login https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#login-with-ssh-keys
-
+!!!ADD PAIRING INSTRUCTIONS!!!
+!!!ADD START UP INSTRUCTIONS!!!
 ## 15. [AUTOSTART BITCOIND]
 !!!RETHINK SECTION AS DOJO MUST START PRIOR TO BITCOIND!!!
 
