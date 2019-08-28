@@ -2,12 +2,12 @@
 **for  ODROID N2**
 <sub><sup>by @GuerraMoneta</sup></sub>
 ```
-!!!WORK IN PROGRESS!!!
+                                            
                O
        /~~~|#|]|=\|---\__
      |-=_____________  |\\ ,             O       O
     I|_/,-.-.-.-.-,-.\_|='(             T/\     /\=,---.
-       ( o )( o )( o )     \            U /\   /\   `O'    cww
+       ( o )( o )( o )     \            U /\   /\   `O'    cww                      !!!WORK IN PROGRESS!!!
         `-'-'-'-'-`-'
 ```
 
@@ -20,7 +20,7 @@ MyDojo is a set of Docker containers providing a full Samourai backend composed 
 * a backend modules with an API accessible as a static Tor hidden service,
 * a maintenance tool accessible through a Tor web browser.
 
-This setup will be running bitcoind externally, versus leaving the default option enabled where Bitcoin runs in Docker. I have chosen this setup which requires a little more work because it is faster than waiting for a full blockchain sync with ODROID N2. First I must say thanks to @hashamadeus @laurentmt @PuraVlda from the Dojo Telegram chat. Also thank you to @stadicus and Burcak Baskan for the Raspibolt guide and the Dojo Pi4 guide. This is a compiled trial and error effort of myself trying to chop together guides, and a lot of help from the Dojo chat. 
+This setup will be running bitcoind externally, versus leaving the default option enabled where Bitcoin runs in Docker. I have chosen this setup which requires a little more work because it is faster than waiting for a full blockchain sync with ODROID N2. First I must say thanks to @hashamadeus @laurentmt @PuraVlda from the Dojo Telegram chat. Also thank you to @stadicus and Burcak Baskan for the Raspibolt guide and the Dojo Pi4 guide. This is a compiled trial and error effort of myself trying to chop together guides, and a lot of help from the Dojo chat.  
 
 # Table of Contents
 * [**HARDWARE REQUIREMENTS**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#1-hardware-requirements) 
@@ -484,19 +484,19 @@ Then run the following.
 Use pip to install docker-compose, apt-get can install an old version. Better to use the docker-compose install instructions which you can look at in Optional Reading. I will walk you through the pip install approach, there are a few ways to install the latest version.
 
 ```
-       
-        $ curl -fsSL https://get.docker.com -o get-docker.sh
-        $ sudo sh get-docker.sh
-        # Let the install finish
+$ curl -fsSL https://get.docker.com -o get-docker.sh
+$ sudo sh get-docker.sh
+# Let the install finish
 
-        $ python3 -m pip install --upgrade docker-compose`
-        # Let the install finish
+$ python3 -m pip install --upgrade docker-compose
+# Let the install finish
  
-                          OR ??????
+OR ??????
                           
-        $ python3 -m pip install --upgrade docker
-        $ python3 -m pip install --upgrade docker-compose`
-        # Let the install finish
+$ python3 -m pip install --upgrade docker
+$ python3 -m pip install --upgrade docker-compose
+# Let the install finish
+# --upgrade part is only useful if you already have it, which some people may have 
 ```
 
 `Optional Reading - https://docs.docker.com/compose/install/`
