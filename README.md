@@ -112,8 +112,6 @@ Check this hash 3bac067... against the file SHA256SUMS.asc once you are on step 
 
 ## 4. [NETWORK]
 
-!!!ADD PORTFORWARD 8333 FOR MAINNET SECTION!!!
-
 The ODROID got a new IP address from your home network. This address can change over time. To make the ODROID reachable from the internet, we assign it a fixed address.
 
 The fixed address is configured in your network router, this can be the cable modem or the Wifi access point. So we first need to access the router. To find out your routers address start the Command Prompt on a computer that is connected to your home network. 
@@ -191,7 +189,7 @@ Optional Reading - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#mov
 
 
 ## 7. [UFW]
-!!!LOCK DOWN DOJO -> BITCOIND FIREWALL RULE!!!
+!!!LOCK DOWN DOJO -> BITCOIND FIREWALL RULE RESTRICT TO PORT 8332!!!
 Enable the Uncomplicated Firewall which controls what traffic is permitted and closes possible security holes. 
 
 The line "ufw allow from 192.168.0.0/24…" below assumes that the IP address of your ODROID is something like 192.168.0.???, the ??? being any number from 0 to 255. If your IP address is 12.34.56.78, you must adapt this line to "ufw allow from 12.34.56.0/24…"
@@ -327,30 +325,28 @@ Now, the configuration file for bitcoind needs to be created. Open it with Nano 
 `$ nano ~/.bitcoin/bitcoin.conf`
 
 ```
-# bitcoind configuration
 # ~/.bitcoin/bitcoin.conf
-# delete comment lines that explain things if youd like
+# bitcoind configuration - with comment to explain each section.
 
 rpcbind=127.0.0.1 
 # needed for other services
 
-rpcbind=10.0.1.95
-# local ip of where bitcoind is
+rpcbind=192.168.0.70
+# local ip of your ODROID
+
+rpcbind=172.28.0.1
 
 rpcport=8332 
 # port used to access rpc
 
-rpcuser=xxxxxxxx 
+rpcuser=XXX
 # put any username you prefer for rpc access, please make sure this is the same as BITCOIND_RPC_USER in Section 15.
 
-rpcpassword=xxxxxx 
+rpcpassword=XXX 
 # put any password you prefer for rpc access, please make sure is the same as BITCOIND_RPC_PASSWORD in Section 15.
 
-rpcallowip=127.0.0.1 
-# may not be but was there already so left
-
-rpcallowip=10.0.1.2 
-#local ip of where Dojo is
+rpcallowip=0.0.0.0/0 
+# allow all rpcbind registered addresses !!!LOCK THIS DOWN LATER!!!!
 
 txindex=1 
 #builds bitcoin transaction index)
@@ -358,9 +354,9 @@ txindex=1
 server=1 
 #force bitcoind to accept JSON-RPC commands
 
-zmqpubrawblock=tcp://127.0.0.1:28332
-zmqpubrawtx=tcp://127.0.0.1:28333
-zmqpubhashblock=tcp://127.0.0.1:28334
+zmqpubrawblock=tcp://0.0.0.0:28332
+zmqpubrawtx=tcp://0.0.0.0:28333
+zmqpubhashblock=tcp://0.0.0.0:28334
 
 # tor settings
 proxy=127.0.0.1:9050
@@ -370,26 +366,28 @@ listenonion=1
 ```
 Here is an example of bitcoin.conf without comments.
 ```
-rpcbind=127.0.0.1 
-rpcbind=192.168.0.70
-rpcport=8332 
-rpcuser=xxxxxxxx 
-rpcpassword=xxxxxx 
-rpcallowip=127.0.0.1 
-
-
-txindex=1 
+# Bitcoind options
 server=1
 daemon=1
+txindex=1
 
-zmqpubrawblock=tcp://127.0.0.1:28332
-zmqpubrawtx=tcp://127.0.0.1:28333
-zmqpubhashblock=tcp://127.0.0.1:28334
+# Connection settings
+rpcuser=XXX
+rpcpassword=XXX
+rpcallowip=0.0.0.0/0
+rpcport=8332
+rpcbind=192.168.0.70
+rpcbind=127.0.0.1
+rpcbind=172.28.0.1
+zmqpubrawblock=tcp://0.0.0.0:28332
+zmqpubrawtx=tcp://0.0.0.0:28333
+zmqpubhashblock=tcp://0.0.0.0:28334
 
-# tor settings
+# add / change:
 proxy=127.0.0.1:9050
 bind=127.0.0.1
 listenonion=1
+
 ```
 Let’s start “bitcoind” manually. Monitor the log file a few minutes to see if it works fine It may stop at “dnsseed thread exit”, that’s ok. Exit the logfile monitoring with Ctrl-C, check the blockchain info, if there are no errors, then stop “bitcoind” again.
 ```
