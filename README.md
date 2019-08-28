@@ -271,6 +271,7 @@ Restart Tor to activate modifications.
 
 
 # 9. [BITCOIN]
+!!!VERIFY SECURE SETTINGS IN BITCOIN.CONF!!!
 
 Now download the software directly from bitcoin.org to your ODROID, verify its signature to make sure that we use an official release, and then install it.
 ```
@@ -346,10 +347,13 @@ rpcpassword=XXX
 # put any password you prefer for rpc access, please make sure is the same as BITCOIND_RPC_PASSWORD in Section 15.
 
 rpcallowip=0.0.0.0/0 
-# allow all rpcbind registered addresses !!!LOCK THIS DOWN LATER!!!!
+# 0.0.0.0 will allow all rpcbind registered addresses !!!LOCK THIS DOWN LATER!!!!
 
 txindex=1 
 #builds bitcoin transaction index)
+
+daemon=1
+#starts bitcoind in the background as a daemon
 
 server=1 
 #force bitcoind to accept JSON-RPC commands
@@ -357,6 +361,7 @@ server=1
 zmqpubrawblock=tcp://0.0.0.0:28332
 zmqpubrawtx=tcp://0.0.0.0:28333
 zmqpubhashblock=tcp://0.0.0.0:28334
+#zmq 0.0.0.0 settings will broadcast zmq messages on all available ports from bitcoind, since it is used by lnd and dojo and other services !!!LOCK THIS DOWN LATER!!!
 
 # tor settings
 proxy=127.0.0.1:9050
@@ -404,7 +409,7 @@ Once you are sync'd up.
 `$ bitcoin-cli stop`
 
 ## 10. [COPY]
-
+!!!ADD LINUX INSTRUCTIONS HERE!!!
 Right at the beginning we started downloading the Bitcoin mainnet blockchain on your regular computer. Check the verification progress directly in Bitcoin Core on this computer. To proceed, it should be fully synced (see status bar).
 
 As soon as the verification is finished, shut down Bitcoin Core on Windows. We will now copy the whole data structure to the ODROID. This takes about 6 hours.
@@ -422,7 +427,6 @@ You can now copy the two subdirectories (folders) named blocks and chainstate fr
 
 Once the data transfer is finished do not start bitcoind again. Continue to step 11.
 
-!!!ADD LINUX INSTRUCTIONS HERE!!!
 
 ## 11. [VALIDATION]
 
