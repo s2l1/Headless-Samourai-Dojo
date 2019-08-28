@@ -658,6 +658,7 @@ Restrict the access to your host machine as much as possible by configuring its 
 ADD END: SSH Key Login https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#login-with-ssh-keys
 !!!ADD PAIRING INSTRUCTIONS!!!
 !!!ADD START UP INSTRUCTIONS!!!
+!!!ADD DOJO SHELL SCRIPT INFO SECTION!!!
 ## 15. [AUTOSTART BITCOIND]
 !!!RETHINK SECTION AS DOJO MUST START PRIOR TO BITCOIND!!!
 
