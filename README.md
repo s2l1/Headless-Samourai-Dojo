@@ -476,7 +476,7 @@ Then run the following.
 
 
 ## 13. [DOCKER]
-
+!!!TEST THIS ON FRESH MINIMAL SETUP!!!
 Use pip to install docker-compose, apt-get can install an old version. Better to use the docker-compose install instructions which you can look at in Optional Reading. I will walk you through the pip install approach, there are a few ways to install the latest version.
 
 ```
@@ -497,7 +497,6 @@ Use pip to install docker-compose, apt-get can install an old version. Better to
 
 `Optional Reading - https://docs.docker.com/compose/install/`
 
-!!!TEST THIS ON FRESH MINIMAL SETUP!!!
 Now check your docker version. An old version can cause problems. Version 19.03.1 of docker is current as of Aug, 27 2019.
 
 `$ docker -v`
