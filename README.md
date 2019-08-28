@@ -169,7 +169,7 @@ Optional Reading: Backup - https://www.raspberrypi.org/magpi/back-up-raspberry-p
 
 There's constantly new development for this image and ODROIDs in general. The first thing you should do after the image is up and running is to install all updates.
 
-`$ apt update && apt upgrade && apt dist-upgrade`
+`$ apt-get update && apt-get upgrade && apt-get dist-upgrade`
 
 Setup tool can be accessed by using the following command.
 
