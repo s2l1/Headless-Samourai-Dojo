@@ -134,6 +134,18 @@ We now need to set the fixed (static) IP address for the ODROID. Normally, you c
 
 Apply changes. 
 
+Next, “Port Forwarding” needs to be configured. Different applications use different network ports, and the router needs to know to which internal network device the traffic of a specific port has to be directed. The port forwarding needs to be set up as follows:
+
+|  Application name |  External port | Internal port | IP address	Protocol (TCP or UDP) |   |
+|---|---|---|---|---|
+|   |   |   |   |   |
+|   |   |   |   |   |
+|   |   |   |   |   |
+
+Application name	External port	Internal port	Internal IP address	Protocol (TCP or UDP)
+bitcoin	8333	8333	192.168.0.20	BOTH
+bitcoin test	18333	18333	192.168.0.20	BOTH
+:point_right: additional information: setting up port forwarding.
 
 ## 5. [SSH]
 
@@ -184,7 +196,7 @@ Optional Reading - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#mov
 
 
 ## 7. [UFW]
-
+!!!LOCK DOWN DOJO -> BITCOIND FIREWALL RULE!!!
 Enable the Uncomplicated Firewall which controls what traffic is permitted and closes possible security holes. 
 
 The line "ufw allow from 192.168.0.0/24…" below assumes that the IP address of your ODROID is something like 192.168.0.???, the ??? being any number from 0 to 255. If your IP address is 12.34.56.78, you must adapt this line to "ufw allow from 12.34.56.0/24…"
@@ -193,6 +205,7 @@ $ apt-get install ufw
 $ ufw default deny incoming
 $ ufw default allow outgoing
 $ ufw allow from 192.168.0.0/24 to any port 22 comment 'SSH access restricted to local LAN'
+$ ufw allow proto tcp from 172.28.0.0/16 to any comment 'allow dojo to talk to external bitcoind'
 $ ufw enable
 $ systemctl enable ufw
 $ ufw status
@@ -473,12 +486,19 @@ Then run the following.
 Use pip to install docker-compose, apt-get can install an old version. Better to use the docker-compose install instructions which you can look at in Optional Reading. I will walk you through the pip install approach, there are a few ways to install the latest version.
 
 ```
-$ curl -fsSL https://get.docker.com -o get-docker.sh
-$ sudo sh get-docker.sh
-# Let the install finish
+       
+        $ curl -fsSL https://get.docker.com -o get-docker.sh
+        $ sudo sh get-docker.sh
+        # Let the install finish
 
-$ python3 -m pip install --upgrade docker-compose`
-# Let the install finish
+        $ python3 -m pip install --upgrade docker-compose`
+        # Let the install finish
+ 
+                          OR ??????
+                          
+        $ python3 -m pip install --upgrade docker
+        $ python3 -m pip install --upgrade docker-compose`
+        # Let the install finish
 ```
 
 `Optional Reading - https://docs.docker.com/compose/install/`
