@@ -660,7 +660,7 @@ Restrict the access to your host machine as much as possible by configuring its 
 ADD END: SSH Key Login https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#login-with-ssh-keys
 
 ## 15. [AUTOSTART BITCOIND]
-
+!!!RETHINK SECTION AS DOJO MUST START PRIOR TO BITCOIND!!!
 The system needs to run the bitcoin daemon automatically in the background, even when nobody is logged in. We use “systemd“, a daemon that controls the startup process using configuration files.
 
 Create the configuration file in the Nano text editor and copy the following paragraph.
