@@ -80,8 +80,8 @@ Default Password: odroid
 Newbie Playlist: 
 https://www.youtube.com/watch?v=plUQ3ZRBL54&list=PLmoQ11MXEmajkNPMvmc8OEeZ0zxOKbGRa
 
-Optional Reading: https://www.dewinter.com/gnupg_howto/english/GPGMiniHowto-3.html
-Optional Reading: https://www.lifewire.com/validate-md5-checksum-file-4037391 
+Optional Reading: How To gpg - https://www.dewinter.com/gnupg_howto/english/GPGMiniHowto-3.html
+Optional Reading: How To md5 - https://www.lifewire.com/validate-md5-checksum-file-4037391 
 ```
 It's ready to be used as a server image. Flash the image on to an SD card and boot up. Give the ODROID some time. As mentioned by meveric above "it will automatically reboot" then it is ready for use.
 
@@ -157,8 +157,8 @@ $ ssh root@IP.OF.ODROID.HERE
 ```
 Now you are connected to your ODROID and can use the terminal. 
 ```
-Optional Reading: https://www.raspberrypi.org/documentation/installation/installing-images/
-Optional Reading: https://www.raspberrypi.org/magpi/back-up-raspberry-pi/
+Optional Reading: Installing Images - https://www.raspberrypi.org/documentation/installation/installing-images/
+Optional Reading: Backup - https://www.raspberrypi.org/magpi/back-up-raspberry-pi/
 ```
 
 ## 6. [SYSTEM SETUP]
@@ -183,8 +183,8 @@ Install fail2ban, curl, and unzip.
 
 Mount external hard disk. Use ext4 format NTFS will not work! See below.
 ```
-Optional Reading - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#mounting-external-hard-disk 
-Optional Reading - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#moving-the-swap-file
+Optional Reading: Mounting External Drive - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#mounting-external-hard-disk 
+Optional Reading: Swap File - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#moving-the-swap-file
 ```
 
 
@@ -207,8 +207,8 @@ $ exit
 ```
 ```
 Optional Reading: Connecting to the Network - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#connecting-to-the-network
-Optional Reading:  Connecting to ODROID - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#connecting-to-the-pi
-Optional Reading:  Access restricted for local LAN - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#enabling-the-uncomplicated-firewall
+Optional Reading: Connecting to ODROID - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#connecting-to-the-pi
+Optional Reading: Access restricted for local LAN - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#enabling-the-uncomplicated-firewall
 Optional Reading: Login with SSH keys - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#login-with-ssh-keys
 ```
 
@@ -468,7 +468,7 @@ Install the Python Package Installer. Change to the home directory of the root u
 
 **TIP:** You will also need these libs if you wanted to install bitcoind standalone. Useful to have them in the system. Also python 2 is end of life so we are using python3.
 
-`Optional Reading - https://pip.pypa.io/en/stable/installing/`
+`Optional Reading: Installing PIP - https://pip.pypa.io/en/stable/installing/`
 
 To install pip, securely download get-pip.py. “Secure” in this context means using a modern browser or a tool like curl that verifies SSL certificates when downloading from https URLs.
 
@@ -499,13 +499,13 @@ $ python3 -m pip install --upgrade docker-compose
 # --upgrade part is only useful if you already have it, which some people may have 
 ```
 
-`Optional Reading - https://docs.docker.com/compose/install/`
+`Optional Reading - Installing docker-compose - https://docs.docker.com/compose/install/`
 
-Now check your docker version. An old version can cause problems. Version 19.03.1 of docker is current as of Aug, 27 2019.
+Now check your docker version. An outdated version can cause problems. 
 
 `$ docker -v`
 
-Take a look at what PIP has installed on your system. Version 1.24.1 of docker-compose is current as of Aug, 27 2019.
+Take a look at what PIP has installed on your system.
 
 `$ python3 -m pip list`
 
