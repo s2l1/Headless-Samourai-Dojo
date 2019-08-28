@@ -165,6 +165,7 @@ Optional Reading: Backup - https://www.raspberrypi.org/magpi/back-up-raspberry-p
 ```
 
 ## 6. [SYSTEM SETUP]
+!!!ADD GUIDE TO MOUNT EXTERNAL SSD!!!
 
 There's constantly new development for this image and ODROIDs in general. The first thing you should do after the image is up and running is to install all updates.
 
@@ -412,9 +413,11 @@ Let's take a step back and check on your other computer that is syncing Bitcoind
 
 `> 3bac0674c0786689167be2b9f35d2d6e91d5477dee11de753fe3b6e22b93d47c`
 
-Let's check that this hash is indeed authentic by taking 
-
-
+Let's check that this hash is indeed authentic by comparing it to the `SHA256SUMS.asc`. We must make sure it matches the hash listed with `bitcoin-0.18.1-win64-setup.exe`.
+```
+$ cd ~/download
+$ cat SHA256SUMS.asc
+```
 If everything is running smoothly, this is the perfect time to familiarize yourself with Bitcoin Core, try some bitcoin-cli commands, and do some reading or videos until the blockchain is up-to-date. A great point to start is the book Mastering Bitcoin by Andreas Antonopoulos which is open source. Now is also a great time to backup your system.
 
 Once you are sync'd up.
