@@ -511,7 +511,7 @@ Use pip to install docker-compose, apt-get can install an old version. Better to
 $ python3 -m pip install --upgrade docker
 $ python3 -m pip install --upgrade docker-compose
 # Let the install finish
-# --upgrade part is only useful if you already have it, which some people may have 
+# --upgrade part is only useful if you already have it, which some people may.
 ```
 
 `Optional Reading - Installing docker-compose - https://docs.docker.com/compose/install/`
