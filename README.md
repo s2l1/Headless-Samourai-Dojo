@@ -1,16 +1,6 @@
 # Headless-Samourai-Dojo
 **for  ODROID N2**
 <sub><sup>by @GuerraMoneta</sup></sub>
-```
-                                            
-               O
-       /~~~|#|]|=\|---\__
-     |-=_____________  |\\ ,             O       O
-    I|_/,-.-.-.-.-,-.\_|='(             T/\     /\=,---.
-       ( o )( o )( o )     \            U /\   /\   `O'    cww                 !!!WORK IN PROGRESS!!!
-        `-'-'-'-'-`-'
-```
-
 
 This guide is for Samourai Dojo on a headless server. Samourai Dojo is the backing server for Samourai Wallet. It provides HD account, loose addresses (BIP47) balances, and transactions lists. Also provides unspent output lists to the wallet. PushTX endpoint broadcasts transactions through the backing bitcoind node. 
 
@@ -771,21 +761,20 @@ Use api logs to watch pairing, can take a couple minutes to pair.
 
 `$ ./dojo.sh logs api`
 
-Congratulations! Your mobile Samourai Wallet is now paired to Dojo.
-
 Please keep in mind that any time Dojo is started, it must be started **BEFORE** bitcoind.
 
-
+Congratulations! Your mobile Samourai Wallet is now paired to Dojo.
 
 
 ------------------------------------------------------------------------------------------
+
 
 To do:
 1. Test part 13 "DOCKER" on fresh minimal setup
 2. Add SSH Key Login info at the end https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#login-with-ssh-keys
 3. Rework "AUTOSTART BITCOIND"
 
-## 16. [AUTOSTART BITCOIND]
+## 16. ~~[AUTOSTART BITCOIND]~~
 
 The system needs to run the bitcoin daemon automatically in the background, even when nobody is logged in. We use “systemd“, a daemon that controls the startup process using configuration files.
 
