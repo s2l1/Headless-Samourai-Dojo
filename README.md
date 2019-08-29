@@ -32,7 +32,7 @@ This setup will be running bitcoind externally, versus leaving the default optio
 * [**UFW**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#7-ufw)
 * [**TOR**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#8-tor)
 * [**BITCOIN**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#9-bitcoin)
-* [**COPY**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#10-copy)
+* [**SCP**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#10-scp)
 * [**VALIDATION**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#11-validation)
 * [**PIP**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#12-pip)
 * [**DOCKER**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#13-docker)
@@ -425,7 +425,7 @@ $ cd ~/download
 $ cat SHA256SUMS.asc
 ```
 
-## 10. [COPY]
+## 10. [SCP]
 !!!ADD LINUX INSTRUCTIONS HERE!!!
 
 Right at the beginning we started downloading the Bitcoin mainnet blockchain on your regular computer. Check the verification progress directly in Bitcoin Core on this computer. To proceed, it should be fully synced (see status bar).
