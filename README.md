@@ -383,7 +383,7 @@ rpcallowip=0.0.0.0/0
 # 0.0.0.0/0 will allow all rpcbind registered addresses !!!LOCK THIS DOWN LATER!!!!
 
 txindex=1 
-# builds bitcoin transaction index)
+# builds bitcoin transaction index
 
 daemon=1
 # starts bitcoind in the background as a daemon
