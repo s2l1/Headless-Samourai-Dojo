@@ -489,14 +489,16 @@ Go to `.bitcoin` directory on your linux machine, usually `/home/user/.bitcoin`.
 
 Copy the bitcoin data from this Linux machine to your ODROID. Here we are using `root@192.168.0.35` as and example. You need to put your ODROID local (internal) IP address here.
 
-$ scp -r blocks/ root@192.168.0.35:~/.bitcoin/blocks
-$ scp -r chainstate/ root@192.168.0.35:~/.bitcoin/blocks
+`$ scp -r blocks/ root@192.168.0.35:~/.bitcoin/blocks`
+
+`$ scp -r chainstate/ root@192.168.0.35:~/.bitcoin/chainstate`
 
 ```
 Optional Reading: SCP on Linux - https://www.computerhope.com/unix/scp.htm
 Optional Reading: WinSCP Windows - https://winscp.net/eng/docs/start
 ```
 
+Now that you are done copying the data over, let's make sure of our Tor connection.
 
 ## 11. [VALIDATION]
 
