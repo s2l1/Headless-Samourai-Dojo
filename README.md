@@ -666,21 +666,78 @@ $ ./dojo.sh logs bitcoind
 Did Tor bootstrap 100%?
 ` $ ./dojo.sh logs tor`
 
-when the syncing of the database has completed.
-
-Retrieve the Tor onion addresses (v2 and v3) of the API of your Dojo
+when the syncing of the database has completed retrieve the Tor onion addresses (v2 and v3) of the API of your Dojo.
 ./dojo.sh onion
-Restrict the access to your host machine as much as possible by configuring its firewall.
 
-ADD END: SSH Key Login https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#login-with-ssh-keys
+A maintenance tool is accessible through your Tor browser at the url. The maintenance tool requires that you allow javascript for the site.
 
-!!!ADD PAIRING INSTRUCTIONS!!!
+A few lines ago you edited `docker-node.conf.tpl`. Sign in to the v3_address.onion (maintenance tool) with the value entered for `NODE_ADMIN_KEY`. You will see a QR code for pairing which we will utilize now.
 
-!!!ADD START UP INSTRUCTIONS!!!
+## 16. [PAIRING WALLET WITH DOJO]
 
-!!!ADD DOJO SHELL SCRIPT INFO SECTION!!!
+Install Samourai Wallet on your mobile device. Enable Tor when you open but do not start a new wallet, tap the 3 dots in the top right corner and choose to pair with a new Dojo. 
 
-## 15. [AUTOSTART BITCOIND]
+Use api logs to watch pairing, can take a couple minutes to pair.
+
+`$ ./dojo.sh logs api`
+
+Congratulations! Your mobile Samourai Wallet is now paired to Dojo.
+
+Please keep in mind that any time Dojo is started, it must be started **BEFORE** bitcoind.
+
+```
+Usage: ./dojo.sh command [module] [options]
+
+Available commands:
+
+  help                          Display the help message.
+
+  bitcoin-cli                   Launch a bitcoin-cli console for interacting with bitcoind RPC API.
+
+  clean                         Free disk space by deleting docker dangling images and images of previous versions.
+
+  install                       Install your Dojo.
+
+  logs [module] [options]       Display the logs of your Dojo. Use CTRL+C to stop the logs.
+
+                                Available modules:
+                                  dojo.sh logs                : display the logs of all containers
+                                  dojo.sh logs bitcoind       : display the logs of bitcoind
+                                  dojo.sh logs db             : display the logs of the MySQL database
+                                  dojo.sh logs tor            : display the logs of tor
+                                  dojo.sh logs api            : display the logs of the REST API (nodejs)
+                                  dojo.sh logs tracker        : display the logs of the Tracker (nodejs)
+                                  dojo.sh logs pushtx         : display the logs of the pushTx API (nodejs)
+                                  dojo.sh logs pushtx-orchest : display the logs of the Orchestrator (nodejs)
+
+                                Available options (for api, tracker, pushtx and pushtx-orchest modules):
+                                  -d [VALUE]                  : select the type of log to be displayed.
+                                                                VALUE can be output (default) or error.
+                                  -n [VALUE]                  : display the last VALUE lines
+
+  onion                         Display the Tor onion address allowing your wallet to access your Dojo.
+
+  restart                       Restart your Dojo.
+
+  start                         Start your Dojo.
+
+  stop                          Stop your Dojo.
+
+  uninstall                     Delete your Dojo. Be careful! This command will also remove all data.
+
+  upgrade                       Upgrade your Dojo.
+
+  version                       Display the version of dojo.
+```
+
+
+------------------------------------------------------------------------------------------
+To do:
+
+!!!ADD SSH KEY LOGIN INFO!!!
+SSH Key Login https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#login-with-ssh-keys
+
+## 16. [AUTOSTART BITCOIND]
 !!!RETHINK SECTION AS DOJO MUST START PRIOR TO BITCOIND!!!
 
 The system needs to run the bitcoin daemon automatically in the background, even when nobody is logged in. We use “systemd“, a daemon that controls the startup process using configuration files.
