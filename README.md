@@ -549,7 +549,6 @@ Then run the following.
 
 
 ## 13. [DOCKER]
-!!!TEST THIS ON FRESH MINIMAL SETUP!!!
 
 Use pip to install docker-compose, apt-get can install an old version. Better to use the docker-compose install instructions which you can look at in Optional Reading. I will walk you through the pip install approach, there are a few ways to install the latest version.
 
@@ -717,19 +716,7 @@ when the syncing of the database has completed retrieve the Tor onion addresses 
 
 A maintenance tool is accessible through your Tor browser at the url. The maintenance tool requires that you allow javascript for the site.
 
-A few lines ago you edited `docker-node.conf.tpl`. Sign in to the v3_address.onion (maintenance tool) with the value entered for `NODE_ADMIN_KEY`. You will see a QR code for pairing which we will utilize now.
-
-## 15. [PAIRING WALLET WITH DOJO]
-
-Install Samourai Wallet on your mobile device. Enable Tor when you open but do not start a new wallet, tap the 3 dots in the top right corner and choose to pair with a new Dojo. 
-
-Use api logs to watch pairing, can take a couple minutes to pair.
-
-`$ ./dojo.sh logs api`
-
-Congratulations! Your mobile Samourai Wallet is now paired to Dojo.
-
-Please keep in mind that any time Dojo is started, it must be started **BEFORE** bitcoind.
+A few lines ago you edited `docker-node.conf.tpl`. Sign in to the v3_address.onion (maintenance tool) with the value entered for `NODE_ADMIN_KEY`. You will see a QR code for pairing which we will utilize in the next step where you will pair your Samourai Wallet with your Dojo.
 
 ```
 Usage: ./dojo.sh command [module] [options]
@@ -776,15 +763,29 @@ Available commands:
   version                       Display the version of dojo.
 ```
 
+## 15. [PAIRING WALLET WITH DOJO]
+
+Install Samourai Wallet on your mobile device. Enable Tor when you open but do not start a new wallet, tap the 3 dots in the top right corner and choose to pair with a new Dojo. 
+
+Use api logs to watch pairing, can take a couple minutes to pair.
+
+`$ ./dojo.sh logs api`
+
+Congratulations! Your mobile Samourai Wallet is now paired to Dojo.
+
+Please keep in mind that any time Dojo is started, it must be started **BEFORE** bitcoind.
+
+
+
 
 ------------------------------------------------------------------------------------------
-To do:
 
-!!!ADD SSH KEY LOGIN INFO!!!
-SSH Key Login https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#login-with-ssh-keys
+To do:
+1. Test part 13 "DOCKER" on fresh minimal setup
+2. Add SSH Key Login info at the end https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#login-with-ssh-keys
+3. Rework "AUTOSTART BITCOIND"
 
 ## 16. [AUTOSTART BITCOIND]
-!!!RETHINK SECTION AS DOJO MUST START PRIOR TO BITCOIND!!!
 
 The system needs to run the bitcoin daemon automatically in the background, even when nobody is logged in. We use “systemd“, a daemon that controls the startup process using configuration files.
 
