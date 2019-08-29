@@ -406,7 +406,7 @@ Let’s start “bitcoind” manually. Monitor the log file a little while to se
 ```
 $ bitcoind
 $ tail -f ~/.bitcoin/debug.log
-# Exit the logfile monitoring with Ctrl-C, 
+# Exit the logfile monitoring with Ctrl-C
 
 Check the blockchain info.
 $ bitcoin-cli getblockchaininfo
