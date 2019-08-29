@@ -164,8 +164,8 @@ Optional Reading: Installing Images - https://www.raspberrypi.org/documentation/
 Optional Reading: Backup - https://www.raspberrypi.org/magpi/back-up-raspberry-pi/
 ```
 
+
 ## 6. [SYSTEM SETUP]
-!!!ADD GUIDE TO MOUNT EXTERNAL SSD!!!
 
 There's constantly new development for this image and ODROIDs in general. The first thing you should do after the image is up and running is to install all updates.
 
@@ -185,9 +185,38 @@ Install fail2ban, curl, and unzip.
 
 `$ apt-get install fail2ban curl unzip net-tools`
 
-Mount external hard disk. Use ext4 format NTFS will not work! See below.
+We will format the hard disk, erasing all previous data. The external hard disk is then attached to the file system and can be accessed as a regular folder (this is called “mounting”). Use ext4 format NTFS will not work! 
+
+Make sure your SSD is plugged in. Get the NAME for main partition on the external hard disk
+
+`$ lsblk -o UUID,NAME,FSTYPE,SIZE,LABEL,MODEL`
+
+Format the external hard disk with Ext4. Use `NAMEHERE` from above, e.g `/dev/sda1`.
+
+`$ mkfs.ext4 /dev/NAMEHERE`
+
+Copy the UUID that is provided as a result of this format command to your notepad.
+
+Edit the fstab file and the following as a new line (replace UUID=123456) at the end.
+
+`$ nano /etc/fstab`
+
+`UUID=123456 /mnt/usb ext4 rw,nosuid,dev,noexec,noatime,nodiratime,auto,nouser,async,nofail 0 2`
+
+Create the directory to add the hard disk and set the correct owner. Here we will use `/mnt/usb` as an example.
+`$ mkdir /mnt/usb`
+
+Mount all drives and check the file system. Is “/mnt/usb” listed?
+```
+$ mount -a
+$ df /mnt/usb
+> Filesystem     1K-blocks  Used Available Use% Mounted on
+> /dev/sda1      479667880 73756 455158568   1% /mnt/hdd
+```
+
 ```
 Optional Reading: Mounting External Drive - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#mounting-external-hard-disk 
+Optional Reading: Fstab Guide -https://www.howtogeek.com/howto/38125/htg-explains-what-is-the-linux-fstab-and-how-does-it-work/
 Optional Reading: Swap File - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#moving-the-swap-file
 ```
 
