@@ -402,13 +402,16 @@ bind=127.0.0.1
 listenonion=1
 ```
 
-Let’s start “bitcoind” manually. Monitor the log file a while to see if it works fine. Exit the logfile monitoring with Ctrl-C, check the blockchain info. 
+Let’s start “bitcoind” manually. Monitor the log file a little while to see if it works fine.  
 ```
 $ bitcoind
 $ tail -f ~/.bitcoin/debug.log
+# Exit the logfile monitoring with Ctrl-C, 
+
+Check the blockchain info.
 $ bitcoin-cli getblockchaininfo
 ```
-When bitcoind is still starting, you may get an error message like “verifying blocks”. That’s normal, just give it a few minutes. Among other infos, the “verificationprogress” is shown. Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated. Since `-txindex` was specified in the `bitcoin.conf` file it will take an hour or more for bitcoin to build the transaction index.
+When bitcoind is still starting, you may get an error message like “verifying blocks”. That’s normal, just give it a few minutes. Among other infos, the “verificationprogress” is shown. Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated. Since `txindex=1` was specified in the `bitcoin.conf` file it will take an hour or more for bitcoin to build the transaction index.
 
 Let's take a step back and check on your other computer that is syncing Bitcoind Core. During the 3rd step of this guide you saved a hash that looks like the following. 
 
