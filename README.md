@@ -460,8 +460,8 @@ We now need to check if all connections are truly routed over Tor.
 
 Verify operations in the debug.log file.
 ```
-cat ~/.bitcoin/debug.log | grep --max-count=11 tor
-cat ~/.bitcoin/debug.log | grep --max-count=3 Init
+$ cat ~/.bitcoin/debug.log | grep --max-count=11 tor
+$ cat ~/.bitcoin/debug.log | grep --max-count=3 Init
 
 > InitParameterInteraction: parameter interaction: -proxy set -> setting -upnp=0
 > InitParameterInteraction: parameter interaction: -proxy set -> setting -discover=0
