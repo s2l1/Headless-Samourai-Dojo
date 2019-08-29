@@ -185,7 +185,7 @@ Install fail2ban, curl, and unzip.
 
 `$ apt-get install fail2ban curl unzip net-tools`
 
-We will format the hard disk, erasing all previous data. The external hard disk is then attached to the file system and can be accessed as a regular folder (this is called “mounting”). Use ext4 format NTFS will not work! 
+Now we will format the hard disk, erasing all previous data. The external SSD is then attached to the file system and can be accessed as a regular folder (this is called mounting). We will use ext4 format, NTFS will not work.
 
 Make sure your SSD is plugged in. Get the NAME for main partition on the external hard disk
 
