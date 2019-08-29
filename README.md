@@ -436,12 +436,12 @@ We are using “Secure Copy” (SCP), so download and install WinSCP, a free ope
 
 With WinSCP, you can now connect to your ODROID.
 
-Accept the server certificate and navigate to the local and remote bitcoin directories:
+Accept the server certificate and navigate to the `Local` and `Remote` bitcoin directories.
 ```
 Local: C:\bitcoin\bitcoin_mainnet\
 Remote: PATH_TO_SSD\bitcoin\
 ```
-You can now copy the two subdirectories (folders) named blocks and chainstate from `Local` to `Remote`. This will take about 6 hours. The transfer must not be interupted. Make sure your computer does not go to sleep.
+You can now copy the two subdirectories (folders) named "blocks" and "chainstate" from `Local` to `Remote`. This will take about 6 hours. The transfer must not be interupted. Make sure your computer does not go to sleep.
 
 Once the data transfer is finished you can close WinSCP and start bitcoind.
 
