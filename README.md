@@ -489,7 +489,7 @@ Install the Python Package Installer. Change to the home directory of the root u
 
 `$ apt-get install python3-dev libffi-dev libssl-dev build-essential`
 
-**TIP:** You will also need these libs if you wanted to install bitcoind standalone. Useful to have them in the system. Also python 2 is end of life so we are using python3.
+**TIP:** Useful libs to have them in the system. Also python 2 is end of life so we are using python3.
 
 `Optional Reading: Installing PIP - https://pip.pypa.io/en/stable/installing/`
 
