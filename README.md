@@ -367,7 +367,7 @@ rpcbind=192.168.0.70
 # type in local ip of your ODROID, 192.168.0.70 is just an example
 
 rpcbind=172.28.0.1
-# dojo docker network, github source below
+# host and bitcoind IP from dojo docker network, github source below
 # https://github.com/Samourai-Wallet/samourai-dojo/blob/develop/docker/my-dojo/docker-compose.yaml#L92
 
 rpcport=8332 
