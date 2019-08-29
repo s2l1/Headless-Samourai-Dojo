@@ -458,7 +458,7 @@ Once you are sync'd up continue to step 11.
 
 We now need to check if all connections are truly routed over Tor.
 
-Verify operations in the debug.log file. You should see your onion address after about one minute.
+Verify operations in the debug.log file.
 ```
 cat ~/.bitcoin/debug.log | grep --max-count=11 tor
 cat ~/.bitcoin/debug.log | grep --max-count=3 Init
@@ -476,7 +476,7 @@ Clear things out once you are done viewing.
 
 `$ clear`
 
-Display the Bitcoin network info to verify that the different network protocols are bound to proxy 127.0.0.1:9050, which is Tor on your localhost. Note the onion network is now reachable: true.
+Display the Bitcoin network info to verify that the different network protocols are bound to proxy 127.0.0.1:9050, which is Tor on your localhost. Note the onion network is now `"reachable": true,`.
 
 `$ bitcoin-cli getnetworkinfo`
 
