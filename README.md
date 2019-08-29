@@ -92,7 +92,7 @@ The Bitcoin blockchain records all transactions and basically defines who owns h
 
 The ODROID is up to the big task of downloading the blockchain so you may wonder why we are downloading on a faster machine, and copying over the data. The download is not the problem, but to initially process the whole blockchain would take a long time due to its computing power and memory. We need to download and verify the blockchain with Bitcoin Core on your regular computer, and then transfer the data to the ODROID. This needs to be done only once. After that the ODROID can easily keep up with new blocks.
 
-This guide assumes that you many will use a Windows machine, but it works with most operating systems. I have done my best to provide linux/max instructions where possible. You need to have about 250 GB free disk space available, internally or on an external hard disk (but not the SSD reserved for the ODROID). As indexing creates heavy read/write traffic, the faster your hard disk the better. If you are using linux as a main machine I will assume that you are comfortable lookup up how to download Bitcoin Core.
+This guide assumes that many will use a Windows machine, but it works with most operating systems. I have done my best to provide linux/max instructions where possible. You need to have about 250 GB free disk space available, internally or on an external hard disk (but not the SSD reserved for the ODROID). As indexing creates heavy read/write traffic, the faster your hard disk the better. If you are using linux as a main machine I will assume that you are comfortable lookup up how to download Bitcoin Core.
 
 Using SCP, we will copy the blockchain from the Windows computer over the local network later in this guide.
 
