@@ -411,7 +411,9 @@ $ tail -f ~/.bitcoin/debug.log
 Check the blockchain info.
 $ bitcoin-cli getblockchaininfo
 ```
-When bitcoind is still starting, you may get an error message like “verifying blocks”. That’s normal, just give it a few minutes. Among other infos, the “verificationprogress” is shown. Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated. Since `txindex=1` was specified in the `bitcoin.conf` file it will take an hour or more for bitcoin to build the transaction index.
+Stop bitcoind once you have verified that startup looks good. You will see it start to gather peers, by that point you know that connection is working.
+
+`$ bitcoin-cli stop`
 
 Let's take a step back and check on your other computer that is syncing Bitcoind Core. During the 3rd step of this guide you saved a hash that looks like the following. 
 
@@ -422,11 +424,6 @@ Let's check that this hash is indeed authentic by comparing it to the `SHA256SUM
 $ cd ~/download
 $ cat SHA256SUMS.asc
 ```
-If everything is running smoothly, this is the perfect time to familiarize yourself with Bitcoin Core, try some bitcoin-cli commands, and do some reading or videos until the blockchain is up-to-date. A great point to start is the book Mastering Bitcoin by Andreas Antonopoulos which is open source. Now is also a great time to backup your system.
-
-Once you are sync'd up.
-
-`$ bitcoin-cli stop`
 
 ## 10. [COPY]
 !!!ADD LINUX INSTRUCTIONS HERE!!!
@@ -444,9 +441,17 @@ Accept the server certificate and navigate to the local and remote bitcoin direc
 Local: C:\bitcoin\bitcoin_mainnet\
 Remote: PATH_TO_SSD\bitcoin\
 ```
-You can now copy the two subdirectories (folders) named blocks and chainstate from Local to Remote. This will take about 6 hours. The transfer must not be interupted. Make sure your computer does not go to sleep.
+You can now copy the two subdirectories (folders) named blocks and chainstate from `Local` to `Remote`. This will take about 6 hours. The transfer must not be interupted. Make sure your computer does not go to sleep.
 
-Once the data transfer is finished do not start bitcoind again. Continue to step 11.
+Once the data transfer is finished you can close WinSCP and start bitcoind.
+
+`$ bitcoind`
+
+When bitcoind is still starting and you are watching the logs, you may get an error message like “verifying blocks”. That’s normal, just give it a few minutes. Among other infos the “verificationprogress” is shown. Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated. Since `txindex=1` was specified in the `bitcoin.conf` file it will take an hour or more for bitcoin to build the transaction index.
+
+If everything is running smoothly, this is the perfect time to familiarize yourself with Bitcoin Core, try some bitcoin-cli commands, and do some reading or videos until the blockchain is up-to-date. A great point to start is the book Mastering Bitcoin by Andreas Antonopoulos which is open source. Now is also a great time to backup your system.
+
+Once you are sync'd up continue to step 11.
 
 
 ## 11. [VALIDATION]
@@ -455,7 +460,8 @@ We now need to check if all connections are truly routed over Tor.
 
 Verify operations in the debug.log file. You should see your onion address after about one minute.
 ```
-$ cat ~/.bitcoin/debug.log -f -n 200
+cat ~/.bitcoin/debug.log | grep --max-count=11 tor
+cat ~/.bitcoin/debug.log | grep --max-count=3 Init
 
 > InitParameterInteraction: parameter interaction: -proxy set -> setting -upnp=0
 > InitParameterInteraction: parameter interaction: -proxy set -> setting -discover=0
@@ -556,7 +562,9 @@ Try rebooting if you do not see your external SSD listed.
 
 ## 14. [DOJO] 
 
-Please verify bitcoind is not running.
+Please verify bitcoind is not running. Will output an error if it is not running.
+
+`$ bitcoin-cli stop`
 
 Download and unzip latest Dojo release.
 
