@@ -92,7 +92,7 @@ The Bitcoin blockchain records all transactions and basically defines who owns h
 
 The ODROID is up to the big task of downloading the blockchain so you may wonder why we are downloading on a faster machine, and copying over the data. The download is not the problem, but to initially process the whole blockchain would take a long time due to its computing power and memory. We need to download and verify the blockchain with Bitcoin Core on your regular computer, and then transfer the data to the ODROID. This needs to be done only once. After that the ODROID can easily keep up with new blocks.
 
-This step of the guide assumes that you will use a Windows machine, but it works with most operating systems. You need to have about 250 GB free disk space available, internally or on an external hard disk (but not the SSD reserved for the ODROID). As indexing creates heavy read/write traffic, the faster your hard disk the better. If you are using linux as a main machine I will assume that you are comfortable lookup up how to download Bitcoin Core.
+This guide assumes that you many will use a Windows machine, but it works with most operating systems. I have done my best to provide linux/max instructions where possible. You need to have about 250 GB free disk space available, internally or on an external hard disk (but not the SSD reserved for the ODROID). As indexing creates heavy read/write traffic, the faster your hard disk the better. If you are using linux as a main machine I will assume that you are comfortable lookup up how to download Bitcoin Core.
 
 Using SCP, we will copy the blockchain from the Windows computer over the local network later in this guide.
 
@@ -455,13 +455,12 @@ $ cat SHA256SUMS.asc
 ```
 
 ## 10. [SCP]
-!!!ADD LINUX INSTRUCTIONS HERE!!!
 
 Right at the beginning we started downloading the Bitcoin mainnet blockchain on your regular computer. Check the verification progress directly in Bitcoin Core on this computer. To proceed, it should be fully synced (see status bar).
 
 As soon as the verification is finished, shut down Bitcoin Core on Windows. We will now copy the whole data structure to the ODROID. This takes about 6 hours.
 
-We are using “Secure Copy” (SCP), so download and install WinSCP, a free open-source program.
+We are using “Secure Copy” (SCP), so download and install WinSCP, a free open-source program. Linux instructions are below.
 
 With WinSCP, you can now connect to your ODROID.
 
@@ -470,7 +469,7 @@ Accept the server certificate and navigate to the `Local` and `Remote` bitcoin d
 Local: C:\bitcoin\bitcoin_mainnet\
 Remote: PATH_TO_SSD\bitcoin\
 ```
-You can now copy the two subdirectories (folders) named "blocks" and "chainstate" from `Local` to `Remote`. This will take about 6 hours. The transfer must not be interupted. Make sure your computer does not go to sleep.
+You can now copy the two subdirectories (folders) named `blocks` and `chainstate` from `Local` to `Remote`. This will take about 6 hours. The transfer must not be interupted. Make sure your computer does not go to sleep.
 
 Once the data transfer is finished you can close WinSCP and start bitcoind.
 
@@ -481,6 +480,22 @@ When bitcoind is still starting and you are watching the logs, you may get an er
 If everything is running smoothly, this is the perfect time to familiarize yourself with Bitcoin Core, try some bitcoin-cli commands, and do some reading or videos until the blockchain is up-to-date. A great point to start is the book Mastering Bitcoin by Andreas Antonopoulos which is open source. Now is also a great time to backup your system.
 
 Once you are sync'd up continue to step 11. You can go ahead and close Bitcoin Core on your other machine and delete later on once you have a stable system with proper backups. 
+
+For linux it would look something like the following.
+
+Go to `.bitcoin` directory on your linux machine, usually `/home/user/.bitcoin`.
+
+`$ cd  /home/user/.bitcoin`
+
+Copy the bitcoin data from this Linux machine to your ODROID. Here we are using `root@192.168.0.35` as and example. You need to put your ODROID local (internal) IP address here.
+
+$ scp -r blocks/ root@192.168.0.35:~/.bitcoin/blocks
+$ scp -r chainstate/ root@192.168.0.35:~/.bitcoin/blocks
+
+```
+Optional Reading: SCP on Linux - https://www.computerhope.com/unix/scp.htm
+Optional Reading: WinSCP Windows - https://winscp.net/eng/docs/start
+```
 
 
 ## 11. [VALIDATION]
@@ -677,7 +692,7 @@ After successful install, exit the logs with CTRL+C, and start bitcoind.
 
 `$ bitcoind`
 
-**PLEASE NOTE TO START DOJO BEFORE BITCOIND EVERY TIME** otherwise the docker network is not created by dojo for bitcoind to bind to so it is ignored.
+**PLEASE NOTE TO START DOJO BEFORE BITCOIND EVERY TIME** otherwise the docker network is not created by Dojo for bitcoind to bind to so it is ignored.
 
 Check that all containers are up.
 
