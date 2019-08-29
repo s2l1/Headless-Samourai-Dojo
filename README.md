@@ -37,7 +37,7 @@ This setup will be running bitcoind externally, versus leaving the default optio
 * [**PIP**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#12-pip)
 * [**DOCKER**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#13-docker)
 * [**DOJO**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#14-dojo)
-* [**AUTOSTART BITCOIND**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#15-autostart-bitcoind)
+* [**PAIRING WALLET WITH DOJO**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#15-pairing-wallet-with-dojo)
 
 ```
 Sources:
@@ -673,7 +673,7 @@ A maintenance tool is accessible through your Tor browser at the url. The mainte
 
 A few lines ago you edited `docker-node.conf.tpl`. Sign in to the v3_address.onion (maintenance tool) with the value entered for `NODE_ADMIN_KEY`. You will see a QR code for pairing which we will utilize now.
 
-## 16. [PAIRING WALLET WITH DOJO]
+## 15. [PAIRING WALLET WITH DOJO]
 
 Install Samourai Wallet on your mobile device. Enable Tor when you open but do not start a new wallet, tap the 3 dots in the top right corner and choose to pair with a new Dojo. 
 
