@@ -451,7 +451,7 @@ When bitcoind is still starting and you are watching the logs, you may get an er
 
 If everything is running smoothly, this is the perfect time to familiarize yourself with Bitcoin Core, try some bitcoin-cli commands, and do some reading or videos until the blockchain is up-to-date. A great point to start is the book Mastering Bitcoin by Andreas Antonopoulos which is open source. Now is also a great time to backup your system.
 
-Once you are sync'd up continue to step 11.
+Once you are sync'd up continue to step 11. You can go ahead and close Bitcoin Core on your other machine and delete later on once you have a stable system with proper backups. 
 
 
 ## 11. [VALIDATION]
