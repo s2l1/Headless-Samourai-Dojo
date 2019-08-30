@@ -42,7 +42,9 @@ Pi 4 Dojo Guide - https://burcak-baskan.gitbook.io/workspace/
 
 ## 1. [HARDWARE REQUIREMENTS]
 - https://forum.odroid.com/viewtopic.php?f=176&t=33781
-I am using this with a 500gb Samsung Portable SSD USB3.0, hardline connections, and SD card. Add a battery back up later on to be sure your ODROID wont lose power during bad weather. You will also need a Windows / Linux / Mac with good specs that is on the same network as the ODROID. Before this I have tried to get running on a Pi3b+ but had a problem. Hypothesis for problem "nodejs can communicate with bitcoind but it doesn't get a response fast enough." If you get Dojo running on Pi3b+ please contact or post a guide to the Dojo community.
+You will need an ODROID N2 with a hard plastic case. I am using this with a 500gb Samsung Portable SSD, USB3.0, hardline ethernet connection, and SD card. Add a battery back up later on to be sure your ODROID wont lose power during bad weather. You will also need a Windows / Linux / Mac with good specs that is on the same network as the ODROID. This setup will take up about as much room as a standard home router/modem and look clean clean once finished.
+
+Before this I have tried to get running on a Pi3b+ but had a problem. Hypothesis for problem "nodejs can communicate with bitcoind but it doesn't get a response fast enough." If you get Dojo running on Pi3b+ please contact or post a guide to the Dojo community.
 
 
 ## 2. [OPERATING SYSTEM]
