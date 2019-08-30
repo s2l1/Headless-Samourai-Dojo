@@ -378,18 +378,14 @@ listenonion=1
 # ~/.bitcoin/bitcoin.conf
 # bitcoind configuration - with comment to explain each section.
 
-rpcbind=127.0.0.1 
-# needed for other services, do not change this
+server=1 
+# force bitcoind to accept JSON-RPC commands
 
-rpcbind=192.168.0.70
-# type in local ip of your ODROID, 192.168.0.70 is just an example
+daemon=1
+# starts bitcoind in the background as a daemon
 
-rpcbind=172.28.0.1
-# host and bitcoind IP from dojo docker network, github source below
-# https://github.com/Samourai-Wallet/samourai-dojo/blob/develop/docker/my-dojo/docker-compose.yaml#L92
-
-rpcport=8332 
-# port used to access rpc, 8332 is the default so do not change this
+txindex=1 
+# builds bitcoin transaction index
 
 rpcuser=XXX
 # put any username you prefer for rpc access, please make sure this is the same as BITCOIND_RPC_USER in Section 15.
@@ -400,24 +396,29 @@ rpcpassword=XXX
 rpcallowip=0.0.0.0/0 
 # 0.0.0.0/0 will allow all rpcbind registered addresses !!!LOCK THIS DOWN LATER!!!!
 
-txindex=1 
-# builds bitcoin transaction index
+rpcport=8332 
+# port used to access rpc, 8332 is the default so do not change this
 
-daemon=1
-# starts bitcoind in the background as a daemon
+rpcbind=192.168.0.70
+# type in local ip of your ODROID, 192.168.0.70 is just an example
 
-server=1 
-# force bitcoind to accept JSON-RPC commands
+rpcbind=127.0.0.1 
+# needed for other services, do not change this
+
+rpcbind=172.28.0.1
+# host and bitcoind IP from dojo docker network, github source below
+# https://github.com/Samourai-Wallet/samourai-dojo/blob/develop/docker/my-dojo/docker-compose.yaml#L92
 
 zmqpubrawblock=tcp://0.0.0.0:28332
 zmqpubrawtx=tcp://0.0.0.0:28333
 zmqpubhashblock=tcp://0.0.0.0:28334
 # zmq 0.0.0.0 settings will broadcast zmq messages on all available ports from bitcoind, since it is used by lnd and dojo and other services !!!LOCK THIS DOWN LATER!!!
 
-# tor settings
+
 proxy=127.0.0.1:9050
 bind=127.0.0.1
 listenonion=1
+# tor settings
 ```
 
 Let’s start “bitcoind” manually. Monitor the log file a little while to see if it works fine.  
