@@ -212,7 +212,6 @@ Optional Reading: Swap File - https://stadicus.github.io/RaspiBolt/raspibolt_20_
 
 
 ## 7. [UFW]
-!!!LOCK DOWN DOJO -> BITCOIND FIREWALL RULE RESTRICT TO PORT 8332!!!
 
 Enable the Uncomplicated Firewall which controls what traffic is permitted and closes possible security holes. 
 
@@ -222,7 +221,7 @@ $ apt-get install ufw
 $ ufw default deny incoming
 $ ufw default allow outgoing
 $ ufw allow from 192.168.0.0/24 to any port 22 comment 'SSH access restricted to local LAN'
-$ ufw allow proto tcp from 172.28.0.0/16 to any comment 'allow dojo to talk to external bitcoind'
+$ ufw allow proto tcp from 172.28.0.0/16 to any port 8332 comment 'allow dojo to talk to external bitcoind'
 $ ufw enable
 $ systemctl enable ufw
 $ ufw status
