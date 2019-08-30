@@ -422,7 +422,7 @@ bind=127.0.0.1
 listenonion=1
 # tor settings
 ```
-If you have others clients (LN, Electrum, etc.) running on others local machines, you'll add new rpcallowip for them.
+If you have others clients running directly on the same machine (not inside docker), adding a line rpcallowip=127.0.01 should do it. If you have others clients (lnd, Electrum, etc.) running on other local machines, you'll need to add a new rpcallowip for them.
 
 Basically, your bitcoind can serve many clients hosted on your local network. You just have to be sure that you "whitelist" the IP addresses of these clients in bitcoin.conf by adding an rpcallowip line if it's needed.
 
