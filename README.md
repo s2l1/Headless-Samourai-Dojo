@@ -376,7 +376,7 @@ listenonion=1
 
 ```
 # ~/.bitcoin/bitcoin.conf
-# bitcoind configuration - with comment to explain each section.
+# bitcoind configuration - with comment to explain each section
 
 server=1 
 # force bitcoind to accept JSON-RPC commands
@@ -388,13 +388,14 @@ txindex=1
 # builds bitcoin transaction index
 
 rpcuser=XXX
-# put any username you prefer for rpc access, please make sure this is the same as BITCOIND_RPC_USER in Section 15.
+# put any username you prefer for rpc access, please make sure this is the same as BITCOIND_RPC_USER in Section 15
 
 rpcpassword=XXX 
-# put any password you prefer for rpc access, please make sure is the same as BITCOIND_RPC_PASSWORD in Section 15.
+# put any password you prefer for rpc access, please make sure is the same as BITCOIND_RPC_PASSWORD in Section 15
 
 rpcallowip=0.0.0.0/0 
-# 0.0.0.0/0 will allow all rpcbind registered addresses !!!LOCK THIS DOWN LATER!!!!
+# for max security, I think the accesses to the RPC API should be restricted as much as possible by using rpcallowip=
+# the idea is to restrict this access to IP addresses of machines on the LAN which absolutely need to access the RPC API
 
 rpcport=8332 
 # port used to access rpc, 8332 is the default so do not change this
@@ -412,14 +413,16 @@ rpcbind=172.28.0.1
 zmqpubrawblock=tcp://0.0.0.0:28332
 zmqpubrawtx=tcp://0.0.0.0:28333
 zmqpubhashblock=tcp://0.0.0.0:28334
-# zmq 0.0.0.0 settings will broadcast zmq messages on all available ports from bitcoind, since it is used by lnd and dojo and other services !!!LOCK THIS DOWN LATER!!!
-
+# zmq 0.0.0.0 settings will broadcast zmq messages on all available ports from bitcoind, since it is used by Dojo, lnd, and other services 
+# zmq ports are less sensitive (they are push only and they push very general information). At worse, they may reveal that a bitcoind is running on this machine. 
+# if you feel "paranoid", may be you'll want to restrict the access to these ports to  specific machines, by adding specific rules on your firewall.
 
 proxy=127.0.0.1:9050
 bind=127.0.0.1
 listenonion=1
 # tor settings
 ```
+If you have others clients (LN, Electrum, etc.) running on others local machines, you'll add new rpcallowip for them.
 
 Let’s start “bitcoind” manually. Monitor the log file a little while to see if it works fine.  
 ```
