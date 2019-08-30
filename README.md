@@ -349,6 +349,8 @@ Now, the configuration file for bitcoind needs to be created. Open it with Nano 
 
 Here is an example of bitcoin.conf without comments. 
 ```
+# ~/.bitcoin/bitcoin.conf
+
 # Bitcoind options
 server=1
 daemon=1
