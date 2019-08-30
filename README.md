@@ -764,7 +764,9 @@ Please keep in mind that any time Dojo is started, it must be started **BEFORE**
 
 Make sure you have a back up of your system. I will also suggest at this point that you harden your system further using the SSH Keys to login and disabling the password.
 
-`Optional Reading: SSH Key Setup - https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2`
+```
+Optional Reading: SSH Key Setup - https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2
+```
 
 Congratulations! Your mobile Samourai Wallet is now paired to Dojo.
 
