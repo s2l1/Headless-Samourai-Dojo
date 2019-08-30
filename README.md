@@ -760,18 +760,20 @@ Use api logs to watch pairing, can take a couple minutes to pair.
 
 `$ ./dojo.sh logs api`
 
-Please keep in mind that any time Dojo is started, it must be started **BEFORE** bitcoind.
+Please keep in mind that any time Dojo is started, it must be started **BEFORE** bitcoind. 
+
+Make sure you have a back up of your system. I will also suggest at this point that you harden your system further using the SSH Keys to login and disabling the password.
+
+`Optional Reading: SSH Key Setup - https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2`
 
 Congratulations! Your mobile Samourai Wallet is now paired to Dojo.
-
 
 ------------------------------------------------------------------------------------------
 
 
 To do:
 1. Test part 13 "DOCKER" on fresh minimal setup
-2. Add SSH Key Login info at the end https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#login-with-ssh-keys
-3. Rework "AUTOSTART BITCOIND"
+2. Rework "AUTOSTART BITCOIND"
 
 ## 16. ~~[AUTOSTART BITCOIND]~~
 
