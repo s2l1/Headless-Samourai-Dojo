@@ -2,7 +2,7 @@
 **for  ODROID N2**
 <sub><sup>by @GuerraMoneta</sup></sub>
 
-This guide is for Samourai Dojo on a headless server. Samourai Dojo is the backing server for Samourai Wallet. It provides HD account, loose addresses (BIP47) balances, and transactions lists. Also provides unspent output lists to the wallet. PushTX endpoint broadcasts transactions through the backing bitcoind node. 
+Looking to run a full node that can interact with a mobile wallet over Tor 24/7? Don't want to leave some dusty old laptop running in the corner with wires hanging about? This guide is for Samourai Dojo on a headless server. Samourai Dojo is the backing server for Samourai Wallet. It provides HD account, loose addresses (BIP47) balances, and transactions lists. Also provides unspent output lists to the wallet. PushTX endpoint broadcasts transactions through the backing bitcoind node. 
 
 MyDojo is a set of Docker containers providing a full Samourai backend composed of:
 * a bitcoin full node accessible as an ephemeral Tor hidden service,
@@ -42,7 +42,7 @@ Pi 4 Dojo Guide - https://burcak-baskan.gitbook.io/workspace/
 
 ## 1. [HARDWARE REQUIREMENTS]
 - https://forum.odroid.com/viewtopic.php?f=176&t=33781
-I am using this with a 500gb Samsung Portable SSD + USB3.0 and SD card. I reccommend quality SD card. I am also using hardline internet connection. You will need a Windows / Linux / Mac with good specs that is on the same network as the ODROID. Before this I have tried to get running on a Pi3b+ but had a problem. Hypothesis for problem "nodejs can communicate with bitcoind but it doesn't get a response fast enough." If you get Dojo running on Pi3b+ please contact or post a guide.
+I am using this with a 500gb Samsung Portable SSD USB3.0, hardline connections, and SD card. Add a battery back up later on to be sure your ODROID wont lose power during bad weather. You will also need a Windows / Linux / Mac with good specs that is on the same network as the ODROID. Before this I have tried to get running on a Pi3b+ but had a problem. Hypothesis for problem "nodejs can communicate with bitcoind but it doesn't get a response fast enough." If you get Dojo running on Pi3b+ please contact or post a guide to the Dojo community.
 
 
 ## 2. [OPERATING SYSTEM]
