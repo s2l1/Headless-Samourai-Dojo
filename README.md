@@ -358,7 +358,7 @@ txindex=1
 # Connection settings
 rpcuser=XXX
 rpcpassword=XXX
-rpcallowip=0.0.0.0/0
+rpcallowip=172.28.0.1/16
 rpcport=8332
 rpcbind=192.168.0.70
 rpcbind=127.0.0.1
@@ -393,7 +393,7 @@ rpcuser=XXX
 rpcpassword=XXX 
 # put any password you prefer for rpc access, please make sure is the same as BITCOIND_RPC_PASSWORD in Section 15
 
-rpcallowip=0.0.0.0/0 
+rpcallowip=172.28.0.1/16 
 # for max security, I think the accesses to the RPC API should be restricted as much as possible by using rpcallowip=
 # the idea is to restrict this access to IP addresses of machines on the LAN which absolutely need to access the RPC API
 
@@ -423,6 +423,8 @@ listenonion=1
 # tor settings
 ```
 If you have others clients (LN, Electrum, etc.) running on others local machines, you'll add new rpcallowip for them.
+
+Basically, your bitcoind can serve many clients hosted on your local network. You just have to be sure that you "whitelist" the IP addresses of these clients in bitcoin.conf by adding an rpcallowip line if it's needed.
 
 Let’s start “bitcoind” manually. Monitor the log file a little while to see if it works fine.  
 ```
