@@ -10,7 +10,7 @@ MyDojo is a set of Docker containers providing a full Samourai backend composed 
 * a backend modules with an API accessible as a static Tor hidden service,
 * a maintenance tool accessible through a Tor web browser.
 
-This setup will be running bitcoind externally, versus leaving the default option enabled where Bitcoin runs in Docker. I have chosen this setup which requires a little more work because it is faster than waiting for a full blockchain sync with ODROID N2. First I must say thanks to @hashamadeus @laurentmt @PuraVlda from the Dojo Telegram chat. Also thank you to @stadicus and Burcak Baskan for the Raspibolt guide and the Dojo Pi4 guide. This is a compiled trial and error effort of myself trying to chop together guides, and a lot of help from the Dojo chat.  
+This setup will be running bitcoind externally, versus leaving the default option enabled where bitcoind runs in Docker. I have chosen this setup which requires a little more work because it is faster than waiting for a full blockchain sync with ODROID N2. First I must say thanks to @hashamadeus @laurentmt @PuraVlda from the Dojo Telegram chat. Also thank you to @stadicus and Burcak Baskan for the Raspibolt guide and the Dojo Pi4 guide. This is a compiled trial and error effort of myself trying to chop together guides, and a lot of help from the Dojo chat.  
 
 # Table of Contents
 * [**HARDWARE REQUIREMENTS**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#1-hardware-requirements) 
