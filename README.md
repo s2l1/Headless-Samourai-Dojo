@@ -294,7 +294,6 @@ Restart Tor to activate modifications.
 
 
 # 9. [BITCOIN]
-!!!VERIFY SECURE SETTINGS IN BITCOIN.CONF!!!
 
 Now download the software directly from bitcoin.org to your ODROID, verify its signature to make sure that we use an official release, and then install it.
 ```
