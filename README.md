@@ -784,9 +784,18 @@ Optional Reading: SSH Key Setup - https://www.digitalocean.com/community/tutoria
 
 To do:
 1. Test part 13 "DOCKER" on fresh minimal setup
-2. Rework "AUTOSTART BITCOIND"
+2. Bonus - Whirlpool cli + gui 
+3. Bonus - lnd
+4. Bonus - eps
+5. Rework "AUTOSTART BITCOIND"
 
-## 16. ~~[AUTOSTART BITCOIND]~~
+## XX. ~~[WHIRLPOOL]~~
+
+## XX. ~~[EPS]~~
+
+## XX. ~~[LND]~~
+
+## XX. ~~[AUTOSTART BITCOIND]~~
 
 The system needs to run the bitcoin daemon automatically in the background, even when nobody is logged in. We use “systemd“, a daemon that controls the startup process using configuration files.
 
