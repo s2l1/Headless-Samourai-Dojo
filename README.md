@@ -222,8 +222,11 @@ The line "ufw allow from 192.168.0.0/24…" below assumes that the IP address of
 $ apt-get install ufw
 $ ufw default deny incoming
 $ ufw default allow outgoing
-$ ufw allow from 192.168.0.0/24 to any port 22 comment 'SSH access restricted to local LAN'
+$ ufw allow from 192.168.0.0/24 to any port 22 comment 'SSH access restricted to local LAN only'
 $ ufw allow proto tcp from 172.28.0.0/16 to any port 8332 comment 'allow dojo to talk to external bitcoind'
+$ ufw allow from 192.168.0.0/24 to any port 8899 comment 'allow whirlpool-gui on local network to access whirlpool-cli on Odroid'
+$ ufw allow 28333
+$ ufw allow 28334
 $ ufw enable
 $ systemctl enable ufw
 $ ufw status
@@ -377,7 +380,6 @@ bind=127.0.0.1
 listenonion=1
 
 ```
-
 ```
 # ~/.bitcoin/bitcoin.conf
 # bitcoind configuration - with comment to explain each section
@@ -402,8 +404,9 @@ rpcallowip=172.28.0.1/16
 # the idea is to restrict this access to IP addresses of machines on the LAN which absolutely need to access the RPC API
 
 rpcallowip=127.0.0.1
-# if you have others clients running directly on the same machine (not inside docker)
+# add this since you will have clients running directly on the ODROID (not inside docker/dojo)
 # adding a line rpcallowip=127.0.0.1 should help bitcoind and these clients communicate
+# https://www.lifewire.com/network-computer-special-ip-address-818385
 # if you have other clients (lnd, Electrum, etc) running on other local machines you'll need to add a new rpcallowip for them too
 
 rpcport=8332 
