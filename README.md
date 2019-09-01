@@ -362,6 +362,7 @@ txindex=1
 rpcuser=XXX
 rpcpassword=XXX
 rpcallowip=172.28.0.1/16
+rpcallowip=127.0.0.1
 rpcport=8332
 rpcbind=192.168.0.70
 rpcbind=127.0.0.1
@@ -400,6 +401,11 @@ rpcallowip=172.28.0.1/16
 # for max security, I think the accesses to the RPC API should be restricted as much as possible by using rpcallowip=
 # the idea is to restrict this access to IP addresses of machines on the LAN which absolutely need to access the RPC API
 
+rpcallowip=127.0.0.1
+# if you have others clients running directly on the same machine (not inside docker)
+# adding a line rpcallowip=127.0.0.1 should help bitcoind and these clients communicate
+# if you have other clients (lnd, Electrum, etc) running on other local machines you'll need to add a new rpcallowip for them too
+
 rpcport=8332 
 # port used to access rpc, 8332 is the default so do not change this
 
@@ -425,8 +431,6 @@ bind=127.0.0.1
 listenonion=1
 # tor settings
 ```
-If you have others clients running directly on the same machine (not inside docker), adding a line rpcallowip=127.0.0.1 should work for you. If you have others clients (lnd, Electrum, etc.) running on other local machines, you'll need to add a new rpcallowip for them as well.
-
 Basically, your bitcoind can serve many clients hosted on your local network. You just have to be sure that you "whitelist" the IP addresses of these clients in bitcoin.conf by adding an rpcallowip line if it's needed.
 
 Let’s start “bitcoind” manually. Monitor the log file a little while to see if it works fine.  
