@@ -552,6 +552,10 @@ Then run the following.
 
 `$ python3 get-pip.py`
 
+In the future, when you need to update software with PIP you will use a command similar to the following. 
+
+`pip install SoftwareName --upgrade`
+
 
 ## 13. [DOCKER]
 
@@ -791,15 +795,97 @@ Optional Reading: SSH Key Setup - https://www.digitalocean.com/community/tutoria
 
 To do:
 1. Test part 13 "DOCKER" on fresh minimal setup
-2. Bonus - Whirlpool cli + gui 
+~~2. Bonus - Whirlpool cli + gui~~ 
 3. Bonus - lnd
 4. Bonus - eps
 5. Rework "AUTOSTART BITCOIND"
+6. Add bonus sections to the TOC, redo format
 
-## XX. ~~[WHIRLPOOL]~~
+## 1. [WHIRLPOOL]
 
-## XX. ~~[EPS]~~
+https://samouraiwallet.com/whirlpool
 
+Let's mix some bitcoin. Normally you need to keep the Whirlpool GUI running on your machine at all times, but we are going to choose a little more advanced of a setup that allows us to utilize the ODROID. We will still use the GUI to interact with Whirlpool from other machines on our local network.
+
+You will need openjdk 8+ and download the Whirlpool runtimes 0.8.
+
+If you followed this guide for setup then you have already made the required Firewall rule which looked like this.
+`$ ufw allow from 192.168.0.0/24 to any port 8899 comment 'allow whirlpool-gui on local network to access whirlpool-cli on Odroid'`
+
+Since that is already taken care of we can move on to downloading and installing.
+
+```
+$ cd ~
+$ mkdir whirlpool
+$ cd whirlpool
+$ wget https://github.com/Samourai-Wallet/whirlpool-runtimes/releases/download/cli-0.8.0/whirlpool-client-cli-0.8.0-run.jar
+$ apt-get install openjdk-8-jdk
+```
+
+Note the path to `whirlpool-client-cli-0.8.0-run.jar` and enter it in the initialization command.
+
+$ java -jar /path/to/whirlpool-client-cli-0.8.0-run.jar --init
+
+You'll follow the prompts. Pair your wallet. Which I just sent the pairing code via email to myself. And the pasted that when prompted. 
+
+It should restart. The second time you use the following command.
+
+`$ java -jar /path/to/whirlpool-client-cli-0.8.0-run.jar --authenticate --listen --tor --automix`
+
+Make sure you safely record the API key as you'll need it to pair with GUI. You can use GUI to edit all the settings you want. You will need to leave this terminal window running when mixing. I will try to update this section 
+
+Now download GUI on any machine you prefer that is connected to your local network.
+
+https://github.com/Samourai-Wallet/whirlpool-gui/releases
+
+Launch the GUI and choose to connect using external cli. Input the local IP of youR ODROID which should be similar to `192.168.0.44` and leave the port default. Enter the API key you just recorded.
+
+You can now deposit and begin your first Tx0 to get started mixing with Whirlpool. Congrats! I also suggest joining the "Whirlpool CoinJoin by Samourai Wallet" chatroom on telegram if you need support. 
+
+`Suggested Reading: Whirlpool - https://support.samourai.io/section/38-whirlpool`
+
+## 2. [ELECTRS]
+https://github.com/romanz/electrs/blob/master/doc/usage.md
+
+$ wget https://www.python.org/ftp/python/3.6.3/Python-3.6.3.tgz
+$ tar xvf Python-3.6.3.tgz
+$ cd Python-3.6.3
+$ ./configure --enable-optimizations --enable-shared
+$ make -j8
+$ sudo make altinstall
+python3.6
+
+It is recommended to use make altinstall according to the official website.
+
+If you want pip to be included, you need to add --with-ensurepip=install to your configure call. For more details see ./configure --help.
+
+$ ufw allow 50001 comment 'allow incoming requests to electrs'
+$ ufw disable
+$ ufw enable 
+Install latest Rust (1.32+) and latest Electrum wallet (3.3+).
+
+Also, install the following packages (on Debian):
+```
+$ sudo apt update
+$ sudo apt install git clang cmake  # for the $ git clone below and for building 'rust-rocksdb'
+```
+
+More packages need to be installed to avoid some known problems.
+```
+$ apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
+libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
+xz-utils tk-dev libffi-dev liblzma-dev
+```
+
+ELECTRUM INSTALL~~~
+
+Now build it. First build should take ~20 minutes.
+```
+$ cd ~
+$ git clone https://github.com/romanz/electrs
+$ cd electrs
+$ cargo build --release
+```
 ## XX. ~~[LND]~~
 
 ## XX. ~~[AUTOSTART BITCOIND]~~
