@@ -795,6 +795,7 @@ Optional Reading: SSH Key Setup - https://www.digitalocean.com/community/tutoria
 
 To do:
 1. Test part 13 "DOCKER" on fresh minimal setup
+
 ~~2. Bonus - Whirlpool cli + gui~~ 
 3. Bonus - lnd
 4. Bonus - eps
@@ -810,7 +811,9 @@ Let's mix some bitcoin. Normally you need to keep the Whirlpool GUI running on y
 You will need openjdk 8+ and download the Whirlpool runtimes 0.8.
 
 If you followed this guide for setup then you have already made the required Firewall rule which looked like this.
-`$ ufw allow from 192.168.0.0/24 to any port 8899 comment 'allow whirlpool-gui on local network to access whirlpool-cli on Odroid'`
+```
+$ ufw allow from 192.168.0.0/24 to any port 8899 comment 'allow whirlpool-gui on local network to access whirlpool-cli on Odroid'
+```
 
 Since that is already taken care of we can move on to downloading and installing.
 
@@ -826,7 +829,7 @@ Note the path to `whirlpool-client-cli-0.8.0-run.jar` and enter it in the initia
 
 $ java -jar /path/to/whirlpool-client-cli-0.8.0-run.jar --init
 
-You'll follow the prompts. Pair your wallet. Which I just sent the pairing code via email to myself. And the pasted that when prompted. 
+You'll follow the prompts. Pair your wallet. Which I just sent the pairing code via email to myself and then pasted that when prompted. 
 
 It should restart. The second time you use the following command.
 
