@@ -159,9 +159,15 @@ Optional Reading: Backup - https://www.raspberrypi.org/magpi/back-up-raspberry-p
 
 ## 6. [SYSTEM SETUP]
 
-There's constantly new development for this image and ODROIDs in general. The first thing you should do after the image is up and running is to install all updates.
+
+
+There's constantly new development for this image and ODROIDs in general. The first thing you should do after the image is up and running is to install all updates and a few things needed later on in the guide.
 
 `$ apt-get update && apt-get upgrade && apt-get dist-upgrade`
+
+Install fail2ban, curl, and unzip.
+
+`$ apt-get install fail2ban git curl unzip net-tools`
 
 Setup tool can be accessed by using the following command.
 
@@ -169,13 +175,15 @@ Setup tool can be accessed by using the following command.
 
 Here you can change root password, hostname, etc. This tool will usually ask you to reboot to apply the changes.
 
+```
+# Optional Convenience Script - please note these scripts are intended for those that are using a similar hardware/OS 
+# ALWAYS analyze scripts before running them!
+$ wget https://github.com/s2l1/Headless-Samourai-Dojo/raw/master/system-setup.sh
+$ ./system-setup.sh
+```
 Set your timezone.
 
 `$ dpkg-reconfigure tzdata`
-
-Install fail2ban, curl, and unzip.
-
-`$ apt-get install fail2ban git curl unzip net-tools`
 
 Now we will format the hard disk, erasing all previous data. The external SSD is then attached to the file system and can be accessed as a regular folder (this is called mounting). We will use ext4 format, NTFS will not work.
 
