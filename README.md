@@ -795,9 +795,9 @@ Optional Reading: SSH Key Setup - https://www.digitalocean.com/community/tutoria
 
 To do:
 1. Test part 13 "DOCKER" on fresh minimal setup
-```
+
 ~~2. Bonus - Whirlpool cli + gui~~
-```
+
 3. Bonus - lnd
 4. Bonus - eps
 5. Rework "AUTOSTART BITCOIND"
