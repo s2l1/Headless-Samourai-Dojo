@@ -828,7 +828,7 @@ $ apt-get install openjdk-8-jdk
 
 Note the path to `whirlpool-client-cli-0.8.0-run.jar` and enter it in the initialization command.
 
-$ java -jar /path/to/whirlpool-client-cli-0.8.0-run.jar --init
+`$ java -jar /path/to/whirlpool-client-cli-0.8.0-run.jar --init`
 
 You'll follow the prompts. Pair your wallet. Which I just sent the pairing code via email to myself and then pasted that when prompted. 
 
