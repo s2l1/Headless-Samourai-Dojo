@@ -795,8 +795,9 @@ Optional Reading: SSH Key Setup - https://www.digitalocean.com/community/tutoria
 
 To do:
 1. Test part 13 "DOCKER" on fresh minimal setup
-
-~~2. Bonus - Whirlpool cli + gui~~ 
+```
+~~2. Bonus - Whirlpool cli + gui~~
+```
 3. Bonus - lnd
 4. Bonus - eps
 5. Rework "AUTOSTART BITCOIND"
@@ -847,33 +848,44 @@ You can now deposit and begin your first Tx0 to get started mixing with Whirlpoo
 
 `Suggested Reading: Whirlpool - https://support.samourai.io/section/38-whirlpool`
 
-## 2. [ELECTRS]
+## ~~2. [ELECTRS]~~
+
 https://github.com/romanz/electrs/blob/master/doc/usage.md
 
-$ wget https://www.python.org/ftp/python/3.6.3/Python-3.6.3.tgz
-$ tar xvf Python-3.6.3.tgz
-$ cd Python-3.6.3
-$ ./configure --enable-optimizations --enable-shared
-$ make -j8
-$ sudo make altinstall
-python3.6
+First we probably need to download and install some things.
 
-It is recommended to use make altinstall according to the official website.
+Debian does not have Python 3.6 in its repositories, which is required by Electrum, but testing has it.
 
-If you want pip to be included, you need to add --with-ensurepip=install to your configure call. For more details see ./configure --help.
+```
+$ sudo nano /etc/apt/sources.list
+# add
+deb http://ftp.de.debian.org/debian testing main
+$ echo 'APT::Default-Release "stable";' | sudo tee -a /etc/apt/apt.conf.d/00local
+$ sudo apt-get update
+$ sudo apt-get -t testing install python3.6
+$ python3.6 -V
+```
 
+I must point out that this is not an official solution as it uses testing repositories. Will update when possible.
+
+Now we must allow incoming requests to port 50001.
+
+```
 $ ufw allow 50001 comment 'allow incoming requests to electrs'
 $ ufw disable
 $ ufw enable 
+```
+
 Install latest Rust (1.32+) and latest Electrum wallet (3.3+).
 
 Also, install the following packages (on Debian):
 ```
-$ sudo apt update
-$ sudo apt install git clang cmake  # for the $ git clone below and for building 'rust-rocksdb'
+$ apt-get update
+$ apt-get install git clang cmake  # for the $ git clone below and for building 'rust-rocksdb'
 ```
 
 More packages need to be installed to avoid some known problems.
+
 ```
 $ apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
 libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
