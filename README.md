@@ -352,7 +352,7 @@ $ gpg --verify SHA256SUMS.asc
 ```
 Now we know that what we have downloaded from bitcoin.org is authentic. Extract the Bitcoin Core binaries, install them and check the version.
 ```
-tar -xvf bitcoin-0.18.1-aarch64-linux-gnu.tar.gz
+$ tar -xvf bitcoin-0.18.1-aarch64-linux-gnu.tar.gz
 $ install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.18.1/bin/*
 $ bitcoind --version
 > Bitcoin Core Daemon version v0.18.1
