@@ -175,7 +175,7 @@ Set your timezone.
 
 Install fail2ban, curl, and unzip.
 
-`$ apt-get install fail2ban curl unzip net-tools`
+`$ apt-get install fail2ban git curl unzip net-tools`
 
 Now we will format the hard disk, erasing all previous data. The external SSD is then attached to the file system and can be accessed as a regular folder (this is called mounting). We will use ext4 format, NTFS will not work.
 
@@ -852,21 +852,11 @@ You can now deposit and begin your first Tx0 to get started mixing with Whirlpoo
 
 https://github.com/romanz/electrs/blob/master/doc/usage.md
 
-First we probably need to download and install some things.
+First we need to download and install some things.
 
-Debian does not have Python 3.6 in its repositories, which is required by Electrum, but testing has it.
+Debian does not have Python 3.6+ in its repositories, which is required by Electrum.
 
-```
-$ sudo nano /etc/apt/sources.list
-# add
-deb http://ftp.de.debian.org/debian testing main
-$ echo 'APT::Default-Release "stable";' | sudo tee -a /etc/apt/apt.conf.d/00local
-$ sudo apt-get update
-$ sudo apt-get -t testing install python3.6
-$ python3.6 -V
-```
-
-I must point out that this is not an official solution as it uses testing repositories. Will update when possible.
+python3.6 -m pip install --user Electrum-3.3.8.tar.gz
 
 Now we must allow incoming requests to port 50001.
 
@@ -878,10 +868,12 @@ $ ufw enable
 
 Install latest Rust (1.32+) and latest Electrum wallet (3.3+).
 
+curl https://sh.rustup.rs -sSf | sh
+
 Also, install the following packages (on Debian):
 ```
 $ apt-get update
-$ apt-get install git clang cmake  # for the $ git clone below and for building 'rust-rocksdb'
+$ apt-get install clang cmake  # for the $ git clone below and for building 'rust-rocksdb'
 ```
 
 More packages need to be installed to avoid some known problems.
@@ -892,7 +884,7 @@ libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
 xz-utils tk-dev libffi-dev liblzma-dev
 ```
 
-ELECTRUM INSTALL~~~
+ELECTRUM INSTALL HERE
 
 Now build it. First build should take ~20 minutes.
 ```
