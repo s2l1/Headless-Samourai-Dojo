@@ -243,6 +243,7 @@ $ ufw status
 ```
 # Optional Convenience Script:
 $ wget https://github.com/s2l1/Headless-Samourai-Dojo/raw/master/ufw-setup.sh
+$ chmod 555 ufw-setup.sh
 $ ./ufw-setup.sh
 ```
 
@@ -315,6 +316,7 @@ $ systemctl status tor
 ```
 # Optional Convenience Script:
 $ wget https://github.com/s2l1/Headless-Samourai-Dojo/raw/master/tor-setup.sh
+$ chmod 555 tor-setup.sh
 $ ./tor-setup.sh
 ```
 
@@ -357,6 +359,14 @@ $ install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.18.1/bin/*
 $ bitcoind --version
 > Bitcoin Core Daemon version v0.18.1
 ```
+
+```
+# Optional Convenience Script:
+$ wget https://github.com/s2l1/Headless-Samourai-Dojo/raw/master/bitcoind-setup.sh
+$ chmod 555 bitcoind-setup.sh
+$ ./bitcoind-setup.sh
+```
+
 Now prepare Bitcoin Core directory.
 
 We use the Bitcoin daemon, called “bitcoind”, that runs in the background without user interface and stores all data in a the directory ~/.bitcoin. Instead of creating a real directory, we create a link that points to a directory on the external hard disk.
