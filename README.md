@@ -176,11 +176,12 @@ Setup tool can be accessed by using the following command.
 Here you can change root password, hostname, etc. This tool will usually ask you to reboot to apply the changes.
 
 ```
-# Optional Convenience Script - please note these scripts are intended for those that are using a similar hardware/OS 
+# Optional Convenience Script: Please note these scripts are intended for those that are using a similar hardware/OS 
 # ALWAYS analyze scripts before running them!
 $ wget https://github.com/s2l1/Headless-Samourai-Dojo/raw/master/system-setup.sh
 $ ./system-setup.sh
 ```
+
 Set your timezone.
 
 `$ dpkg-reconfigure tzdata`
@@ -238,8 +239,14 @@ $ ufw allow 28334
 $ ufw enable
 $ systemctl enable ufw
 $ ufw status
-$ exit
 ```
+
+```
+# Optional Convenience Script:
+$ wget https://github.com/s2l1/Headless-Samourai-Dojo/raw/master/ufw-setup.sh
+$ ./ufw-setup.sh
+```
+
 ```
 Optional Reading: Connecting to the Network - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#connecting-to-the-network
 Optional Reading: Connecting to ODROID - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#connecting-to-the-pi
