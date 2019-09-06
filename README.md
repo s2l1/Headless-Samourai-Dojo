@@ -290,13 +290,7 @@ The latest version of Tor can now be installed. While not required, tor-arm prov
 
 `$ apt install tor tor-arm`
 
-Check the version of Tor and that the service is up and running.
-```
-$ tor --version
-> Tor version 0.3.4.9 (git-074ca2e0054fded1).
-$ systemctl status tor
-```
-Modify the Tor configuration by uncommenting (removing the #) or adding the following lines.
+Now modify the Tor configuration by uncommenting (removing the #) or adding the following lines.
 
 `$ nano /etc/tor/torrc`
 
@@ -311,6 +305,19 @@ CookieAuthFileGroupReadable 1
 Restart Tor to activate modifications.
 
 `$ systemctl restart tor`
+
+Check the version of Tor and that the service is up and running.
+```
+$ tor --version
+> Tor version 0.3.4.9 (git-074ca2e0054fded1).
+$ systemctl status tor
+```
+
+```
+# Optional Convenience Script:
+$ wget https://github.com/s2l1/Headless-Samourai-Dojo/raw/master/tor-setup.sh
+$ ./tor-setup.sh
+```
 
 
 # 9. [BITCOIN]
