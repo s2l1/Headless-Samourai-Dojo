@@ -159,8 +159,6 @@ Optional Reading: Backup - https://www.raspberrypi.org/magpi/back-up-raspberry-p
 
 ## 6. [SYSTEM SETUP]
 
-
-
 There's constantly new development for this image and ODROIDs in general. The first thing you should do after the image is up and running is to install all updates and a few things needed later on in the guide.
 
 `$ apt-get update && apt-get upgrade && apt-get dist-upgrade`
@@ -176,9 +174,10 @@ Setup tool can be accessed by using the following command.
 Here you can change root password, hostname, etc. This tool will usually ask you to reboot to apply the changes.
 
 ```
-# Optional Convenience Script: Please note these scripts are intended for those that are using a similar hardware/OS 
+# Optional Convenience Script: Please note these scripts are intended for those that are using similar hardware/OS 
 # ALWAYS analyze scripts before running them!
 $ wget https://github.com/s2l1/Headless-Samourai-Dojo/raw/master/system-setup.sh
+$ chmod 555 system-setup.sh
 $ ./system-setup.sh
 ```
 
