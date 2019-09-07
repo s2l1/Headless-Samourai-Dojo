@@ -650,6 +650,7 @@ $ cd ~
 $ curl -fsSL https://github.com/Samourai-Wallet/samourai-dojo/archive/master.zip -o master.zip
 $ unzip master.zip
 ```
+
 Create a directory for Dojo (named dojo_dir in this doc)
 
 `$ mkdir dojo_dir`
@@ -689,9 +690,8 @@ Configure your dojo installation by editing all 3 .conf.tpl files. For each line
 
 `$ nano docker-bitcoind.conf.tpl`
 ```
-BITCOIND_RPC_USER = login protecting the access to the RPC API of your full node,
-BITCOIND_RPC_PASSWORD = password protecting the access to the RPC API of your full node.
-If your machine has a lot of RAM, it's recommended that you increase the value of BITCOIND_DB_CACHE for a faster Initial Block Download. This file also provides a few additional settings for advanced setups like static onion address for your full node, bitcoind RPC API exposed to external apps, use of an external full node.
+BITCOIND_RPC_USER = login protecting the access to the RPC API of your full node
+BITCOIND_RPC_PASSWORD = password protecting the access to the RPC API of your full node
 #
 # Set the value of BITCOIND_INSTALL to "off"
 # Set the value of BITCOIND_IP with the IP address of you bitcoin full node which is 172.28.0.1
@@ -706,16 +706,16 @@ If your machine has a lot of RAM, it's recommended that you increase the value o
 `$ nano docker-mysql.conf.tpl`
 ```
 Edit docker-mysql.conf.tpl and provide a new value for the following parameters:
-MYSQL_ROOT_PASSWORD = password protecting the root account of MySQL,
-MYSQL_USER = login of the account used to access the database of your Dojo,
-MYSQL_PASSWORD = password of the account used to access the database of your Dojo.
+MYSQL_ROOT_PASSWORD = password protecting the root account of MySQL
+MYSQL_USER = login of the account used to access the database of your Dojo
+MYSQL_PASSWORD = password of the account used to access the database of your Dojo
 ```
 `$ nano docker-node.conf.tpl`
 ```
 Edit docker-node.conf.tpl and provide a new value for the following parameters:
-NODE_API_KEY = API key which will be required from your Samourai Wallet / Sentinel for its interactions with the API of your Dojo,
-NODE_ADMIN_KEY = API key which will be required from the maintenance tool for accessing a set of advanced features provided by the API of your Dojo,
-NODE_JWT_SECRET = secret used by your Dojo for the initialization of a cryptographic key signing Json Web Tokens. These parameters will protect the access to your Dojo. Be sure to provide alphanumeric values with enough entropy.
+NODE_API_KEY = API key which will be required from your Samourai Wallet / Sentinel for its interactions with the API of your Dojo
+NODE_ADMIN_KEY = API key which will be required from the maintenance tool for accessing a set of advanced features provided by the API of your Dojo
+NODE_JWT_SECRET = secret used by your Dojo for the initialization of a cryptographic key signing Json Web Tokens. These parameters will protect the access to your Dojo. Be sure to provide alphanumeric values with enough entropy
 ```
 Open the docker quickstart terminal or a terminal console and go to the my-dojo/ directory.
 
