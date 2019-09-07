@@ -832,7 +832,8 @@ To do:
 3. Bonus - lnd
 4. Bonus - eps
 5. Rework "AUTOSTART BITCOIND"
-6. Add bonus sections to the TOC, redo format
+6. Add bonus sections to the TOC 
+7. Redo format
 
 ## 1. [WHIRLPOOL]
 
