@@ -2,6 +2,8 @@
 **for  ODROID N2**
 <sub><sup>by @GuerraMoneta</sup></sub>
 
+Check out https://github.com/s2l1/Headless-Samourai-Dojo/wiki for a better format of this guide!
+
 Looking to run a full node that can interact with a mobile wallet over Tor 24/7? Don't want to leave some dusty old laptop running in the corner with wires hanging about? This guide is for Samourai Dojo on a headless server. Samourai Dojo is the backing server for Samourai Wallet. It provides HD account, loose addresses (BIP47) balances, and transactions lists. Also provides unspent output lists to the wallet. PushTX endpoint broadcasts transactions through the backing bitcoind node. 
 
 MyDojo is a set of Docker containers providing a full Samourai backend composed of:
