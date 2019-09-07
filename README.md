@@ -983,3 +983,167 @@ Use the Bitcoin Core client bitcoin-cli to get information about the current blo
 See bitcoind in action by monitoring its log file (exit with Ctrl-C)
 
 `$ tail -f ~/.bitcoin/debug.log`
+
+LND
+
+$tmux new -s lnd
+
+So to start out let’s get the dependencies. Reference: https://github.com/lightningnetwork/lnd/blob/master/docs/INSTALL.md#bitcoind-options for more information. But lets get started. 
+
+$wget https://dl.google.com/go/go1.12.3.linux-armv6l.tar.gz sha256sum go1.12.3.linux-armv6l.tar
+
+Verify checksum:
+efce59fac5ebc7302263ca1093fe2c3252c1b936f5b1ae08afc328eea0403c79
+-----
+$tar -C /usr/local -xzf go1.12.3.linux-armv6l.tar.gz export PATH=$PATH:/usr/local/go/bin
+----
+$export GOPATH=~/gocode
+$export PATH=$PATH:$GOPATH/bin
+-----
+Add to $PATH from above to .profile to bottom of doc
+
+$nano .profile
+
+export GOPATH=~/gocode
+export PATH=$PATH:$GOPATH/bin
+
+Ctrl+X , y
+----
+Installing LND
+
+Ok so now that dependencies are installed. Next thing we need to do is install LND. Again, reference https://github.com/lightningnetwork/lnd/blob/master/docs/INSTALL.md#bitcoind-options for more information.
+
+$go get -d github.com/lightningnetwork/lnd
+$cd $GOPATH/src/github.com/lightningnetwork/lnd 
+$make && make install
+
+Once complete:
+$make check
+----
+Pairing with dojo 
+
+So for this next part we need some information prepared ahead of time. 
+Installed tor (see tor section)
+Dojo configured for external apps
+See external apps section
+You have your external IP address from docker-bitcoind.conf
+(assumes Tor is configured outside of docker, external apps setting in conf file is set to 'on' ,  & dojo was restarted and is running)
+
+Get your external facing IP address of your dojo machine by visiting --> https://www.iplocation.net/
+
+Now lets use tmux to create a split a second terminal
+$tmux new -s lnd
+
+$ lnd --bitcoin.active --bitcoin.mainnet --debuglevel=debug --bitcoin.node=bitcoind --bitcoind.rpchost=127.0.0.1:28256 --bitcoind.rpcuser=your_dojo_rpc_username --bitcoind.rpcpass=your_dojo_rpc_password --bitcoind.zmqpubrawblock=127.0.0.1:9502 --bitcoind.zmqpubrawtx=127.0.0.1:9501 --externalip=xxx.xxx.x.xxx (IP you looked up)
+
+(Note if you are running on seperate machine. You must change the IP in docker-bitcoind.conf to the IP of the machine) 
+
+Ie if your IP on your Dojo Pi is 192.168.1.XX your command would be:
+
+$ lnd --bitcoin.active --bitcoin.mainnet --debuglevel=debug --bitcoin.node=bitcoind --bitcoind.rpchost=192.168.1.XX:28256 --bitcoind.rpcuser=your_dojo_rpc_username --bitcoind.rpcpass=your_dojo_rpc_password --bitcoind.zmqpubrawblock=192.168.1.XX:9502 --bitcoind.zmqpubrawtx=192.168.1.XX:9501 --externalip=xxx.xxx.x.xxx (IP you looked up)
+
+At this point it will ask you to use the command $lncli create or unlock to create new wallet. This is a requirement everytime you start LND. But must be in a separate window.
+
+So lets switch out of this tmux session:
+Ctrl+b d 
+
+***In current terminal ***
+$lncli create
+Create new password - (Write down password created, you will need it)
+Follow prompts
+Write down 24-word seed.
+Enter
+Enter
+**You can choose to encrypt the file when prompted or enter thru it.
+
+$lncli unlock
+Enter password.
+
+(Prompt "successfully unlocked wallet")
+
+Now that we have successfully unlocked the wallet. LND will begin to verify all the blocks from your Dojo. This generally takes a few hours. So take a break and comeback. With the tmux window it will continue running so no fears on leaving it. But lets get back to LND window and verify.
+
+***Back in terminal "LND"***
+$tmux a -t ‘lnd’
+
+Verify it is running and let it process all blocks.
+----
+
+Now that the blocks are caught up and LND is running. We need to configure our lnd.conf file.
+Switch out of ‘lnd’ session.
+
+Ctrl+b d
+
+**Original Terminal**
+$lncli stop
+
+Time to edit lnd.conf to connect over Tor.
+
+$cd .lnd
+$nano lnd.conf
+
+--------------------------lnd.conf-------------------------
+alias=***your_choice***
+debuglevel=debug
+
+## Bitcoin Settings
+bitcoin.active=1
+bitcoin.mainnet=1
+bitcoin.node=bitcoind
+
+## Bitcoind Settings (**Note-must match your Dojo’s docker-bitcoind.conf for external apps***)
+
+bitcoind.rpchost=127.0.0.1:28256
+bitcoind.rpcuser=***your_dojo_rpc_username***
+bitcoind.rpcpass=***your_dojo_rpc_password***
+bitcoind.zmqpubrawblock=127.0.0.1:9502
+bitcoind.zmqpubrawtx=127.0.0.1:9501
+
+## Tor Settings
+
+tor.active=1
+tor.socks=127.0.0.1:9050
+tor.control=127.0.0.1:9051
+tor.streamisolation=1
+tor.v3=1
+
+## Application Options
+
+listen=localhost
+#tlsextraip=192.168.1.0/24 # <-- uncomment if you plan to use Zap Android/iOS and replace with your (adjust according to your local IP 192.168.0.0/24)
+#rpclisten=0.0.0.0:10009 # <-- uncomment if you plan to use Zap Android/iOS
+
+--------------------------------------------------------------------------------
+End lnd.conf file
+Save and exit 
+^X , y
+
+**Remember the bitcoind setting IP address must match that if your dojo docker-bitcoind.conf external app IP
+---------------
+
+Ok so now that we have reconfigured your lnd.conf. We need to delete the TLS cert and re-spin up LND.
+
+Delete the tls.cert file and restart LND to recreate it.
+
+$ sudo rm /home/***pi***/.lnd/tls.* (replace ***pi*** with your username)
+
+Start LND
+
+$tmux a -t 'lnd'
+$lnd
+
+*Wait till prompted to unlock wallet*
+Ctrl+b d
+
+**Original terminal**
+$lncli unlock
+Enter wallet password
+
+**Successfully Unlocked prompt)
+
+Let’s verify LND is successfully running:
+
+$tmux a -t ‘lnd’
+
+You should now be Riding the Lightning.. over Tor...backed by your own personal Dojo Node
+
