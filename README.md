@@ -4,15 +4,18 @@
 
 Check out https://github.com/s2l1/Headless-Samourai-Dojo/wiki for a better format of this guide!
 
+First I must say thanks to @hashamadeus @laurentmt @PuraVlda from the Dojo Telegram chat. Also thank you to @stadicus and Burcak Baskan for the Raspibolt guide and the Dojo Pi4 guide. This is a compiled trial and error effort of myself trying to chop together guides, and a lot of help from the Dojo chat.
+
 Looking to run a full node that can interact with a mobile wallet over Tor 24/7? Don't want to leave some dusty old laptop running in the corner with wires hanging about? This guide is for Samourai Dojo on a headless server. Samourai Dojo is the backing server for Samourai Wallet. It provides HD account, loose addresses (BIP47) balances, and transactions lists. Also provides unspent output lists to the wallet. PushTX endpoint broadcasts transactions through the backing bitcoind node. 
 
 MyDojo is a set of Docker containers providing a full Samourai backend composed of:
-* a bitcoin full node accessible as an ephemeral Tor hidden service,
-* a backend database,
-* a backend modules with an API accessible as a static Tor hidden service,
-* a maintenance tool accessible through a Tor web browser.
+* a bitcoin full node accessible as an ephemeral Tor hidden service
+* a backend database
+* a backend modules with an API accessible as a static Tor hidden service
+* a maintenance tool accessible through a Tor web browser
 
-This setup will be running bitcoind externally, versus leaving the default option enabled where bitcoind runs in Docker. I have chosen this setup which requires a little more work because it is faster than waiting for a full blockchain sync with ODROID N2. First I must say thanks to @hashamadeus @laurentmt @PuraVlda from the Dojo Telegram chat. Also thank you to @stadicus and Burcak Baskan for the Raspibolt guide and the Dojo Pi4 guide. This is a compiled trial and error effort of myself trying to chop together guides, and a lot of help from the Dojo chat.  
+This setup will be running bitcoind externally, which is a little bit more advanced, versus leaving the default option enabled where bitcoind will run inside Docker. I have chosen this setup because it is faster than waiting for a full blockchain sync with ODROID N2. If you have experience this deployment should take around 8 hours. 
+  
 
 # Table of Contents
 * [**HARDWARE REQUIREMENTS**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#1-hardware-requirements) 
@@ -32,7 +35,12 @@ This setup will be running bitcoind externally, versus leaving the default optio
 * [**PAIRING WALLET WITH DOJO**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#15-pairing-wallet-with-dojo)
 
 ```
-Sources:
+# Don't want to bother with this advanced setup?
+# Looking for some guides for other OS, hardware, etc?
+# Check out what the community is up to!
+
+
+A few sources:
 Dojo Docs - https://github.com/Samourai-Wallet/samourai-dojo/blob/master/doc/DOCKER_setup.md#first-time-setup
 Advanced Setups - https://github.com/Samourai-Wallet/samourai-dojo/blob/master/doc/DOCKER_advanced_setups.md
 Raspibolt - https://stadicus.github.io/RaspiBolt/
@@ -62,8 +70,10 @@ MIRROR: http://fuzon.co.uk/meveric/images/Stretch/Debian-Stretch64-1.0.1-2019051
 MD5: http://fuzon.co.uk/meveric/images/Stretch/Debian-Stretch64-1.0.1-20190519-N2.img.xz.md5
 SHA512: http://fuzon.co.uk/meveric/images/Stretch/Debian-Stretch64-1.0.1-20190519-N2.img.xz.sha512
 SIG: http://fuzon.co.uk/meveric/images/Stretch/Debian-Stretch64-1.0.1-20190519-N2.img.xz.sig
+
+PGP PUBLIC KEY: https://oph.mdrjr.net/meveric/meveric.asc
 ```
-Use the md5, sha512, sig, files to check that the .img is authentic. Do not trust, verify! If you are not sure please look up “md5 to verify software” and “gpg to verify software.” Please take some time to learn. Watch this entire playlist below if you are a newbie.
+Use the md5, sha512, sig, and the PGP public key to check that the Debian `.img.xz` you have downloaded is authentic. Do not trust, verify! If you are not sure on this please look up “md5 to verify software” and “gpg to verify software.” Please take some time to learn as this is used to verify things often. Watch the entire playlist below if you are a newbie and work on getting comfotable using the cmd or terminal.
 ```
 Size compressed: 113MB
 Size uncompressed: 897 MB
@@ -129,13 +139,9 @@ We now need to set the fixed (static) IP address for the ODROID. Normally, you c
 
 Apply changes. 
 
-Next, “Port Forwarding” needs to be configured. Different applications use different network ports, and the router needs to know to which internal network device the traffic of a specific port needs to be directed to. The port forwarding needs to be set up as follows.
+If you have not changed your router login password from the default, please do so now. 
 
-| Application name | External port | Internal port | IP address	Protocol | TCP or UDP |
-|---|---|---|---|---|
-| bitcoin | 8333 | 8333 | 192.168.0.20 | BOTH |
-
-If you have not changed your router login password from the default, please do so now. Apply and log out of your router. 
+Apply and log out of your router. 
 
 ## 5. [SSH]
 
@@ -174,7 +180,6 @@ Setup tool can be accessed by using the following command.
 `$ setup-odroid`
 
 Here you can change root password, hostname, etc. This tool will usually ask you to reboot to apply the changes.
-
 ```
 # Optional Convenience Script: Please note these scripts are intended for those that are using similar hardware/OS 
 # ALWAYS analyze scripts before running them!
@@ -182,7 +187,6 @@ $ wget https://github.com/s2l1/Headless-Samourai-Dojo/raw/master/system-setup.sh
 $ chmod 555 system-setup.sh
 $ ./system-setup.sh
 ```
-
 Set your timezone.
 
 `$ dpkg-reconfigure tzdata`
@@ -208,18 +212,21 @@ Edit the fstab file and the following as a new line (replace UUID=123456) at the
 Create the directory to add the hard disk and set the correct owner. Here we will use `/mnt/usb` as an example.
 `$ mkdir /mnt/usb`
 
-Mount all drives and check the file system. Is “/mnt/usb” listed?
+**NEWBIE TIPS:** `/mnt/usb/` is simply my desired path, and you can choose any path you want for the mounting of your SSD. If you did choose path, any time you see `/mnt/usb/` they should know to change it to their SSD's file path.
+
+Mount all drives and check the file system. Is `/mnt/usb` listed?
 ```
 $ mount -a
 $ df /mnt/usb
 > Filesystem     1K-blocks  Used Available Use% Mounted on
 > /dev/sda1      479667880 73756 455158568   1% /mnt/hdd
 ```
-
 ```
+# move swapfile to ssd or disable swap to extend life of SD card
+Optional Reading: Swap File - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#moving-the-swap-file
+Optional Reading: Extend Life of SD Card - https://raspberrypi.stackexchange.com/questions/169/how-can-i-extend-the-life-of-my-sd-card
 Optional Reading: Mounting External Drive - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#mounting-external-hard-disk 
 Optional Reading: Fstab Guide -https://www.howtogeek.com/howto/38125/htg-explains-what-is-the-linux-fstab-and-how-does-it-work/
-Optional Reading: Swap File - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#moving-the-swap-file
 ```
 
 
@@ -241,14 +248,12 @@ $ ufw enable
 $ systemctl enable ufw
 $ ufw status
 ```
-
 ```
 # Optional Convenience Script:
 $ wget https://github.com/s2l1/Headless-Samourai-Dojo/raw/master/ufw-setup.sh
 $ chmod 555 ufw-setup.sh
 $ ./ufw-setup.sh
 ```
-
 ```
 Optional Reading: Connecting to the Network - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#connecting-to-the-network
 Optional Reading: Connecting to ODROID - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#connecting-to-the-pi
@@ -292,16 +297,17 @@ The latest version of Tor can now be installed. While not required, tor-arm prov
 
 `$ apt install tor tor-arm`
 
-Now modify the Tor configuration by uncommenting (removing the #) or adding the following lines.
+Now modify the Tor configuration by uncommenting (removing the #) and adding the following line. 
 
 `$ nano /etc/tor/torrc`
-
 ```
-# uncomment:
+# scroll down a bit and find the section you need to edit
+
+# remove the # symbol in front of these 2 lines:
 ControlPort 9051
 CookieAuthentication 1
 
-# add:
+# now add the following line:
 CookieAuthFileGroupReadable 1
 ```
 Restart Tor to activate modifications.
@@ -314,7 +320,6 @@ $ tor --version
 > Tor version 0.3.4.9 (git-074ca2e0054fded1).
 $ systemctl status tor
 ```
-
 ```
 # Optional Convenience Script:
 $ wget https://github.com/s2l1/Headless-Samourai-Dojo/raw/master/tor-setup.sh
@@ -354,30 +359,32 @@ $ gpg --verify SHA256SUMS.asc
 > gpg: Good signature from "Wladimir J. van der Laan ..."
 > Primary key fingerprint: 01EA 5486 DE18 A882 D4C2 6845 90C8 019E 36C2 E964
 ```
-Now we know that what we have downloaded from bitcoin.org is authentic. Extract the Bitcoin Core binaries, install them and check the version.
+Now we know that what we have downloaded from bitcoin.org is authentic. Proceed to extract the Bitcoin Core binaries, install them and check the version.
 ```
 $ tar -xvf bitcoin-0.18.1-aarch64-linux-gnu.tar.gz
 $ install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.18.1/bin/*
 $ bitcoind --version
 > Bitcoin Core Daemon version v0.18.1
 ```
-
 ```
 # Optional Convenience Script:
 $ wget https://github.com/s2l1/Headless-Samourai-Dojo/raw/master/bitcoind-setup.sh
 $ chmod 555 bitcoind-setup.sh
 $ ./bitcoind-setup.sh
 ```
-
 Now prepare Bitcoin Core directory.
 
 We use the Bitcoin daemon, called “bitcoind”, that runs in the background without user interface and stores all data in a the directory ~/.bitcoin. Instead of creating a real directory, we create a link that points to a directory on the external hard disk.
 
-We add a symbolic link that points to the SSD hard disk.
+First make the bitcoin directory on your external SSD.
 
-`$ ln -s /TYPE_DESIRED_SSD_PATH_HERE/bitcoin ~/.bitcoin`
+`$ mkdir /mnt/usb/bitcoin`
 
-Navigate to the home directory an d check the symbolic link (the target must not be red). The content of this directory will actually be on the external SSD.
+Now add a symbolic link that points to the external SSD.
+
+`$ ln -s /mnt/usb/bitcoin ~/.bitcoin`
+
+Navigate to the home directory and check the symbolic link (the target must not be red). The content of this directory will actually be on the external SSD.
 
 `$ ls -la`
 
@@ -492,6 +499,7 @@ $ cd ~/download
 $ cat SHA256SUMS.asc
 ```
 
+
 ## 10. [SCP]
 
 Right at the beginning we started downloading the Bitcoin mainnet blockchain on your regular computer. Check the verification progress directly in Bitcoin Core on this computer. To proceed, it should be fully synced (see status bar).
@@ -555,7 +563,6 @@ $ cat ~/.bitcoin/debug.log | grep --max-count=3 Init
 > tor: Got service ID [YOUR_ID] advertising service [YOUR_ID].onion:8333
 > addlocal([YOUR_ID].onion:8333,4)
 ```
-
 Clear things out once you are done viewing.
 
 `$ clear`
@@ -592,16 +599,27 @@ In the future, when you need to update software with PIP you will use a command 
 
 ## 13. [DOCKER]
 
-Use pip to install docker-compose, apt-get can install an old version. Better to use the docker-compose install instructions which you can look at in Optional Reading. I will walk you through the pip install approach, there are a few ways to install the latest version.
+Now install docker using this method the convenience script. This script is meant for quick and easy install. 
 
+`$ curl -fsSL https://get.docker.com -o get-docker.sh` 
+
+`$ sh get-docker.sh`
+
+**NEWBIE TIPS:** Make sure to verify the contents of the script you downloaded matches the contents of `install.sh` located at https://github.com/docker/docker-install before executing. Take this and all security measures seriously by doing some research when necessary.
+```
+# git commit from https://github.com/docker/docker-install
+SCRIPT_COMMIT_SHA="6bf300318ebaab958c4adc341a8c7bb9f3a54a1a"
+```
+Now we will use pip to install docker-compose, I have noticed that apt-get can install an old version. Better to use the docker-compose install instructions which you can look at in Optional Reading. I will walk you through the pip install approach, though there are a few ways to install the latest version.
 ```                         
-$ python3 -m pip install --upgrade docker
 $ python3 -m pip install --upgrade docker-compose
 # Let the install finish
 # --upgrade part is only useful if you already have it, which some people may.
 ```
-
-`Optional Reading - Installing docker-compose - https://docs.docker.com/compose/install/`
+```
+Optional Reading - Install docker-compose - https://docs.docker.com/compose/install/
+Optional Reading - Install docker-compose using pip - https://docs.docker.com/compose/install/#install-using-pip
+```
 
 Now check your docker version. An outdated version can cause problems. 
 
@@ -618,7 +636,7 @@ Now to configure docker to use the external SSD. Create a new file in text edito
 Add the following 3 lines.
 ```
 { 
-                  "data-root": "/PATH_TO_SSD/docker" 
+                  "data-root": "/mnt/usb/docker" 
 } 
 ```
 Save and exit Nano text editor.
