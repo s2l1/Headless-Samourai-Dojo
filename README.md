@@ -620,7 +620,6 @@ $ python3 -m pip install --upgrade docker-compose
 Optional Reading - Install docker-compose - https://docs.docker.com/compose/install/
 Optional Reading - Install docker-compose using pip - https://docs.docker.com/compose/install/#install-using-pip
 ```
-
 Now check your docker version. An outdated version can cause problems. 
 
 `$ docker -v`
@@ -650,7 +649,7 @@ Restart docker to accept changes.
 Check that docker is using the SSD.
 ```
 $ docker info | grep "Docker Root Dir:" 
-> "data-root": "/PATH_TO_SSD/docker/"
+> "data-root": "/mnt/usb/docker/"
 ```
 Try rebooting if you do not see your external SSD listed.
 
@@ -664,28 +663,24 @@ Please verify bitcoind is not running. Will output an error if it is not running
 `$ bitcoin-cli stop`
 
 Download and unzip latest Dojo release.
-
 ```
 $ cd ~
 $ curl -fsSL https://github.com/Samourai-Wallet/samourai-dojo/archive/master.zip -o master.zip
 $ unzip master.zip
 ```
-
-Create a directory for Dojo (named dojo_dir in this doc)
+Create a directory for Dojo. We will name it `dojo_dir` for this guide.
 
 `$ mkdir dojo_dir`
 
-Copy samourai-dojo-master directory contents to dojo_dir directory. 
+Copy samourai-dojo-master directory contents to `dojo_dir` directory. 
 
 `$ cp -rv samourai-dojo-master/* dojo_dir/`
 
-Remove what will no longer be used. 
-
+Now remove all the old downloads that you used earlier in the guide.
 ```
 $ rm -rvf samourai-dojo-master/ bitcoin-0.18.1/ master.zip SHA256SUMS.asc laanwj-releases.asc get-pip.py get-docker.sh bitcoin-0.18.1-aarch64-linux-gnu.tar.gz
 ```
-
-Open Bitcoin Dockerfile in text editor. We are going to use the "aarch64-linux-gnu.tar.gz" source.
+Open bitcoin docker file in text editor. We are going to use the `aarch64-linux-gnu.tar.gz` source.
 
 `$ nano ~/dojo_dir/docker/my-dojo/bitcoin/Dockerfile`
 ```
@@ -702,11 +697,9 @@ Edit mysql Dockerfile to use a compatible database.
          #Change line #1 to:
             FROM    mariadb:latest
 ```
-Configure your dojo installation by editing all 3 .conf.tpl files. For each line USER, PASSWORD, KEY, and SECRET type in whatever you'd like. Make it secure like any other password. Also please keep in mind that BITCOIND_RPC_USER and BITCOIND_RPC_PASSWORD need to match what is in the bitcoin.conf in Section 9 above.
+Configure your Dojo installation by editing all 3 `.conf.tpl` files. For each line i.e "USER, PASSWORD, KEY, SECRET" type in anything you prefer. Make it secure like any other password. Please keep in mind that BITCOIND_RPC_USER and BITCOIND_RPC_PASSWORD need to match what is in the `bitcoin.conf` in Section 9 above.
 
 `$ cd ~/dojo_dir/docker/my-dojo/conf`
-
-
 
 `$ nano docker-bitcoind.conf.tpl`
 ```
@@ -744,7 +737,6 @@ Open the docker quickstart terminal or a terminal console and go to the my-dojo/
 This directory contains a script named dojo.sh which will be your entrypoint for all operations related to the management of your Dojo.
 
 Docker and Docker Compose are going to build the images and containers of your Dojo. This operation will take a few minutes (download and setup of all required software components). After completion, your Dojo will be launched and will be ready for connection to your "external" bitcoin full node on your ODROID. 
-
 ```
 $ cd ~/dojo_dir/docker/my-dojo
 $ ./dojo.sh install
@@ -753,33 +745,37 @@ After successful install, exit the logs with CTRL+C, and start bitcoind.
 
 `$ bitcoind`
 
-**PLEASE NOTE TO START DOJO BEFORE BITCOIND EVERY TIME** otherwise the docker network is not created by Dojo for bitcoind to bind to so it is ignored.
+**PLEASE NOTE TO START DOJO BEFORE BITCOIND EVERY TIME** If you do not do this, the docker network is not created by Dojo for bitcoind to bind to, so it is ignored.
 
 Check that all containers are up.
 
 `$ docker-compose ps`
 
 Monitor the progress made for the initialization of the database with this command. It is scanning your external bitcoind node. This will take about an hour to complete.
-./dojo.sh logs tracker
 
-Remember that bitcoind is running externally.
+`./dojo.sh logs tracker`
+
+Remember that bitcoind is running externally. This command will remind you when you go to look for logs.
 ```
 $ ./dojo.sh logs bitcoind
 > Command not supported for your setup.
 > Cause: Your Dojo is using an external bitcoind
 ```
 Did Tor bootstrap 100%?
+
 ` $ ./dojo.sh logs tor`
 
-when the syncing of the database has completed retrieve the Tor onion addresses (v2 and v3) of the API of your Dojo.
-./dojo.sh onion
+When the syncing of the database has completed retrieve the Tor onion addresses (v2 and v3) of the API of your Dojo.
+
+`./dojo.sh onion`
 
 A maintenance tool is accessible through your Tor browser at the url. The maintenance tool requires that you allow javascript for the site.
 
-A few lines ago you edited `docker-node.conf.tpl`. Sign in to the v3_address.onion (maintenance tool) with the value entered for `NODE_ADMIN_KEY`. You will see a QR code for pairing which we will utilize in the next step where you will pair your Samourai Wallet with your Dojo.
+A few lines ago you edited `docker-node.conf.tpl` entered a value for `NODE_ADMIN_KEY`. Go to the v3_address.onion (maintenance tool) and log in using the `NODE_ADMIN_KEY` value. Click the pairing tab and you will see a QR code for pairing. We will utilize in the next step where you will pair your Samourai Wallet with your Dojo.
 
 ```
-Usage: ./dojo.sh command [module] [options]
+# dojo command help
+./dojo.sh command [module] [options]
 
 Available commands:
 
@@ -825,9 +821,9 @@ Available commands:
 
 ## 15. [PAIRING WALLET WITH DOJO]
 
-Install Samourai Wallet on your mobile device. Enable Tor when you open but do not start a new wallet, tap the 3 dots in the top right corner and choose to pair with a new Dojo. 
+Install Samourai Wallet on your mobile device. Enable Tor when you open the app but do not start a new wallet. Tap the 3 dots in the top right corner and choose to pair with a new Dojo. Now scan your pairing QR code.
 
-Use api logs to watch pairing, can take a couple minutes to pair.
+Use api logs to watch pairing, it can take a couple minutes to pair.
 
 `$ ./dojo.sh logs api`
 
@@ -836,11 +832,10 @@ Please keep in mind that any time Dojo is started, it must be started **BEFORE**
 Make sure you have a back up of your system. I will also suggest at this point that you harden your system further using the SSH Keys to login and disabling the password.
 
 Congratulations! Your mobile Samourai Wallet is now paired to Dojo.
-
 ```
+Optional Reading: Login with SSH Key - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#login-with-ssh-keys
 Optional Reading: SSH Key Setup - https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2
 ```
-
 ------------------------------------------------------------------------------------------
 
 
