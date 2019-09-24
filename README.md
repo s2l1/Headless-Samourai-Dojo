@@ -577,13 +577,15 @@ Display the Bitcoin network info to verify that the different network protocols 
 
 ## 12. [PIP] 
 
-Install the Python Package Installer. Change to the home directory of the root user.
+Now install the Python Package Installer which we will utilize soon.
+
+First go to the home directory of the root user and then install the necessary dependencies. 
 
 `$ cd ~`
 
 `$ apt-get install python3-dev libffi-dev libssl-dev build-essential`
 
-**TIP:** Useful libs to have them in the system. Also python 2 is end of life so we are using python3.
+**NEWBIE TIPS:** Useful libs to have in the system. Also python2 is end of life so we are using python3.
 
 `Optional Reading: Installing PIP - https://pip.pypa.io/en/stable/installing/`
 
@@ -752,11 +754,15 @@ After successful install, exit the logs with CTRL+C, and start bitcoind.
 
 Check that all containers are up.
 
-`$ docker-compose ps`
+`$ docker ps`
+
+You can bring up the logs for all containers at any time by using this command.
+
+`$ ./dojo.sh logs`
 
 Monitor the progress made for the initialization of the database with this command. It is scanning your external bitcoind node. This will take about an hour to complete.
 
-`./dojo.sh logs tracker`
+`$ ./dojo.sh logs tracker`
 
 Remember that bitcoind is running externally. This command will remind you when you go to look for logs.
 ```
@@ -770,11 +776,13 @@ Did Tor bootstrap 100%?
 
 When the syncing of the database has completed retrieve the Tor onion addresses (v2 and v3) of the API of your Dojo.
 
-`./dojo.sh onion`
+`$ ./dojo.sh onion`
 
-A maintenance tool is accessible through your Tor browser at the url. The maintenance tool requires that you allow javascript for the site.
+A maintenance tool is accessible through your Tor browser at this onion address you have just obtained. Other than maintenance, this tool is what you will use to pair a Samourai Wallet on mobile to your Dojo on ODROID. The tool requires that you allow javascript for the site.
 
 A few lines ago you edited `docker-node.conf.tpl` entered a value for `NODE_ADMIN_KEY`. Go to the v3_address.onion (maintenance tool) and log in using the `NODE_ADMIN_KEY` value. Click the pairing tab and you will see a QR code for pairing. We will utilize in the next step where you will pair your Samourai Wallet with your Dojo.
+
+Take some time to get familiar with Dojo commands and docs below.
 
 ```
 # dojo command help
@@ -821,7 +829,10 @@ Available commands:
 
   version                       Display the version of dojo.
 ```
-
+```
+Dojo Docs - https://github.com/Samourai-Wallet/samourai-dojo/blob/master/doc/DOCKER_setup.md#first-time-setup
+Advanced Setups - https://github.com/Samourai-Wallet/samourai-dojo/blob/master/doc/DOCKER_advanced_setups.md
+```
 ## 15. [PAIRING WALLET WITH DOJO]
 
 Install Samourai Wallet on your mobile device. Enable Tor when you open the app but do not start a new wallet. Tap the 3 dots in the top right corner and choose to pair with a new Dojo. Now scan your pairing QR code.
@@ -830,7 +841,7 @@ Use api logs to watch pairing, it can take a couple minutes to pair.
 
 `$ ./dojo.sh logs api`
 
-Please keep in mind that any time Dojo is started, it must be started **BEFORE** bitcoind. 
+Please keep in mind that any time Dojo is started it must be started **BEFORE** bitcoind. 
 
 Make sure you have a back up of your system. I will also suggest at this point that you harden your system further using the SSH Keys to login and disabling the password.
 
@@ -839,19 +850,28 @@ Congratulations! Your mobile Samourai Wallet is now paired to Dojo.
 Optional Reading: Login with SSH Key - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#login-with-ssh-keys
 Optional Reading: SSH Key Setup - https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2
 ```
+
+
 ------------------------------------------------------------------------------------------
 
 
+# Bonus Guides
+* [**WHIRLPOOL**](https://github.com/s2l1/Headless-Samourai-Dojo#1-whirlpool) 
+* [**ELECTRS**](https://github.com/s2l1/Headless-Samourai-Dojo#2-electrs)
+
 To do:
-1. Test part 13 "DOCKER" on fresh minimal setup
+~~1. Test part 13 "DOCKER" on fresh minimal setup~~
 
 ~~2. Bonus - Whirlpool cli + gui~~
 
 3. Bonus - lnd
 4. Bonus - eps
-5. Rework "AUTOSTART BITCOIND"
-6. Add bonus sections to the TOC 
-7. Redo format
+5. Redo "AUTOSTART BITCOIND"
+
+~~6. Add bonus sections to the TOC ~~
+
+~~7. Redo format~~
+
 
 ## 1. [WHIRLPOOL]
 
@@ -898,7 +918,8 @@ You can now deposit and begin your first Tx0 to get started mixing with Whirlpoo
 
 `Suggested Reading: Whirlpool - https://support.samourai.io/section/38-whirlpool`
 
-## ~~2. [ELECTRS]~~
+
+## 2. [ELECTRS]
 
 https://github.com/romanz/electrs/blob/master/doc/usage.md
 
@@ -943,7 +964,7 @@ $ git clone https://github.com/romanz/electrs
 $ cd electrs
 $ cargo build --release
 ```
-## XX. ~~[LND]~~
+
 
 ## XX. ~~[AUTOSTART BITCOIND]~~
 
@@ -1002,7 +1023,8 @@ See bitcoind in action by monitoring its log file (exit with Ctrl-C)
 
 `$ tail -f ~/.bitcoin/debug.log`
 
-LND
+
+## XX. ~~[LND]~~
 
 $tmux new -s lnd
 
