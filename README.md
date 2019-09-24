@@ -36,7 +36,7 @@ If you have some spare time please make a github account and edit this guide. Yo
 * [**DOCKER**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#13-docker)
 * [**DOJO**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#14-dojo)
 * [**PAIRING WALLET WITH DOJO**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#15-pairing-wallet-with-dojo)
-* [**BONUS**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#bonus-guides)
+* [**BONUS**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#bonus-guides-under-construction)
 
 ```
 # Don't want to bother with this advanced setup?
