@@ -875,6 +875,7 @@ To do:
 ~~2. Bonus - Whirlpool cli + gui~~
 
 ~~3. Bonus - lnd~~
+
 4. Bonus - electrs or eps
 5. Redo "AUTOSTART BITCOIND"
 
