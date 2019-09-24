@@ -858,7 +858,7 @@ Optional Reading: SSH Key Setup - https://www.digitalocean.com/community/tutoria
 ------------------------------------------------------------------------------------------
 
 
-# Bonus Guides
+# Bonus Guides (UNDER CONSTRUCTION)
 * [**WHIRLPOOL**](https://github.com/s2l1/Headless-Samourai-Dojo#1-whirlpool) 
 * [**ELECTRS**](https://github.com/s2l1/Headless-Samourai-Dojo#2-electrs)
 
@@ -879,46 +879,43 @@ To do:
 
 ## 1. [WHIRLPOOL]
 
-https://samouraiwallet.com/whirlpool
+`https://samouraiwallet.com/whirlpool`
 
 Let's mix some bitcoin. Normally you need to keep the Whirlpool GUI running on your machine at all times, but we are going to choose a little more advanced of a setup that allows us to utilize the ODROID. We will still use the GUI to interact with Whirlpool from other machines on our local network.
 
-You will need openjdk 8+ and download the Whirlpool runtimes 0.8.
+You will need openjdk 8+ and download the Whirlpool runtimes.
 
 If you followed this guide for setup then you have already made the required Firewall rule which looked like this.
 ```
 $ ufw allow from 192.168.0.0/24 to any port 8899 comment 'allow whirlpool-gui on local network to access whirlpool-cli on Odroid'
 ```
-
 Since that is already taken care of we can move on to downloading and installing.
-
 ```
 $ cd ~
 $ mkdir whirlpool
 $ cd whirlpool
-$ wget https://github.com/Samourai-Wallet/whirlpool-runtimes/releases/download/cli-0.8.0/whirlpool-client-cli-0.8.0-run.jar
+$ wget https://github.com/Samourai-Wallet/whirlpool-runtimes/releases/download/cli-0.9.0/whirlpool-client-cli-0.9.0-run.jar
 $ apt-get install openjdk-8-jdk
 ```
+Note the path to `whirlpool-client-cli-0.9.0-run.jar` and enter it in the initialization command.
 
-Note the path to `whirlpool-client-cli-0.8.0-run.jar` and enter it in the initialization command.
-
-`$ java -jar /path/to/whirlpool-client-cli-0.8.0-run.jar --init`
+`$ java -jar /path/to/whirlpool-client-cli-0.9.0-run.jar --init`
 
 You'll follow the prompts. Pair your wallet. Which I just sent the pairing code via email to myself and then pasted that when prompted. 
 
 It should restart. The second time you use the following command.
 
-`$ java -jar /path/to/whirlpool-client-cli-0.8.0-run.jar --authenticate --listen --tor --automix`
+`$ java -jar /path/to/whirlpool-client-cli-0.9.0-run.jar --authenticate --listen --tor --automix`
 
 Make sure you safely record the API key as you'll need it to pair with GUI. You can use GUI to edit all the settings you want. You will need to leave this terminal window running when mixing. I will try to update this section 
 
 Now download GUI on any machine you prefer that is connected to your local network.
 
-https://github.com/Samourai-Wallet/whirlpool-gui/releases
+`https://github.com/Samourai-Wallet/whirlpool-gui/releases`
 
-Launch the GUI and choose to connect using external cli. Input the local IP of youR ODROID which should be similar to `192.168.0.44` and leave the port default. Enter the API key you just recorded.
+Launch the GUI and choose to connect using external cli. Input the local IP of your ODROID which should be similar to `192.168.0.44` and leave the port default. Enter the API key you just recorded.
 
-You can now deposit and begin your first Tx0 to get started mixing with Whirlpool. Congrats! I also suggest joining the "Whirlpool CoinJoin by Samourai Wallet" chatroom on telegram if you need support. 
+You can now deposit and begin your first Tx0 to get started mixing with Whirlpool. Congrats! I also suggest joining the "Whirlpool CoinJoin by Samourai Wallet" chatroom on Telegram if you need support. 
 
 `Suggested Reading: Whirlpool - https://support.samourai.io/section/38-whirlpool`
 
