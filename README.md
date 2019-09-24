@@ -54,14 +54,16 @@ Pi 4 Dojo Guide - https://burcak-baskan.gitbook.io/workspace/
 
 
 ## 1. [HARDWARE REQUIREMENTS]
-- https://forum.odroid.com/viewtopic.php?f=176&t=33781
+- `https://forum.odroid.com/viewtopic.php?f=176&t=33781`
+
 You will need an ODROID N2 with a hard plastic case. I am using this with a 500gb Samsung Portable SSD, USB3.0, hardline ethernet connection, and SD card. Add a battery back up later on to be sure your ODROID wont lose power during bad weather. You will also need a Windows / Linux / Mac with good specs that is on the same network as the ODROID. This setup will take up about as much room as a standard home router/modem and look clean clean once finished.
 
 Before this I have tried to get running on a Pi3b+ but had a problem. Hypothesis for problem "nodejs can communicate with bitcoind but it doesn't get a response fast enough." If you get Dojo running on Pi3b+ please contact or post a guide to the Dojo community.
 
 
 ## 2. [OPERATING SYSTEM]
-- https://forum.odroid.com/viewtopic.php?f=179&t=33865
+- `https://forum.odroid.com/viewtopic.php?f=179&t=33865`
+
 By meveric » Tue Feb 19, 2019 8:29 AM: This is the first version of my Debian Stretch image for the ODROID N2. It is uses the 4.9 LTS Kernel from Hardkernel. It's a headless server image only with user root. It has all my repositories included, which allows for easy installation and updates of packages such as Kernel and Headers and other packages. The image has my usual setup: means on first boot it's resizing the rootfs partition and configures SSH. It will automatically reboot after the initial setup after which this image is ready to use. Kernel and headers are already installed if you need to build your own drivers. A few basic tools such as htop, mc, vim and bash-completion are already installed.
 ```
 DOWNLOAD: https://oph.mdrjr.net/meveric/images/Stretch/Debian-Stretch64-1.0.1-20190519-N2.img.xz 
