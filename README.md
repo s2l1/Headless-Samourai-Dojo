@@ -6,7 +6,7 @@ Check out `https://github.com/s2l1/Headless-Samourai-Dojo/wiki` for a better for
 
 Want to ask questions, troubleshoot, contribute, or just chat about Dojo? Check out `https://t.me/samourai_dojo`.
 
-First I must say thanks to @hashamadeus @laurentmt @PuraVlda from Dojo Telegram chat. Also thanks to @stadicus and Burcak Baskan for the Raspibolt guide and the Dojo Pi4 guide. 
+First I must say thanks to @BTCxZelko @hashamadeus @laurentmt @PuraVlda from Dojo Telegram chat. Also thanks to @stadicus and Burcak Baskan for the Raspibolt guide and the Dojo Pi4 guide. 
 
 Looking to run a full node that can interact with a mobile wallet over Tor 24/7? Don't want to leave some dusty old laptop running in the corner with wires hanging about? This guide is for Samourai Dojo on a headless server. Samourai Dojo is the backing server for Samourai Wallet. It provides HD account, loose addresses (BIP47) balances, and transactions lists. Also provides unspent output lists to the wallet. PushTX endpoint broadcasts transactions through the backing bitcoind node. 
 
@@ -850,17 +850,23 @@ Make sure you have a back up of your system. I will also suggest at this point t
 
 Congratulations! Your mobile Samourai Wallet is now paired to Dojo.
 ```
+Donations:
+SegWit native address (Bech32) bc1q5s6jhl0uz9lsj3vgclvftqqap9p60ztpurpax7
+Segwit compatible address (P2SH) 3LdWJ2op2Ba51BndUkUuX7qxoecXaK5FWk
+```
+```
 Optional Reading: Login with SSH Key - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#login-with-ssh-keys
 Optional Reading: SSH Key Setup - https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2
 ```
 
 
-------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------
 
 
 # Bonus Guides (UNDER CONSTRUCTION)
-* [**WHIRLPOOL**](https://github.com/s2l1/Headless-Samourai-Dojo#1-whirlpool) 
-* [**ELECTRS**](https://github.com/s2l1/Headless-Samourai-Dojo#2-electrs)
+* [**WHIRLPOOL**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#1-whirlpool) 
+* [**ELECTRS**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#2-electrs)
+* [**LND**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#3-lnd)
 
 To do:
 
@@ -869,7 +875,7 @@ To do:
 ~~2. Bonus - Whirlpool cli + gui~~
 
 ~~3. Bonus - lnd~~
-4. Bonus - eps
+4. Bonus - electrs or eps
 5. Redo "AUTOSTART BITCOIND"
 
 ~~6. Add bonus sections to the TOC~~
@@ -967,65 +973,8 @@ $ cargo build --release
 ```
 
 
-## XX. ~~[AUTOSTART BITCOIND]~~
-
-The system needs to run the bitcoin daemon automatically in the background, even when nobody is logged in. We use “systemd“, a daemon that controls the startup process using configuration files.
-
-Create the configuration file in the Nano text editor and copy the following paragraph.
-
-`$ nano /etc/systemd/system/bitcoind.service`
-
-```
-# systemd unit for bitcoind
-# /etc/systemd/system/bitcoind.service
-
-[Unit]
-Description=Bitcoin daemon
-After=network.target
-
-[Service]
-ExecStartPre=/bin/sh -c 'sleep 30'
-ExecStart=/usr/local/bin/bitcoind -daemon -conf=~/.bitcoin/bitcoin.conf -pid=~/.bitcoin/bitcoind.pid
-PIDFile=~/.bitcoin/bitcoind.pid
-User=bitcoin
-Group=bitcoin
-Type=forking
-KillMode=process
-Restart=always
-TimeoutSec=120
-RestartSec=30
-
-[Install]
-WantedBy=multi-user.target
-```
-Save and exit.
-
-Enable the configuration file.
-
-`$ systemctl enable bitcoind.service`
-
-Restart the ODROID
-
-`$ shutdown -r now`
-
-After rebooting, the bitcoind should start and begin to sync and validate the Bitcoin blockchain. 
-
-Wait a bit, reconnect via SSH.
-
-Check the status of the bitcoin daemon that was started by systemd (exit with Ctrl-C).
-
-`$ systemctl status bitcoind.service`
-
-Use the Bitcoin Core client bitcoin-cli to get information about the current blockchain
-
-`$ bitcoin-cli getblockchaininfo`
-
-See bitcoind in action by monitoring its log file (exit with Ctrl-C)
-
-`$ tail -f ~/.bitcoin/debug.log`
-
-
-## XX. ~~[LND]~~
+## 3. [LND]
+<sub><sup>by @BTCxZelko</sup></sub>
 
 `$tmux new -s lnd`
 
@@ -1184,3 +1133,61 @@ Enter wallet password. Let’s go ahead and verify LND is successfully running.
 You should now be Riding the Lightning over Tor, backed by your own personal Dojo Node!
 
 `Sources: https://github.com/lightningnetwork/lnd/blob/master/docs/INSTALL.md#bitcoind-options for more information.`
+
+
+## XX. ~~[AUTOSTART BITCOIND]~~
+
+The system needs to run the bitcoin daemon automatically in the background, even when nobody is logged in. We use “systemd“, a daemon that controls the startup process using configuration files.
+
+Create the configuration file in the Nano text editor and copy the following paragraph.
+
+`$ nano /etc/systemd/system/bitcoind.service`
+
+```
+# systemd unit for bitcoind
+# /etc/systemd/system/bitcoind.service
+
+[Unit]
+Description=Bitcoin daemon
+After=network.target
+
+[Service]
+ExecStartPre=/bin/sh -c 'sleep 30'
+ExecStart=/usr/local/bin/bitcoind -daemon -conf=~/.bitcoin/bitcoin.conf -pid=~/.bitcoin/bitcoind.pid
+PIDFile=~/.bitcoin/bitcoind.pid
+User=bitcoin
+Group=bitcoin
+Type=forking
+KillMode=process
+Restart=always
+TimeoutSec=120
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
+```
+Save and exit.
+
+Enable the configuration file.
+
+`$ systemctl enable bitcoind.service`
+
+Restart the ODROID
+
+`$ shutdown -r now`
+
+After rebooting, the bitcoind should start and begin to sync and validate the Bitcoin blockchain. 
+
+Wait a bit, reconnect via SSH.
+
+Check the status of the bitcoin daemon that was started by systemd (exit with Ctrl-C).
+
+`$ systemctl status bitcoind.service`
+
+Use the Bitcoin Core client bitcoin-cli to get information about the current blockchain
+
+`$ bitcoin-cli getblockchaininfo`
+
+See bitcoind in action by monitoring its log file (exit with Ctrl-C)
+
+`$ tail -f ~/.bitcoin/debug.log`
