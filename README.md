@@ -2,7 +2,7 @@
 **for  ODROID N2**
 <sub><sup>by @GuerraMoneta</sup></sub>
 
-Check out https://github.com/s2l1/Headless-Samourai-Dojo/wiki for a better format of this guide!
+Check out `https://github.com/s2l1/Headless-Samourai-Dojo/wiki` for a better format of this guide!
 
 Want to ask questions, troubleshoot, contribute, or just chat about Dojo? Check out `https://t.me/samourai_dojo`.
 
