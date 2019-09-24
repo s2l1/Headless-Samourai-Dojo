@@ -976,7 +976,7 @@ $ cargo build --release
 ## 3. [LND]
 <sub><sup>by @BTCxZelko</sup></sub>
 
-`$tmux new -s lnd`
+`$ tmux new -s lnd`
 
 So to start out let’s get the dependencies. 
 ```
