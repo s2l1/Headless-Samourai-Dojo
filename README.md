@@ -863,6 +863,7 @@ Optional Reading: SSH Key Setup - https://www.digitalocean.com/community/tutoria
 * [**ELECTRS**](https://github.com/s2l1/Headless-Samourai-Dojo#2-electrs)
 
 To do:
+
 ~~1. Test part 13 "DOCKER" on fresh minimal setup~~
 
 ~~2. Bonus - Whirlpool cli + gui~~
@@ -871,7 +872,7 @@ To do:
 4. Bonus - eps
 5. Redo "AUTOSTART BITCOIND"
 
-~~6. Add bonus sections to the TOC ~~
+~~6. Add bonus sections to the TOC~~
 
 ~~7. Redo format~~
 
