@@ -1,7 +1,10 @@
-# Optional Convenience Script: Please note these scripts are intended for those that are using similar hardware/OS
-# ALWAYS analyze scripts before downloading and running them!
+# Optional Convenience Script - Advanced Dojo Setup
+# Please note these scripts are intended for those that have similar hardware/OS and some experience
+# Must make changes to the lines 62, 64, 243, 244, and 248 below for this script to work!!! 
+# See the comments around those lines for details 
+# ALWAYS analyze scripts before downloading and running them
 
-# Give the script permission and run it 
+# Give the script permission and run it when you are ready
 # Use command $ chmod 555 NAME.sh
 # Use command $ ./NAME.sh
 
