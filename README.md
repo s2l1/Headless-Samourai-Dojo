@@ -1,5 +1,5 @@
-## Headless-Samourai-Dojo
-# for Odroid N2
+# Headless-Samourai-Dojo
+## for Odroid N2
 
 First I must say thanks to @BTCxZelko @hashamadeus @laurentmt @PuraVlda from Dojo Telegram chat. Also thanks to @stadicus and Burcak Baskan for the Raspibolt guide and the Dojo Pi4 guide. 
 
