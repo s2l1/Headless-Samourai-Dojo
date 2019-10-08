@@ -296,5 +296,5 @@ echo "Check that bitcoin is authentic anywhere you download it"
 echo "***"
 echo ""
 cat ~/download/SHA256SUMS.asc
-#bitcoind setup ends
-
+# bitcoind setup ends
+# now carry on to step 10 - SCP bitcoin data from another device
