@@ -122,10 +122,10 @@ echo "Modifying the Tor configuration"
 echo "***"
 echo ""
 sed -i '56d' /etc/tor/torrc
-sed -i "56i ControlPort 9051" /etc/tor/torrc
+sed -i '56i ControlPort 9051' /etc/tor/torrc
 sed -i '60d' /etc/tor/torrc
-sed -i "60i CookieAuthentication 1" /etc/tor/torrc
-sed -i "61i CookieAuthFileGroupReadable 1" /etc/tor/torrc
+sed -i '60i CookieAuthentication 1' /etc/tor/torrc
+sed -i '61i CookieAuthFileGroupReadable 1' /etc/tor/torrc
 # method used with the sed command is to delete entire lines 56, 60 and add new line without a comment marker
 # double check /etc/tor/torrc
 
@@ -211,3 +211,48 @@ echo "***"
 echo "Now prepare Bitcoin Core directory"
 echo "***"
 echo ""
+mkdir /mnt/usb/bitcoin
+ln -s /mnt/usb/bitcoin ~/.bitcoin
+# this adds symbolic link that points to SSD
+
+echo ""
+echo "***"
+echo "Check the symbolic link"
+echo "If the target is red check your settings"
+echo "***"
+echo ""
+cd ~
+ls -la
+sleep 10s
+
+echo ""
+echo "***"
+echo "Creating and editing the bitcoin.conf file"
+echo "***"
+echo ""
+touch ~/.bitcoin/bitcoin.conf
+sed -i '1i # ~/.bitcoin/bitcoin.conf' ~/.bitcoin/bitcoin.conf
+sed -i '3i # Bitcoind options' ~/.bitcoin/bitcoin.conf
+sed -i '4i server=1' ~/.bitcoin/bitcoin.conf
+sed -i '5i daemon=1' ~/.bitcoin/bitcoin.conf
+sed -i '6i txindex=1' ~/.bitcoin/bitcoin.conf
+sed -i '8i # Connection settings ~/.bitcoin/bitcoin.conf
+sed -i '9i rpcuser=XXX' ~/.bitcoin/bitcoin.conf
+sed -i '10i rpcpassword=XXX' ~/.bitcoin/bitcoin.conf
+sed -i '11i rpcallowip=172.28.0.1/16' ~/.bitcoin/bitcoin.conf
+sed -i '12i rpcallowip=127.0.0.1' ~/.bitcoin/bitcoin.conf
+sed -i '13i rpcport=8332' ~/.bitcoin/bitcoin.conf
+sed -i '14i rpcbind=192.168.0.70' ~/.bitcoin/bitcoin.conf
+sed -i '15i rpcbind=172.28.0.1' ~/.bitcoin/bitcoin.conf
+sed -i '16i zmqpubrawblock=tcp://0.0.0.0:28332' ~/.bitcoin/bitcoin.conf
+sed -i '17i zmqpubrawtx=tcp://0.0.0.0:28333' ~/.bitcoin/bitcoin.conf
+sed -i '18i zmqpubhashblock=tcp://0.0.0.0:28334' ~/.bitcoin/bitcoin.conf
+sed -i '20i # tor settings' ~/.bitcoin/bitcoin.conf
+sed -i '21i proxy=127.0.0.1:9050' ~/.bitcoin/bitcoin.conf
+sed -i '22i bind=127.0.0.1' ~/.bitcoin/bitcoin.conf
+sed -i '23i listenonion=1' ~/.bitcoin/bitcoin.conf
+# replace 192.168.0.70 with the local ip of your ODROID as it was just an example
+# replace the XXX in rpcuser=XXX and rpcpassword=XXX with your own username and password
+# method used with the sed command is to build the config file line by line
+# double check if needeed ~/.bitcoin/bitcoin.conf
+
