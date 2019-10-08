@@ -211,11 +211,15 @@ $ df /mnt/usb
 > /dev/sda1      479667880 73756 455158568   1% /mnt/hdd
 ```
 
+Set your timezone.
+
+`$ dpkg-reconfigure tzdata`
+
 Setup tool can be accessed by using the following command.
 
 `$ setup-odroid`
 
-Here you can change root password, hostname, move rootfs to HDD/SSD etc. This tool may ask you to reboot to apply the changes.
+Here you can change root password from the default, hostname, and move rootfs to HDD/SSD etc. This tool may ask you to reboot to apply the changes.
 ```
 # Optional Convenience Script: Please note these scripts are intended for those that are using similar hardware/OS 
 # ALWAYS analyze scripts before running them!
@@ -223,9 +227,6 @@ $ wget https://github.com/s2l1/Headless-Samourai-Dojo/raw/master/system-setup.sh
 $ chmod 555 system-setup.sh
 $ ./system-setup.sh
 ```
-Set your timezone.
-
-`$ dpkg-reconfigure tzdata`
 
 ```
 # during setup you can move the swapfile to SSD or disable swap to extend life of your SD card
