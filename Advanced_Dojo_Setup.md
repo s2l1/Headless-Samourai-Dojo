@@ -189,15 +189,16 @@ Format the external hard disk with Ext4. Use `NAME` from above, example is `/dev
 
 `$ mkfs.ext4 /dev/sda1`
 
-Copy the UUID that is provided as a result of this format command to your notepad.
+Copy the `UUID` that is provided as a result of this format command to your notepad.
 
-Edit the fstab file and add the following as a new line (replace UUID=123456) at the end.
+Edit the fstab file using nano, then add the line at the end replacing the `UUID` with your own. 
+```
+$ nano /etc/fstab
+# replace `UUID=123456` with the `UUID` that you just took note of
+UUID=123456 /mnt/usb ext4 rw,nosuid,dev,noexec,noatime,nodiratime,auto,nouser,async,nofail 0 2
+```
+Create the directory to add the SSD to and set the correct owner. Here we will use `/mnt/usb` as an example.
 
-`$ nano /etc/fstab`
-
-`UUID=123456 /mnt/usb ext4 rw,nosuid,dev,noexec,noatime,nodiratime,auto,nouser,async,nofail 0 2`
-
-Create the directory to add the hard disk and set the correct owner. Here we will use `/mnt/usb` as an example.
 `$ mkdir /mnt/usb`
 
 **NEWBIE TIPS:** `/mnt/usb/` is simply my desired path, and you can choose any path you want for the mounting of your SSD. If you did choose path, any time you see `/mnt/usb/` they should know to change it to their SSD's file path.
