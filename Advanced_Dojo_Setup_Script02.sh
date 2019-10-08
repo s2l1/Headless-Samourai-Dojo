@@ -160,5 +160,10 @@ echo "***"
 echo ""
 docker info | grep "Docker Root Dir:"
 sleep 5s
-# docker setup ends
 
+echo ""
+echo "***"
+echo "Try rebooting if you do not see your SSD listed"
+echo "***"
+echo ""
+# docker setup ends
