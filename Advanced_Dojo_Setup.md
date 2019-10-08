@@ -7,22 +7,22 @@ This setup will be running bitcoind externally, which is a bit more advanced, ve
 **NEWBIE TIPS:** Each command has $ before it, and the outputs of the command are marked > to avoid confusion. # is symbol fo a comment. Do not enter these as part of a command. If you are not sure about commands, stuck, learning, etc. try visiting the information links and doing the Optional Reading. Look up terms that you do not know. The Dojo Telegram chat is also very active and helpful. I am trying my best to educate anyone new throughout this guide. 
  
 # Table of Contents
-* [**HARDWARE REQUIREMENTS**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#1-hardware-requirements) 
-* [**OPERATING SYSTEM**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#2-operating-system)
-* [**BLOCKCHAIN DATA**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#3-blockchain-data)
-* [**NETWORK**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#4-network)
-* [**SSH**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#5-ssh)
-* [**SYSTEM SETUP**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#6-system-setup)
-* [**UFW**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#7-ufw)
-* [**TOR**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#8-tor)
-* [**BITCOIN**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#9-bitcoin)
-* [**SCP**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#10-scp)
-* [**VALIDATION**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#11-validation)
-* [**PIP**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#12-pip)
-* [**DOCKER**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#13-docker)
-* [**DOJO**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#14-dojo)
-* [**PAIRING WALLET WITH DOJO**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#15-pairing-wallet-with-dojo)
-* [**BONUS**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#bonus-guides-under-construction)
+* [**HARDWARE REQUIREMENTS**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#1-hardware-requirements) 
+* [**OPERATING SYSTEM**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#2-operating-system)
+* [**BLOCKCHAIN DATA**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#3-blockchain-data)
+* [**NETWORK**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#4-network)
+* [**SSH**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#5-ssh)
+* [**SYSTEM SETUP**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#6-system-setup)
+* [**UFW**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#7-ufw)
+* [**TOR**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#8-tor)
+* [**BITCOIN**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#9-bitcoin)
+* [**SCP**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#10-scp)
+* [**VALIDATION**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#11-validation)
+* [**PIP**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#12-pip)
+* [**DOCKER**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#13-docker)
+* [**DOJO**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#14-dojo)
+* [**PAIRING WALLET WITH DOJO**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#15-pairing-wallet-with-dojo)
+* [**BONUS**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#bonus-guides-under-construction)
 
 ```
 # My sources:
