@@ -421,7 +421,7 @@ zmqpubrawblock=tcp://0.0.0.0:28332
 zmqpubrawtx=tcp://0.0.0.0:28333
 zmqpubhashblock=tcp://0.0.0.0:28334
 
-# add / change:
+# tor settings:
 proxy=127.0.0.1:9050
 bind=127.0.0.1
 listenonion=1
