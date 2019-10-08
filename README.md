@@ -7,7 +7,7 @@ Are you looking to run a full node that can interact with a mobile wallet over T
 
 If you are new to many of these concepts that is ok, no prior experience is required. This guide should help you get started and point you in the directions for researching.
 
-Choose between the 2 guides Default_Dojo_Setup.md or Advanced_Dojo_Setup.md based on your needs and preferences. If you need bitcoind to run outside of Docker then I do recommend the Advanced Setup guide.
+Choose between the 2 guides [Default_Dojo_Setup.md](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md) or [Advanced_Dojo_Setup.md](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md) based on your needs and preferences. If you need bitcoind to run outside of Docker then I do recommend the Advanced Setup guide.
 
 Samourai Dojo is the backing server for Samourai Wallet. It provides HD account, loose addresses (BIP47) balances, and transactions lists. Also provides unspent output lists to the wallet. PushTX endpoint broadcasts transactions through the backing bitcoind node. 
 
