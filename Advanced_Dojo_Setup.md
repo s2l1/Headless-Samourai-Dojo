@@ -2,21 +2,9 @@
 **for ODROID N2**
 <sub><sup>by @GuerraMoneta</sup></sub>
 
-First I must say thanks to @BTCxZelko @hashamadeus @laurentmt @PuraVlda from Dojo Telegram chat. Also thanks to @stadicus and Burcak Baskan for the Raspibolt guide and the Dojo Pi4 guide. 
+This setup will be running bitcoind externally, which is a bit more advanced, versus leaving the default option enabled where bitcoind will run inside Docker. This setup is useful for a many reasons like using pre-existing full node, it is faster than waiting for a full blockchain sync with ODROID N2, and Docker can be confusing to connect things like an electrum server to. This setup will also teach new users some very useful skills involving networking, hardware, linux, and bitcoin. If you have some experience with a similar deployment, this should take around 8 hours. Take a look at Dojo documentation on "advanced setup" in the "My sources" section below for more info.
 
-This setup will be running bitcoind externally, which is a bit more advanced, versus leaving the default option enabled where bitcoind will run inside Docker. I have chosen this setup because it is faster than waiting for a full blockchain sync with ODROID N2. If you have experience this deployment should take around 8 hours. Take a look at Dojo docs "advanced setup" section for more info.
-
-Are you looking to run a full node that can interact with a mobile wallet over Tor 24/7? Don't want to leave some dusty old laptop running in the corner with wires hanging about? This guide is for Samourai Dojo on a headless server. Samourai Dojo is the backing server for Samourai Wallet. It provides HD account, loose addresses (BIP47) balances, and transactions lists. Also provides unspent output lists to the wallet. PushTX endpoint broadcasts transactions through the backing bitcoind node. 
-
-If you are new to many of these concepts that is ok, no prior experience is required. This guide should help you get started and point you in the directions for researching.
-
-MyDojo is a set of Docker containers providing a full Samourai backend composed of:
-* a bitcoin full node accessible as an ephemeral Tor hidden service
-* a backend database
-* a backend modules with an API accessible as a static Tor hidden service
-* a maintenance tool accessible through a Tor web browser
-
-If you have some spare time please make a github account and edit this guide. You can also fork the guide to your own version, maybe for a purpose such as adding more detailed notes, or perhaps for making more drastic changes like a different method of deployment. It was a community effort that helped me bring this guide together, and it may take the same effort to keep this guide polished and up to date.  Feel free to revise things, make suggestions, become contributor, update versions, et cetera. Thank you!
+**NEWBIE TIPS:** Each command has $ before it, and the outputs of the command are marked > to avoid confusion. # is symbol fo a comment. Do not enter these as part of a command. If you are not sure about commands, stuck, learning, etc. try visiting the information links and doing the Optional Reading. Look up terms that you do not know. The Dojo Telegram chat is also very active and helpful. I am trying my best to educate anyone new throughout this guide. 
  
 # Table of Contents
 * [**HARDWARE REQUIREMENTS**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#1-hardware-requirements) 
@@ -37,16 +25,6 @@ If you have some spare time please make a github account and edit this guide. Yo
 * [**BONUS**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/README.md#bonus-guides-under-construction)
 
 ```
-# Don't want to bother with this advanced setup?
-# Looking for some guides for other OS, hardware, etc?
-# Check out some other guides, see what the community is up to!
-
-PyDojo Library - https://github.com/pxsocs/pyDojo
-Electrs ontop of Dojo @BTCxZelko - https://bitcoin-on-raspberry-pi-4.gitbook.io/workspace/installing-electrs-ontop-of-dojo
-Dojo on a Raspberry Pi 4 @burcakbaskan - https://bitcoin-on-raspberry-pi-4.gitbook.io/workspace/
-Dojo on a Raspberry Pi 4 @BtcnFtrs - https://medium.com/@btcftrs/samourai-dojo-bitcoin-full-node-on-raspberry-pi-2b6713c2ebfb
-```
-```
 # My sources:
 
 Dojo Telegram - https://t.me/samourai_dojo
@@ -56,21 +34,17 @@ Raspibolt - https://stadicus.github.io/RaspiBolt/
 Pi 4 Dojo Guide - https://burcak-baskan.gitbook.io/workspace/
 ```
 
-**NEWBIE TIPS:** Each command has $ before it, and the outputs of the command are marked > to avoid confusion. # is symbol fo a comment. Do not enter these as part of a command. If you are not sure about commands, stuck, learning, etc. try visiting the information links and doing the Optional Reading. Look up terms that you do not know. The Dojo Telegram chat is also very active and helpful. I am trying my best to educate anyone new throughout this guide. 
-
 
 ## 1. [HARDWARE REQUIREMENTS]
 - `https://forum.odroid.com/viewtopic.php?f=176&t=33781`
 
-You will need an ODROID N2 with a hard plastic case. I am using this with a 500gb Samsung Portable SSD, USB3.0, hardline ethernet connection, and SD card. Add a battery back up later on to be sure your ODROID wont lose power during bad weather. You will also need a Windows / Linux / Mac with good specs that is on the same network as the ODROID. This setup will take up about as much room as a standard home router/modem and look clean clean once finished.
-
-Before this I have tried to get running on a Pi3b+ but had a problem. Hypothesis for problem "nodejs can communicate with bitcoind but it doesn't get a response fast enough." If you get Dojo running on Pi3b+ please contact or post a guide to the Dojo community.
+You will need an ODROID N2 with a hard plastic case. I am using this with a 1tb Samsung Portable SSD, USB3.0, hardline ethernet connection, and SD card. Add a UPS battery back up later on to be sure your ODROID wont lose power during bad weather. You will also need a Windows / Linux / Mac with good specs that is on the same network as the ODROID. This setup will take up about as much room as a standard home router/modem and look clean clean once finished.
 
 
 ## 2. [OPERATING SYSTEM]
 - `https://forum.odroid.com/viewtopic.php?f=179&t=33865`
 
-By meveric » Tue Feb 19, 2019 8:29 AM: This is the first version of my Debian Stretch image for the ODROID N2. It is uses the 4.9 LTS Kernel from Hardkernel. It's a headless server image only with user root. It has all my repositories included, which allows for easy installation and updates of packages such as Kernel and Headers and other packages. The image has my usual setup: means on first boot it's resizing the rootfs partition and configures SSH. It will automatically reboot after the initial setup after which this image is ready to use. Kernel and headers are already installed if you need to build your own drivers. A few basic tools such as htop, mc, vim and bash-completion are already installed.
+By meveric » Tue Feb 19, 2019 8:29 AM: "This is the first version of my Debian Stretch image for the ODROID N2. It is uses the 4.9 LTS Kernel from Hardkernel. It's a headless server image only with user root. It has all my repositories included, which allows for easy installation and updates of packages such as Kernel and Headers and other packages. The image has my usual setup: means on first boot it's resizing the rootfs partition and configures SSH. It will automatically reboot after the initial setup after which this image is ready to use. Kernel and headers are already installed if you need to build your own drivers. A few basic tools such as htop, mc, vim and bash-completion are already installed."
 ```
 DOWNLOAD: https://oph.mdrjr.net/meveric/images/Stretch/Debian-Stretch64-1.0.1-20190519-N2.img.xz 
 MD5: https://oph.mdrjr.net/meveric/images/Stretch/Debian-Stretch64-1.0.1-20190519-N2.img.xz.md5
@@ -84,7 +58,7 @@ SIG: http://fuzon.co.uk/meveric/images/Stretch/Debian-Stretch64-1.0.1-20190519-N
 
 PGP PUBLIC KEY: https://oph.mdrjr.net/meveric/meveric.asc
 ```
-Use the md5, sha512, sig, and the PGP public key to check that the Debian `.img.xz` you have downloaded is authentic. Do not trust, verify! If you are not sure on this please look up “md5 to verify software” and “gpg to verify software.” Please take some time to learn as this is used to verify things often. Watch the entire playlist below if you are a newbie and work on getting comfotable using the cmd or terminal.
+Use the md5, sha512, sig, and the PGP public key to check that the Debian `.img.xz` you have downloaded is authentic. Do not trust, verify! If you are not sure on this please look up “md5 to verify software” and “gpg to verify software.” Please take some time to learn as this is used to verify things often. Watch the entire playlist below if you are a newbie and working on getting comfortable using the Windows CMD or Linux Terminal.
 ```
 Size compressed: 113MB
 Size uncompressed: 897 MB
@@ -148,23 +122,25 @@ Now open your web browser and access your router by entering the address, like a
 
 We now need to set the fixed (static) IP address for the ODROID. Normally, you can find this setting under “DHCP server”. The manual address should be the same as the current address, just change the last part to a lower number (e.g. 192.168.0.240 → 192.168.0.20).
 
-Apply changes. 
+Take note of this new static IP address for your ODROID and apply changes. 
 
-If you have not changed your router login password from the default, please do so now. 
+If you have not changed your router's default login password from the default, please do so now. 
 
 Apply and log out of your router. 
 
 ## 5. [SSH]
 
-Take note of the of your ODROID's static IP address on your local network. 
-
-Go ahead and SSH into your ODROID by opening terminal on any Linux machine connected to your local network.
+Go ahead and SSH into your ODROID by using Putty on Windows or Terminal on Linux. The machine must be connected to your local network.
 ```
-#Windows: 
-#Download - https://www.putty.org/
-Enter the ODROID IP and password to connect. 
+# Login info:
+# Default Username - root
+# Default Password - odroid
 
-#In Linux Terminal:
+# Windows: 
+# Download - https://www.putty.org/
+# Enter the ODROID IP you just took note of, connect, and enter the password.
+
+# In Linux Terminal:
 $ ssh root@IP.OF.ODROID.HERE
 #Example: root@192.168.0.5
 >Enter password:
@@ -182,15 +158,63 @@ There's constantly new development for this image and ODROIDs in general. The fi
 
 `$ apt-get update && apt-get upgrade && apt-get dist-upgrade`
 
-Install fail2ban, curl, and unzip.
+Install fail2ban, git, curl, unzip, and net-tools.
 
 `$ apt-get install fail2ban git curl unzip net-tools`
+
+Now we will format the SSD, erasing all previous data. Make sure your SSD is plugged in. The external SSD is then attached to the file system and can be accessed as a regular folder (this is called mounting). We will use ext4 format, NTFS will not work.
+```
+# Delete existing flash drive partition:
+$ fdisk /dev/sda
+# Press 'd'
+# Press 'w'
+```
+```
+Create new primary flash drive partition:
+$ fdisk /dev/sda
+# Press 'n'
+# Press 'p'
+# Press '1'
+# Press 'enter'
+# Press 'enter'
+# Press 'w'
+```
+Take note of the `NAME` for main partition on the external hard disk using the following command.
+
+`$ lsblk -o UUID,NAME,FSTYPE,SIZE,LABEL,MODEL`
+
+Assuming you only have one drive connected, the `NAME` will be `/dev/sda`. Double-check that `/dev/sda` exists, and that its storage capacity is what you expected.
+
+Format the external hard disk with Ext4. Use `NAME` from above, example is `/dev/sda1`.
+
+`$ mkfs.ext4 /dev/sda1`
+
+Copy the UUID that is provided as a result of this format command to your notepad.
+
+Edit the fstab file and add the following as a new line (replace UUID=123456) at the end.
+
+`$ nano /etc/fstab`
+
+`UUID=123456 /mnt/usb ext4 rw,nosuid,dev,noexec,noatime,nodiratime,auto,nouser,async,nofail 0 2`
+
+Create the directory to add the hard disk and set the correct owner. Here we will use `/mnt/usb` as an example.
+`$ mkdir /mnt/usb`
+
+**NEWBIE TIPS:** `/mnt/usb/` is simply my desired path, and you can choose any path you want for the mounting of your SSD. If you did choose path, any time you see `/mnt/usb/` they should know to change it to their SSD's file path.
+
+Mount all drives and then check the file system. Is `/mnt/usb` listed?
+```
+$ mount -a
+$ df /mnt/usb
+> Filesystem     1K-blocks  Used Available Use% Mounted on
+> /dev/sda1      479667880 73756 455158568   1% /mnt/hdd
+```
 
 Setup tool can be accessed by using the following command.
 
 `$ setup-odroid`
 
-Here you can change root password, hostname, etc. This tool will usually ask you to reboot to apply the changes.
+Here you can change root password, hostname, move rootfs to HDD/SSD etc. This tool may ask you to reboot to apply the changes.
 ```
 # Optional Convenience Script: Please note these scripts are intended for those that are using similar hardware/OS 
 # ALWAYS analyze scripts before running them!
@@ -202,38 +226,8 @@ Set your timezone.
 
 `$ dpkg-reconfigure tzdata`
 
-Now we will format the hard disk, erasing all previous data. The external SSD is then attached to the file system and can be accessed as a regular folder (this is called mounting). We will use ext4 format, NTFS will not work.
-
-Make sure your SSD is plugged in. Get the NAME for main partition on the external hard disk
-
-`$ lsblk -o UUID,NAME,FSTYPE,SIZE,LABEL,MODEL`
-
-Format the external hard disk with Ext4. Use `NAMEHERE` from above, e.g `/dev/sda1`.
-
-`$ mkfs.ext4 /dev/NAMEHERE`
-
-Copy the UUID that is provided as a result of this format command to your notepad.
-
-Edit the fstab file and the following as a new line (replace UUID=123456) at the end.
-
-`$ nano /etc/fstab`
-
-`UUID=123456 /mnt/usb ext4 rw,nosuid,dev,noexec,noatime,nodiratime,auto,nouser,async,nofail 0 2`
-
-Create the directory to add the hard disk and set the correct owner. Here we will use `/mnt/usb` as an example.
-`$ mkdir /mnt/usb`
-
-**NEWBIE TIPS:** `/mnt/usb/` is simply my desired path, and you can choose any path you want for the mounting of your SSD. If you did choose path, any time you see `/mnt/usb/` they should know to change it to their SSD's file path.
-
-Mount all drives and check the file system. Is `/mnt/usb` listed?
 ```
-$ mount -a
-$ df /mnt/usb
-> Filesystem     1K-blocks  Used Available Use% Mounted on
-> /dev/sda1      479667880 73756 455158568   1% /mnt/hdd
-```
-```
-# move swapfile to ssd or disable swap to extend life of SD card
+# during setup you can move the swapfile to SSD or disable swap to extend life of your SD card
 Optional Reading: Swap File - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#moving-the-swap-file
 Optional Reading: Extend Life of SD Card - https://raspberrypi.stackexchange.com/questions/169/how-can-i-extend-the-life-of-my-sd-card
 Optional Reading: Mounting External Drive - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#mounting-external-hard-disk 
@@ -243,9 +237,9 @@ Optional Reading: Fstab Guide -https://www.howtogeek.com/howto/38125/htg-explain
 
 ## 7. [UFW]
 
-Enable the Uncomplicated Firewall which controls what traffic is permitted and closes possible security holes. 
+Enable the Uncomplicated Firewall which controls what traffic is permitted and closes some possible security holes. 
 
-The line "ufw allow from 192.168.0.0/24…" below assumes that the IP address of your ODROID is something like 192.168.0.???, the ??? being any number from 0 to 255. If your IP address is 12.34.56.78, you must adapt this line to "ufw allow from 12.34.56.0/24…"
+The lines that start with `ufw allow from 192.168.0.0/24...` below assumes that the IP address of your ODROID is something like 192.168.0.???, the ??? being any number from 0 to 255. If your IP address is 12.34.56.78, you must adapt this line to `ufw allow from 12.34.56.0/24...`. 
 ```
 $ apt-get install ufw
 $ ufw default deny incoming
