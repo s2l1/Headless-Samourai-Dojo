@@ -256,3 +256,45 @@ sed -i '23i listenonion=1' ~/.bitcoin/bitcoin.conf
 # method used with the sed command is to build the config file line by line
 # double check if needeed ~/.bitcoin/bitcoin.conf
 
+echo ""
+echo "***"
+echo "Starting bitcoind"
+echo "***"
+echo ""
+bitcoind
+sleep 5s
+timeout 30 tail -f ~/.bitcoin/debug.log
+# watch the logs for 30 seconds be timeout
+
+echo ""
+echo "***"
+echo "If the bitoin logs show show a problem check settings"
+echo "***"
+echo ""
+sleep 5s
+
+echo ""
+echo "***"
+echo "Checking the blockchain info"
+echo "***"
+echo ""
+bitcoin-cli getblockchaininfo
+sleep 5s
+
+echo ""
+echo "***"
+echo "Stopping bitcoin"
+echo "***"
+echo ""
+bitcoin-cli stop
+sleep 5s
+
+echo ""
+echo "***"
+echo "Showing SHA256SUMS for further verification"
+echo "Check that bitcoin is authentic anywhere you download it"
+echo "***"
+echo ""
+cat ~/download/SHA256SUMS.asc
+#bitcoind setup ends
+
