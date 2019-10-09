@@ -170,7 +170,7 @@ $ fdisk /dev/sda
 # Press 'w'
 ```
 ```
-Create new primary flash drive partition:
+# Create new primary flash drive partition:
 $ fdisk /dev/sda
 # Press 'n'
 # Press 'p'
