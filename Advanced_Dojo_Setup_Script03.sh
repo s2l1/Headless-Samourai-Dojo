@@ -7,6 +7,8 @@
 # Use command $ ./NAME.sh
 
 # This is the final script for after Step 13 in the Advanced Dojo Setup guide
+# Check that each value below is properly filled in (where XXX appears)
+# Check that you have the right version of bitcoin
 # Step 13 ends with a check that docker is using the SSD, and a reboot may be needed
 
 # start dojo setup
@@ -65,9 +67,62 @@ sleep 5s
 
 echo ""
 echo "***"
-echo "Editing all 3 .conf.tpl files needed for dojo setup"
+echo "Configuring your Dojo installation by editing all 3 .conf.tpl files"
 echo "***"
 echo ""
-# ~/dojo_dir/docker/my-dojo/conf/docker-bitcoind.conf.tpl
-# ~/dojo_dir/docker/my-dojo/conf/docker-mysql.conf.tpl
-# ~/dojo_dir/docker/my-dojo/conf/docker-node.conf.tpl
+# this script may be broken during updates if changes are made to the .conf.tpl files
+# example is username and password are on lines 7 and 11, if that changed the sed commands would not work properly
+# may need to go back and check line by line for if there is failure here, or different method
+
+sed -i '7d' ~/dojo_dir/docker/my-dojo/conf/docker-bitcoind.conf.tpl
+sed -i '7i BITCOIND_RPC_USER=XXX' ~/dojo_dir/docker/my-dojo/conf/docker-bitcoind.conf.tpl
+sed -i '11d' ~/dojo_dir/docker/my-dojo/conf/docker-bitcoind.conf.tpl
+sed -i '11i BITCOIND_RPC_PASSWORD=XXX' ~/dojo_dir/docker/my-dojo/conf/docker-bitcoind.conf.tpl
+# replace the XXX in BITCOIND_RPC_USER=XXX and BITCOIND_RPC_PASSWORD=XXX
+# method used with the sed command is to delete lines 7, 11 and add new lines 7, 11
+# make it secure like any other password
+# keep in mind that BITCOIND_RPC_USER and BITCOIND_RPC_PASSWORD need to match what is in the ~/.bitcoin/bitcoin.conf
+
+sed -i '83d' ~/dojo_dir/docker/my-dojo/conf/docker-bitcoind.conf.tpl
+sed -i '83i BITCOIND_INSTALL=off' ~/dojo_dir/docker/my-dojo/conf/docker-bitcoind.conf.tpl
+# turns off the install of bitcoind inside docker
+# method used with the sed command is to delete line 83 and add new line 83
+
+sed -i '88d' ~/dojo_dir/docker/my-dojo/conf/docker-bitcoind.conf.tpl
+sed -i '88i BITCOIND_IP=172.28.0.1' ~/dojo_dir/docker/my-dojo/conf/docker-bitcoind.conf.tpl
+# Set the value of BITCOIND_IP with the IP address of you bitcoin full node which is 172.28.0.1
+# IP address source - https://github.com/Samourai-Wallet/samourai-dojo/blob/develop/docker/my-dojo/docker-compose.yaml#L92
+# method used with the sed command is to delete line 88 and add new line 88
+
+sed -i '93d' ~/dojo_dir/docker/my-dojo/conf/docker-bitcoind.conf.tpl
+sed -i '93i BITCOIND_RPC_PORT=8332' ~/dojo_dir/docker/my-dojo/conf/docker-bitcoind.conf.tpl
+# Set the value of BITCOIND_RPC_PORT with the port used by your bitcoin full node for the RPC API (8332 default)
+# method used with the sed command is to delete line 93 and add new line 93
+
+sed -i '98d' ~/dojo_dir/docker/my-dojo/conf/docker-bitcoind.conf.tpl
+sed -i '98i BITCOIND_ZMQ_RAWTXS=28333' ~/dojo_dir/docker/my-dojo/conf/docker-bitcoind.conf.tpl
+sed -i '103d' ~/dojo_dir/docker/my-dojo/conf/docker-bitcoind.conf.tpl
+sed -i '103i BITCOIND_ZMQ_BLK_HASH=28334' ~/dojo_dir/docker/my-dojo/conf/docker-bitcoind.conf.tpl
+# Set the value of BITCOIND_ZMQ_RAWTXS with the port used by your bitcoin full node for ZMQ notifications of raw transactions
+#   (i.e. port defined for -zmqpubrawtx in the bitcoin.conf of your full node)
+# Set the value of BITCOIND_ZMQ_BLK_HASH with the port used by your bitcoin full node for ZMQ notifications of block hashes
+#   (i.e. port defined for -zmqpubhashblock in the bitcoin.conf of your full node)
+# method used with the sed command is to delete lines 98,103 and add new line 98, 103
+
+sed -i '7d' ~/dojo_dir/docker/my-dojo/conf/docker-mysql.conf.tpl
+sed -i '7i MYSQL_ROOT_PASSWORD=XXX' ~/dojo_dir/docker/my-dojo/conf/docker-mysql.conf.tpl
+sed -i '11d' ~/dojo_dir/docker/my-dojo/conf/docker-mysql.conf.tpl
+sed -i '11i MYSQL_USER=XXX' ~/dojo_dir/docker/my-dojo/conf/docker-mysql.conf.tpl
+sed -i '15d' ~/dojo_dir/docker/my-dojo/conf/docker-mysql.conf.tpl
+sed -i '15i MYSQL_PASSWORD=XXX' ~/dojo_dir/docker/my-dojo/conf/docker-mysql.conf.tpl
+# replace each XXX with your desired value
+# method used with the sed command is to delete lines 7, 11, 15 and add new lines 7, 11, 15
+
+sed -i '9d' ~/dojo_dir/docker/my-dojo/conf/docker-node.conf.tpl
+sed -i '9i NODE_API_KEY=XXX' ~/dojo_dir/docker/my-dojo/conf/docker-node.conf.tpl
+sed -i '15d' ~/dojo_dir/docker/my-dojo/conf/docker-node.conf.tpl
+sed -i '15i NODE_ADMIN_KEY=XXX' ~/dojo_dir/docker/my-dojo/conf/docker-node.conf.tpl
+sed -i '21d' ~/dojo_dir/docker/my-dojo/conf/docker-node.conf.tpl
+sed -i '21i NODE_JWT_SECRET=XXX' ~/dojo_dir/docker/my-dojo/conf/docker-node.conf.tpl
+# replace each XXX with your desired value
+# method used with the sed command is to delete lines 9, 15, 21 and add new lines 9, 15, 21
