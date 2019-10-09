@@ -88,6 +88,7 @@ echo "***"
 echo ""
 read input
 if [ $input != "Y" -o $input != "y" ]; then
+
 echo ""
 echo "***"
 echo "Exiting now"
@@ -166,4 +167,5 @@ echo "***"
 echo "Try rebooting if you do not see your SSD listed"
 echo "***"
 echo ""
+fi
 # docker setup ends
