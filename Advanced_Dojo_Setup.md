@@ -711,6 +711,7 @@ Configure your Dojo installation by editing all 3 `.conf.tpl` files. For each li
 
 `$ nano docker-bitcoind.conf.tpl`
 ```
+# Using nano edit docker-bitcoind.conf.tpl and provide a new value for the following parameters:
 BITCOIND_RPC_USER = login protecting the access to the RPC API of your full node
 BITCOIND_RPC_PASSWORD = password protecting the access to the RPC API of your full node
 #
@@ -726,14 +727,14 @@ BITCOIND_RPC_PASSWORD = password protecting the access to the RPC API of your fu
 ```
 `$ nano docker-mysql.conf.tpl`
 ```
-Edit docker-mysql.conf.tpl and provide a new value for the following parameters:
+# Using nano edit docker-mysql.conf.tpl and provide a new value for the following parameters:
 MYSQL_ROOT_PASSWORD = password protecting the root account of MySQL
 MYSQL_USER = login of the account used to access the database of your Dojo
 MYSQL_PASSWORD = password of the account used to access the database of your Dojo
 ```
 `$ nano docker-node.conf.tpl`
 ```
-Edit docker-node.conf.tpl and provide a new value for the following parameters:
+# Using nano edit docker-node.conf.tpl and provide a new value for the following parameters:
 NODE_API_KEY = API key which will be required from your Samourai Wallet / Sentinel for its interactions with the API of your Dojo
 NODE_ADMIN_KEY = API key which will be required from the maintenance tool for accessing a set of advanced features provided by the API of your Dojo
 NODE_JWT_SECRET = secret used by your Dojo for the initialization of a cryptographic key signing Json Web Tokens. These parameters will protect the access to your Dojo. Be sure to provide alphanumeric values with enough entropy
