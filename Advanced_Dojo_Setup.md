@@ -185,7 +185,7 @@ Take note of the `NAME` for main partition on the external hard disk using the f
 
 Assuming you only have one drive connected, the `NAME` will be `/dev/sda`. Double-check that `/dev/sda` exists, and that its storage capacity is what you expected.
 
-Format the external hard disk with Ext4. Use `NAME` from above, example is `/dev/sda1`.
+Format the external SSD with Ext4. Use `NAME` from above, example is `/dev/sda1`.
 
 `$ mkfs.ext4 /dev/sda1`
 
