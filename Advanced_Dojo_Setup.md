@@ -718,12 +718,16 @@ BITCOIND_RPC_PASSWORD = password protecting the access to the RPC API of your fu
 # Set the value of BITCOIND_INSTALL to "off"
 # Set the value of BITCOIND_IP with the IP address of you bitcoin full node which is 172.28.0.1
 # IP address source - https://github.com/Samourai-Wallet/samourai-dojo/blob/develop/docker/my-dojo/docker-compose.yaml#L92
-# Set the value of BITCOIND_RPC_PORT with the port used by your bitcoin full node for the RPC API (8332 default)
-# Set the value of BITCOIND_ZMQ_RAWTXS with the port used by your bitcoin full node for ZMQ notifications of raw transactions
-#   (i.e. port defined for -zmqpubrawtx in the bitcoin.conf of your full node)
-# Set the value of BITCOIND_ZMQ_BLK_HASH with the port used by your bitcoin full node for ZMQ notifications of block hashes
-#   (i.e. port defined for -zmqpubhashblock in the bitcoin.conf of your full node)
 #
+# Set the value of BITCOIND_RPC_PORT to the port used by your bitcoin full node for the RPC API which is 8332 by default
+#
+# Set the value of BITCOIND_ZMQ_RAWTXS to 28333 
+# This is the port used by your bitcoin full node for ZMQ notifications of raw transactions
+#   (i.e. port defined for -zmqpubrawtx in the bitcoin.conf of your full node)
+#
+# Set the value of BITCOIND_ZMQ_BLK_HASH to 28334
+# This the port used by your bitcoin full node for ZMQ notifications of block hashes
+#   (i.e. port defined for -zmqpubhashblock in the bitcoin.conf of your full node)
 ```
 `$ nano docker-mysql.conf.tpl`
 ```
