@@ -126,3 +126,14 @@ sed -i '21d' ~/dojo_dir/docker/my-dojo/conf/docker-node.conf.tpl
 sed -i '21i NODE_JWT_SECRET=XXX' ~/dojo_dir/docker/my-dojo/conf/docker-node.conf.tpl
 # replace each XXX with your desired value
 # method used with the sed command is to delete lines 9, 15, 21 and add new lines 9, 15, 21
+
+echo ""
+echo "***"
+echo "Installing Dojo"
+echo "***"
+echo ""
+sleep 5s
+cd ~/dojo_dir/docker/my-dojo
+./dojo.sh install
+# after successful install start bitcoind and check logs
+# end dojo setup
