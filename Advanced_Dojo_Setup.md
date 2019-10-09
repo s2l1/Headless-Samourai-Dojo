@@ -743,11 +743,11 @@ NODE_API_KEY = API key which will be required from your Samourai Wallet / Sentin
 NODE_ADMIN_KEY = API key which will be required from the maintenance tool for accessing a set of advanced features provided by the API of your Dojo
 NODE_JWT_SECRET = secret used by your Dojo for the initialization of a cryptographic key signing Json Web Tokens. These parameters will protect the access to your Dojo. Be sure to provide alphanumeric values with enough entropy
 ```
-Open the docker quickstart terminal or a terminal console and go to the my-dojo/ directory.
+Using the terminal go to the `my-dojo/` directory.
 
-`$ ~/dojo_dir/docker/my-dojo`
+`$ cd ~/dojo_dir/docker/my-dojo`
 
-This directory contains a script named dojo.sh which will be your entrypoint for all operations related to the management of your Dojo.
+This directory contains a script named `dojo.sh` which will be your entrypoint for all operations related to the management of your Dojo.
 
 Docker and Docker Compose are going to build the images and containers of your Dojo. This operation will take a few minutes (download and setup of all required software components). After completion, your Dojo will be launched and will be ready for connection to your "external" bitcoin full node on your ODROID. 
 ```
