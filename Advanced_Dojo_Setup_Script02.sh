@@ -1,4 +1,4 @@
-# Optional Convenience Script - Advanced Dojo Setup
+# Advanced Dojo Setup - Optional Convenience Script 02 
 # Please note these scripts are intended for those that have similar hardware/OS and some experience
 # ALWAYS analyze scripts before downloading and running them
 
