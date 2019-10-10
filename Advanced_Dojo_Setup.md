@@ -519,7 +519,7 @@ With WinSCP, you can now connect to your ODROID.
 Accept the server certificate and navigate to the `Local` and `Remote` bitcoin directories.
 ```
 Local: C:\bitcoin\bitcoin_mainnet\
-Remote: PATH_TO_SSD\bitcoin\
+Remote: ~/.bitcoin/
 ```
 You can now copy the two subdirectories (folders) named `blocks` and `chainstate` from `Local` to `Remote`. This will take about 6 hours. The transfer must not be interupted. Make sure your computer does not go to sleep.
 
