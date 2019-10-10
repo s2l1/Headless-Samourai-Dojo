@@ -70,6 +70,7 @@ mkdir /mnt/usb
 mount -a
 sleep 5s
 df /mnt/usb
+sleep 10s
 
 echo ""
 echo "***"
