@@ -62,6 +62,17 @@ rm ~/uuid.txt
 
 echo ""
 echo "***"
+echo "Creating /mnt/usb and mounting all drives"
+echo "Check output for /dev/sda1"
+echo "***"
+echo ""
+mkdir /mnt/usb
+mount -a
+sleep 5s
+df /mnt/usb
+
+echo ""
+echo "***"
 echo "Installing fail2ban, git, curl, unzip, net-tools"
 echo "***"
 echo ""
