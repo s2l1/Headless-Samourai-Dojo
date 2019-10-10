@@ -123,14 +123,6 @@ sleep 5s
 
 echo ""
 echo "***"
-echo "Checking docker version"
-echo "***"
-echo ""
-docker -v
-sleep 5s
-
-echo ""
-echo "***"
 echo "Take a look at what PIP has installed on your system"
 echo "***"
 echo ""
