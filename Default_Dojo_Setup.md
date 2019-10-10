@@ -2,7 +2,7 @@
 **for ODROID N2**
 <sub><sup>by @GuerraMoneta</sup></sub>
 
-This is inspired by what is considered to be the "default dojo deployment". This setup is recommended to Samourai users who feel comfortable with a few command lines. More advanced users may find [this guide](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md) helpful for things like running external bitcoind.
+This is inspired by what is considered to be the "default dojo deployment". This setup is recommended to Samourai users who feel comfortable with a few command lines. More advanced users may find [this guide](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md) helpful for things like running external bitcoind. I have tried my best to give as much detail as possible for new users.
 
 # Table of Contents
 * [**HARDWARE REQUIREMENTS**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#1-hardware-requirements) 
