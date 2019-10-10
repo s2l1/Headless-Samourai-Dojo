@@ -1,19 +1,23 @@
 # Introduction
 **for ODROID N2**
+<sub><sup>by @GuerraMoneta</sup></sub>
+
+This is inspired by what is considered to be the "default dojo deployment". This setup is recommended to Samourai users who feel comfortable with a few command lines. More advanced users may find [this guide](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md) helpful for things like running external bitcoind.
 
 # Table of Contents
-* [**HARDWARE REQUIREMENTS**]() 
-* [**OPERATING SYSTEM**]()
-* [**BLOCKCHAIN DATA**]()
-* [**NETWORK**]()
-* [**SSH**]()
-* [**SYSTEM SETUP**]()
-* [**UFW**]()
-* [**SCP**]()
-* [**PIP**]()
-* [**DOCKER**]()
-* [**DOJO**]()
-* [**PAIRING WALLET WITH DOJO**]()
+* [**HARDWARE REQUIREMENTS**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#1-hardware-requirements) 
+* [**OPERATING SYSTEM**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#2-operating-system)
+* [**BLOCKCHAIN DATA**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#3-blockchain-data)
+* [**NETWORK**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#4-network)
+* [**SSH**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#5-ssh)
+* [**SYSTEM SETUP**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#6-system-setup)
+* [**UFW**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#7-ufw)
+* [**PIP**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#8-pip)
+* [**DOCKER**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#9-docker)
+* [**DOJO**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#10-dojo)
+* [**SCP**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#11-scp)
+* [**FINALIZE DOJO**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#12-finalize-dojo)
+* [**PAIRING WALLET WITH DOJO**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#13-pairing-wallet-with-dojo)
 
 ```
 # My sources:
@@ -24,8 +28,6 @@ Advanced Setups - https://github.com/Samourai-Wallet/samourai-dojo/blob/master/d
 Raspibolt - https://stadicus.github.io/RaspiBolt/
 Pi 4 Dojo Guide - https://burcak-baskan.gitbook.io/workspace/
 ```
-
-This is inspired by what is considered to be the "default dojo deployment". This setup is recommended to Samourai users who feel comfortable with a few command lines. More advanced users may find [this guide](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md) helpful for things like running external bitcoind.
 
 **NEWBIE TIPS:** Each command has `$` before it, and the outputs of the command are marked `>` to avoid confusion. `#` is symbol fo a comment. Do not enter these as part of a command. If you are not sure about commands, stuck, learning, etc. try visiting the information links and doing the Optional Reading. Look up terms that you do not know. The Dojo Telegram chat is also very active and helpful. I am trying my best to educate anyone new throughout this guide. 
 
