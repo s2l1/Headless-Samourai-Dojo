@@ -20,6 +20,48 @@ apt-get dist-upgrade
 
 echo ""
 echo "***"
+echo "Format the SSD"
+echo "See comments of this script for help
+echo "***"
+echo ""
+sleep 10s
+fdisk /dev/sda
+# delete existing drive partition
+# Press 'd'
+# Press 'w'
+fdisk /dev/sda
+# create new primary drive partition
+# Press 'n'
+# Press 'p'
+# Press '1'
+# Press 'enter'
+# Press 'enter'
+# Press 'w'
+
+echo ""
+echo "***"
+echo "Displaying the NAME on the external disk"
+echo "About to try formatting ext4 partition1 /dev/sda1"
+echo "***"
+echo ""
+lsblk -o UUID,NAME,FSTYPE,SIZE,LABEL,MODEL
+# double-check that /dev/sda exists, and that its storage capacity is what you expected
+sleep 10s
+mkfs.ext4 /dev/sda1
+# format partion 1 to ext4
+lsblk -o UUID,NAME, | grep sda1 >> ~/uuid.txt
+# look up uuid of sda1 and make txt file with that value
+sed -i 's/ sda1//g' ~/uuid.txt
+# removes the text sda1 after the uuid in txt file
+sed 1's|$| /mnt/usb ext4 rw,nosuid,dev,noexec,noatime,nodiratime,auto,nouser,async,nofail 0 2 &|' ~/uuid.txt
+# adds path and other options after the uuid in txt file
+cat ~/uuid.txt >> /etc/fstab
+# adds the line to fstab
+rm ~/uuid.txt
+# delete txt file
+
+echo ""
+echo "***"
 echo "Installing fail2ban, git, curl, unzip, net-tools"
 echo "***"
 echo ""
