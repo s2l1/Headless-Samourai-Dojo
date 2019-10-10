@@ -508,7 +508,7 @@ $ cat SHA256SUMS.asc
 
 ## 10. [SCP]
 
-Right at the beginning we started downloading the Bitcoin mainnet blockchain on your regular computer. Check the verification progress directly in Bitcoin Core on this computer. To proceed, it should be fully synced (see status bar).
+Right at the beginning we started downloading the Bitcoin mainnet blockchain on your other computer. Check the verification progress directly in Bitcoin Core on this computer. To proceed, it should be fully synced (see status bar).
 
 As soon as the verification is finished, shut down Bitcoin Core on Windows. We will now copy the whole data structure to the ODROID. This takes about 6 hours.
 
