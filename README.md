@@ -11,7 +11,7 @@ Choose between the 2 guides [Default_Dojo_Setup.md](https://github.com/s2l1/Head
 
 ## 1. [Default Dojo Setup](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md)
 
-This is inspired by what is considered to be the "default dojo deployment". This setup is recommended to Samourai users who feel comfortable with a few command lines. If you are not willing to learn these basic command line steps this is not for you and you might want to check you a "plug 'n play" Dojo like [this one](https://shop.nodl.it). Samourai Dojo is the backing server for Samourai Wallet. It provides HD account, loose addresses (BIP47) balances, and transactions lists. Also provides unspent output lists to the wallet. PushTX endpoint broadcasts transactions through the backing bitcoind node. 
+This is inspired by what is considered to be the "default dojo deployment". This setup is recommended to Samourai users who feel comfortable with a few command lines. If you are not willing to learn these basic command line steps this is not for you and you might want to check out a "plug 'n play" Dojo like [this one](https://shop.nodl.it). Samourai Dojo is the backing server for Samourai Wallet. It provides HD account, loose addresses (BIP47) balances, and transactions lists. Also provides unspent output lists to the wallet. PushTX endpoint broadcasts transactions through the backing bitcoind node. 
 
 MyDojo is a set of Docker containers providing a full Samourai backend composed of:
 * a bitcoin full node accessible as an ephemeral Tor hidden service
