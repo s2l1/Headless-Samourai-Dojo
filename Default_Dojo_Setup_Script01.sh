@@ -86,7 +86,7 @@ sleep 10s
 
 echo ""
 echo "***"
-echo "Installing fail2ban, git, curl, unzip, net-tools, sudo"
+echo "Installing fail2ban, git, curl, unzip, net-tools"
 echo "***"
 echo ""
 apt-get install fail2ban
