@@ -62,16 +62,17 @@ echo "***"
 echo ""
 sleep 5s
 lsblk -o UUID,NAME | grep sda1 >> ~/uuid.txt
-# look up uuid of sda1 and make txt file with that value
+# this will look up uuid of sda1 and makes txt file with that value
 sed -i 's/ └─sda1//g' ~/uuid.txt
 # removes the text sda1 after the uuid in txt file
 sed -i 1's|$| /mnt/usb ext4 rw,nosuid,dev,noexec,noatime,nodiratime,auto,nouser,async,nofail 0 2 &|' ~/uuid.txt
-# adds path and other options after the uuid in txt file
+# adds a necessary line with the path and other options after the uuid in txt file
+sed -i 's/^/UUID=/' ~/uuid.txt
+# adds UUID= prefix to the front of the line
 cat ~/uuid.txt >> /etc/fstab
 # adds the line to fstab
 rm ~/uuid.txt
 # delete txt file
-
 
 echo ""
 echo "***"
