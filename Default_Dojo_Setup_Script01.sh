@@ -117,7 +117,7 @@ echo "***"
 echo ""
 sleep 5s
 dpkg-reconfigure tzdata
-#system setup pauses here, and resumes at the very end of this script
+# system setup pauses here and resumes at the very end of this script
 
 # ufw setup starts
 echo ""
@@ -129,9 +129,9 @@ apt-get install ufw
 ufw default deny incoming
 ufw default allow outgoing
 # EDIT 1
-# Take note of the following lines that start with ufw allow from 192.168.0.0/24
-# These 2 lines assume that the IP address of your ODROID is something like 192.168.0.???
-# If your IP address is 12.34.56.78, you must adapt this line to ufw allow from 12.34.56.0/24
+# take note of the following lines that start with ufw allow from 192.168.0.0/24
+# these 2 lines assume that the IP address of your ODROID is something like 192.168.0.???
+# if your IP address is 12.34.56.78, you must adapt this line to ufw allow from 12.34.56.0/24
 ufw allow from 192.168.0.0/24 to any port 22 comment 'SSH access restricted to local LAN only'
 ufw allow from 192.168.0.0/24 to any port 8899 comment 'allow whirlpool-gui on local network to access whirlpool-cli on Odroid'
 
