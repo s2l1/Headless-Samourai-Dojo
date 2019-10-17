@@ -2,6 +2,7 @@
 # Please note these scripts are intended for those that have similar hardware/OS and some experience
 # ALWAYS analyze scripts before downloading and running them!!!
 
+# Use a search function like Ctrl + F in browser to find "EDIT 1", "EDIT 2", "EDIT 3"...
 # Give the script permission and run it when you are ready
 # Use command $ chmod 555 NAME.sh
 # Use command $ ./NAME.sh
@@ -42,7 +43,6 @@ echo "***"
 echo "Using ext4 format, partition1, /dev/sda1"
 echo "***"
 echo ""
-
 mkfs.ext4 /dev/sda1
 # format partion 1 to ext4
 
@@ -113,6 +113,7 @@ echo ""
 apt-get install ufw
 ufw default deny incoming
 ufw default allow outgoing
+# EDIT 1
 # Take note of the following lines that start with ufw allow from 192.168.0.0/24
 # These 2 lines assume that the IP address of your ODROID is something like 192.168.0.???
 # If your IP address is 12.34.56.78, you must adapt this line to ufw allow from 12.34.56.0/24
