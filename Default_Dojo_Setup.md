@@ -152,7 +152,7 @@ Now you are connected to your ODROID.
 There's constantly new development for this image and ODROIDs in general. The first thing you should do after the image is up and running is to install all updates and sudo.
 
 ```
-$ sudo apt-get update && apt-get upgrade && apt-get dist-upgrade
+$ apt-get update && apt-get upgrade && apt-get dist-upgrade
 $ apt-get install sudo 
 ```
 
