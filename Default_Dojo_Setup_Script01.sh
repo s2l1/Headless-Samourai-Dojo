@@ -137,7 +137,9 @@ ufw allow from 192.168.0.0/24 to any port 8899 comment 'allow whirlpool-gui on l
 
 echo ""
 echo "***"
-echo "Enabling ufw, check settings if connection failure"
+echo "Enabling ufw"
+echo "Check settings if connection failure"
+echo "See script comments for EDIT 1 if needed"
 echo "***"
 echo ""
 sleep 5s
