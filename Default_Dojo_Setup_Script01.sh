@@ -72,16 +72,29 @@ cat ~/uuid.txt >> /etc/fstab
 rm ~/uuid.txt
 # delete txt file
 
+
 echo ""
 echo "***"
-echo "Creating /mnt/usb and mounting all drives"
+echo "Creating /mnt/usb"
+echo "***"
+echo ""
+mkdir /mnt/usb
+sleep 3s
+
+echo ""
+echo "***"
+echo "Mounting all drives"
+echo "***"
+echo ""
+sleep 3s
+mount -a
+
+echo ""
+echo "***"
 echo "Check output for /dev/sda1"
 echo "***"
 echo ""
-sleep 5s
-mkdir /mnt/usb
-mount -a
-df /mnt/usb
+df -h
 sleep 10s
 
 echo ""
