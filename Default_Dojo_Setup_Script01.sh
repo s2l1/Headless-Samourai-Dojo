@@ -39,15 +39,29 @@ fdisk /dev/sda
 
 echo ""
 echo "***"
-echo "Displaying the NAME on the external disk"
-echo "About to try formatting ext4 partition1 /dev/sda1"
+echo "Using ext4 format, partition1, /dev/sda1"
+echo "***"
+echo ""
+
+mkfs.ext4 /dev/sda1
+# format partion 1 to ext4
+
+echo ""
+echo "***"
+echo "Displaying the name on the external disk"
 echo "***"
 echo ""
 lsblk -o UUID,NAME,FSTYPE,SIZE,LABEL,MODEL
 # double-check that /dev/sda exists, and that its storage capacity is what you expected
 sleep 10s
-mkfs.ext4 /dev/sda1
-# format partion 1 to ext4
+lsblk -o UUID,NAME | grep sda1 >> ~/uuid.txt
+
+echo ""
+echo "***"
+echo "Editing /etc/fstab to input UUID for sda1 and settings"
+echo "***"
+echo ""
+sleep 5s
 lsblk -o UUID,NAME | grep sda1 >> ~/uuid.txt
 # look up uuid of sda1 and make txt file with that value
 sed -i 's/ sda1//g' ~/uuid.txt
@@ -81,7 +95,6 @@ apt-get install git
 apt-get install curl
 apt-get install unzip
 apt-get install net-tools
-apt-get install sudo
 
 echo ""
 echo "***"
