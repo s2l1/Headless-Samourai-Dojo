@@ -19,7 +19,7 @@ apt-get dist-upgrade
 echo ""
 echo "***"
 echo "Format the SSD"
-echo "See comments of this script for help
+echo "See comments of this script for help"
 echo "***"
 echo ""
 sleep 10s
