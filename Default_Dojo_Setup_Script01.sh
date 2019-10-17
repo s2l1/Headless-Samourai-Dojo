@@ -64,9 +64,9 @@ echo ""
 sleep 5s
 lsblk -o UUID,NAME | grep sda1 >> ~/uuid.txt
 # look up uuid of sda1 and make txt file with that value
-sed -i 's/ sda1//g' ~/uuid.txt
+sed -i 's/ └─sda1//g' ~/uuid.txt
 # removes the text sda1 after the uuid in txt file
-sed 1's|$| /mnt/usb ext4 rw,nosuid,dev,noexec,noatime,nodiratime,auto,nouser,async,nofail 0 2 &|' ~/uuid.txt
+sed -i 1's|$| /mnt/usb ext4 rw,nosuid,dev,noexec,noatime,nodiratime,auto,nouser,async,nofail 0 2 &|' ~/uuid.txt
 # adds path and other options after the uuid in txt file
 cat ~/uuid.txt >> /etc/fstab
 # adds the line to fstab
@@ -79,9 +79,9 @@ echo "Creating /mnt/usb and mounting all drives"
 echo "Check output for /dev/sda1"
 echo "***"
 echo ""
+sleep 5s
 mkdir /mnt/usb
 mount -a
-sleep 5s
 df /mnt/usb
 sleep 10s
 
