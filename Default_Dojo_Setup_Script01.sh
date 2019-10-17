@@ -73,7 +73,7 @@ sleep 10s
 
 echo ""
 echo "***"
-echo "Installing fail2ban, git, curl, unzip, net-tools"
+echo "Installing fail2ban, git, curl, unzip, net-tools, sudo"
 echo "***"
 echo ""
 apt-get install fail2ban
@@ -81,24 +81,16 @@ apt-get install git
 apt-get install curl
 apt-get install unzip
 apt-get install net-tools
+apt-get install sudo
 
 echo ""
 echo "***"
 echo "Set your timezone."
 echo "***"
 echo ""
+sleep 5s
 dpkg-reconfigure tzdata
-
-echo ""
-echo "***"
-echo "Running setup-odroid in 10 seconds"
-echo "Change root password, hostname, move rootfs, etc." 
-echo "This tool may ask you to reboot to apply the changes once you are finished"
-echo "***"
-echo ""
-sleep 10s
-setup-odroid
-#system setup ends
+#system setup pauses here, and resumes at the very end of this script
 
 # ufw setup starts
 echo ""
@@ -257,4 +249,16 @@ echo "***"
 echo ""
 fi
 # docker setup ends
+
+#system setup resumes here
+echo ""
+echo "***"
+echo "Running setup-odroid in 10 seconds"
+echo "Change root password, hostname" 
+echo "This tool may ask you to reboot to apply the changes once you are finished"
+echo "***"
+echo ""
+sleep 10s
+setup-odroid
+#system setup ends
 
