@@ -174,7 +174,6 @@ Reboot and and log in with the new user "admin".
 
 `$ shutdown -r now`
 
-NOTE: MOVE THIS TO RIGHT PART OF GUIDE
 Now lock the “root” account with the following command.
 
 `$ sudo passwd -l root`
