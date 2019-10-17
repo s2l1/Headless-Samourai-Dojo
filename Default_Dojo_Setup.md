@@ -149,7 +149,7 @@ $ ssh root@IP.OF.ODROID.HERE
 ```
 Now you are connected to your ODROID. 
 
-There's constantly new development for this image and ODROIDs in general. The first thing you should do after the image is up and running is to install all updates and a few things needed later on in the guide.
+There's constantly new development for this image and ODROIDs in general. The first thing you should do after the image is up and running is to install all updates and sudo.
 
 ```
 $ sudo apt-get update && apt-get upgrade && apt-get dist-upgrade
