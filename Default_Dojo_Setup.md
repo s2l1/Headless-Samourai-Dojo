@@ -9,7 +9,7 @@ This is inspired by what is considered to be the "default dojo deployment". This
 * [**OPERATING SYSTEM**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#2-operating-system)
 * [**BLOCKCHAIN DATA**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#3-blockchain-data)
 * [**NETWORK**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#4-network)
-* [**SSH**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#5-ssh-sudo-and-root)
+* [**SSH AND PRIVLEGES**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#5-ssh-sudo-and-root)
 * [**SYSTEM SETUP**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#6-system-setup)
 * [**UFW**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#7-ufw)
 * [**PIP**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#8-pip)
