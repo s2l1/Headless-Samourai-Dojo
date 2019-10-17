@@ -9,7 +9,7 @@ This is inspired by what is considered to be the "default dojo deployment". This
 * [**OPERATING SYSTEM**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#2-operating-system)
 * [**BLOCKCHAIN DATA**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#3-blockchain-data)
 * [**NETWORK**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#4-network)
-* [**SSH**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#5-ssh)
+* [**SSH**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#5-ssh-sudo-and-root)
 * [**SYSTEM SETUP**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#6-system-setup)
 * [**UFW**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#7-ufw)
 * [**PIP**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Default_Dojo_Setup.md#8-pip)
@@ -34,7 +34,11 @@ Pi 4 Dojo Guide - https://burcak-baskan.gitbook.io/workspace/
 ## 1. [HARDWARE REQUIREMENTS]
 - `https://forum.odroid.com/viewtopic.php?f=176&t=33781`
 
-You will need an ODROID N2 with a hard plastic case. I am using this with a 1tb Samsung Portable SSD, USB3.0, hardline ethernet connection, and SD card. Add a UPS battery back up later on to be sure your ODROID wont lose power during bad weather. You will also need a Windows / Linux / Mac with good specs that is on the same network as the ODROID. This setup will take up about as much room as a standard home router/modem and look clean clean once finished.
+You will need an ODROID N2 and I do suggest getting a case for it. I am using this with a 1tb Samsung Portable SSD, USB3.0, hardline ethernet connection, and SD card. You could also use an old 500gb HDD if you have a spare on hand to tinker with.
+
+You will also need a Windows / Linux / Mac with good specs that is on the same network as the ODROID. This setup will take up about as much room as a standard home router/modem and look clean clean once finished.
+
+Add a UPS battery back up later on to be sure your ODROID wont lose power during bad weather etc. 
 
 
 ## 2. [OPERATING SYSTEM]
@@ -54,7 +58,9 @@ SIG: http://fuzon.co.uk/meveric/images/Stretch/Debian-Stretch64-1.0.1-20190519-N
 
 PGP PUBLIC KEY: https://oph.mdrjr.net/meveric/meveric.asc
 ```
-Use the md5, sha512, sig, and the PGP public key to check that the Debian `.img.xz` you have downloaded is authentic. Do not trust, verify! If you are not sure on this please look up “md5 to verify software” and “gpg to verify software.” Please take some time to learn as this is used to verify things often. Watch the entire playlist below if you are a newbie and working on getting comfortable using the Windows CMD or Linux Terminal.
+Use the md5, sha512, sig, and the PGP public key to check that the Debian `.img.xz` you have downloaded is authentic. Do not trust, verify! If you are not sure on this please look up “md5 to verify software” and “gpg to verify software.” 
+
+Please take some time to learn as this is used to verify things often. Watch the entire playlist below if you are a newbie and working on getting comfortable using the Windows CMD or Linux Terminal.
 ```
 Size compressed: 113MB
 Size uncompressed: 897 MB
@@ -80,7 +86,7 @@ This guide assumes that many will use a Windows machine, but it should also work
 
 Using SCP, we will copy the blockchain from the Windows computer over the local network later in this guide.
 
-For now download the Bitcoin Core installer from bitcoincore.org and store it in the directory you want to use to download the blockchain. To check the authenticity of the program, we will calculate its checksum and compare it with the checksums provided.
+For now download the Bitcoin Core installer from `bitcoincore.org` and store it in the directory you want to use to download the blockchain. To check the authenticity of the program, we will calculate its checksum and compare it with the checksums provided.
 
 In Windows, I’ll preface all commands you need to enter with `$`, so with the command `$ cd bitcoin` just type `cd bitcoin` and hit enter.
 
@@ -124,11 +130,11 @@ If you have not changed your router's default login password from the default, p
 Apply and log out of your router. 
 
 
-## 5. [SSH]
+## 5. [SSH, SUDO, AND ROOT]
 
-Go ahead and SSH into your ODROID by using Putty on Windows or Terminal on Linux. The machine must be connected to your local network.
+Go ahead and log in or SSH into your ODROID by using Putty on Windows or Terminal on Linux. The machine must be connected to your local network.
 ```
-# Login info:
+# Default Login Info:
 # Default Username - root
 # Default Password - odroid
 
@@ -139,9 +145,44 @@ Go ahead and SSH into your ODROID by using Putty on Windows or Terminal on Linux
 # In Linux Terminal:
 $ ssh root@IP.OF.ODROID.HERE
 #Example: root@192.168.0.5
->Enter password:
+>Enter password:odroid
 ```
-Now you are connected to your ODROID and can use the terminal. 
+Now you are connected to your ODROID. 
+
+There's constantly new development for this image and ODROIDs in general. The first thing you should do after the image is up and running is to install all updates and a few things needed later on in the guide.
+
+```
+$ sudo apt-get update && apt-get upgrade && apt-get dist-upgrade
+$ apt-get install sudo 
+```
+
+Now use the terminal to setup sudo permission on a new user and disable the root account. @Nicholas does a great job explaining why you should do this in the following quotation.
+
+"Ultimately the whole point of a permission set is to separate things. Why should Dojo have access to install system drivers? Why should Tor be able to edit Dojo's database? Stuff like that. Ultimately I'd say it's worth it, if not just for good practices. Having a user with an ssh key is good practice, but then requiring their own credentials (sudo -> root) is just another barrier in case a malicious actor gets into your system.
+
+We disable the root account because it is a matter of the principle of least privilege, there's no point running as root when you don't have to. The difference is relatively slim when dealing with a node that only has one purpose and one user. You can argue that if your user is compromised there might be some security, but with an interactive compromised user this is limited. From my understanding (compromised user -> evil maid attack -> root)".
+
+Now let's add the main user, you could think of it as the "admin" user.
+
+Create the new user, set password, and add it to the group "sudo".
+``` 
+$ adduser XXX
+$ adduser XXX sudo
+# replace XXX with any username you want
+```
+Reboot and and log in with the new user "admin".
+
+`$ shutdown -r now`
+
+NOTE: MOVE THIS TO RIGHT PART OF GUIDE
+Now lock the “root” account with the following command.
+
+`$ sudo passwd -l root`
+
+Modify the command to `-u` if you need to unlock the root account.
+
+`$ sudo passwd -u root`
+
 ```
 Optional Reading: Installing Images - https://www.raspberrypi.org/documentation/installation/installing-images/
 Optional Reading: Backup - https://www.raspberrypi.org/magpi/back-up-raspberry-pi/
@@ -150,24 +191,22 @@ Optional Reading: Backup - https://www.raspberrypi.org/magpi/back-up-raspberry-p
 
 ## 6. [SYSTEM SETUP]
 
-There's constantly new development for this image and ODROIDs in general. The first thing you should do after the image is up and running is to install all updates and a few things needed later on in the guide.
-
-`$ apt-get update && apt-get upgrade && apt-get dist-upgrade`
+First SSH in or log in to your new "admin" account. 
 
 Install fail2ban, git, curl, unzip, and net-tools.
 
-`$ apt-get install fail2ban git curl unzip net-tools`
+`$ sudo apt-get install fail2ban git curl unzip net-tools`
 
 Now we will format the SSD, erasing all previous data. Make sure your SSD is plugged in. The external SSD is then attached to the file system and can be accessed as a regular folder (this is called mounting). We will use ext4 format, NTFS will not work.
 ```
 # Delete existing flash drive partition:
-$ fdisk /dev/sda
+$ sudo fdisk /dev/sda
 # Press 'd'
 # Press 'w'
 ```
 ```
 # Create new primary flash drive partition:
-$ fdisk /dev/sda
+$ sudo fdisk /dev/sda
 # Press 'n'
 # Press 'p'
 # Press '1'
@@ -183,25 +222,25 @@ Assuming you only have one drive connected, the `NAME` will be `/dev/sda`. Doubl
 
 Format the external SSD with Ext4. Use `NAME` from above, example is `/dev/sda1`.
 
-`$ mkfs.ext4 /dev/sda1`
+`$ sudo mkfs.ext4 /dev/sda1`
 
 Copy the `UUID` that is provided as a result of this format command to your notepad.
 
-Edit the fstab file using nano, then add the line at the end replacing the `UUID` with your own. 
+Edit the fstab file using nano, then add the line at the end replacing the `UUID` with your own.
 ```
-$ nano /etc/fstab
+$ sudo nano /etc/fstab
 # replace `UUID=123456` with the `UUID` that you just took note of
 UUID=123456 /mnt/usb ext4 rw,nosuid,dev,noexec,noatime,nodiratime,auto,nouser,async,nofail 0 2
 ```
-Create the directory to add the SSD to and set the correct owner. Here we will use `/mnt/usb` as an example.
+Create the directory to add the SSD. Here we will use `/mnt/usb` as the example.
 
-`$ mkdir /mnt/usb`
+`$ sudo mkdir /mnt/usb`
 
-**NEWBIE TIPS:** `/mnt/usb/` is simply my desired path, and you can choose any path you want for the mounting of your SSD. If you did choose path, any time you see `/mnt/usb/` they should know to change it to their SSD's file path.
+**NEWBIE TIPS:** `/mnt/usb/` is simply my desired path, and you can choose any path you want for the mounting of your SSD. Any time you see `/mnt/usb/` you should know to change it to your SSD's file path.
 
 Mount all drives and then check the file system. Is `/mnt/usb` listed?
 ```
-$ mount -a
+$ sudo mount -a
 $ df /mnt/usb
 > Filesystem     1K-blocks  Used Available Use% Mounted on
 > /dev/sda1      479667880 73756 455158568   1% /mnt/hdd
@@ -209,19 +248,22 @@ $ df /mnt/usb
 
 Set your timezone.
 
-`$ dpkg-reconfigure tzdata`
+`$ sudo dpkg-reconfigure tzdata`
 
 Setup tool can be accessed by using the following command.
 
-`$ setup-odroid`
+`$ sudo setup-odroid`
 
-Here you can change root password from the default, hostname, and move rootfs to HDD/SSD etc. This tool may ask you to reboot to apply the changes.
+Here you can change hostname, root password, etc. 
+
+Do not move the rootfs to HDD/SSD. I suggest putting OS, Dojo, and any other non-docker software on the SD card. The docker images will be under a subfolder on the external disk.
+
+This tool may ask you to reboot to apply the changes. 
+
 ```
-# Optional Convenience Script: Please note these scripts are intended for those that are using similar hardware/OS 
-# ALWAYS analyze scripts before running them!
-$ wget https://github.com/s2l1/Headless-Samourai-Dojo/raw/master/system-setup.sh
-$ chmod 555 system-setup.sh
-$ ./system-setup.sh
+# disabling password login and using SSH Key for login is highly recommended!
+Optional Reading: Login with SSH Key - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#login-with-ssh-keys
+Optional Reading: SSH Key Setup - https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2
 ```
 
 ```
@@ -474,8 +516,6 @@ Monitor the progress made for the initialization of the database with this comma
 
 Check that bitcoind is running properly. Among other infos the “verificationprogress” is shown. Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated. Since `txindex=1` was specified in the `bitcoin.conf` file it will take an hour or more for bitcoin to build the transaction index.
 
-
-
 Once you are sync'd up continue to step 11. 
 
 `$ ./dojo.sh logs bitcoind`
@@ -565,8 +605,4 @@ Congratulations! Your mobile Samourai Wallet is now paired to Dojo. If you have 
 Donations:
 SegWit native address (Bech32) bc1q5s6jhl0uz9lsj3vgclvftqqap9p60ztpurpax7
 Segwit compatible address (P2SH) 3LdWJ2op2Ba51BndUkUuX7qxoecXaK5FWk
-```
-```
-Optional Reading: Login with SSH Key - https://stadicus.github.io/RaspiBolt/raspibolt_20_pi.html#login-with-ssh-keys
-Optional Reading: SSH Key Setup - https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2
 ```
