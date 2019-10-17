@@ -43,6 +43,7 @@ echo "***"
 echo "Using ext4 format, partition1, /dev/sda1"
 echo "***"
 echo ""
+sleep 5s
 mkfs.ext4 /dev/sda1
 # format partion 1 to ext4
 
