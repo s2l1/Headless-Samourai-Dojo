@@ -54,7 +54,6 @@ echo ""
 lsblk -o UUID,NAME,FSTYPE,SIZE,LABEL,MODEL
 # double-check that /dev/sda exists, and that its storage capacity is what you expected
 sleep 10s
-lsblk -o UUID,NAME | grep sda1 >> ~/uuid.txt
 
 echo ""
 echo "***"
