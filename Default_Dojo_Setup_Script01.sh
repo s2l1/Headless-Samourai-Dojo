@@ -48,7 +48,7 @@ lsblk -o UUID,NAME,FSTYPE,SIZE,LABEL,MODEL
 sleep 10s
 mkfs.ext4 /dev/sda1
 # format partion 1 to ext4
-lsblk -o UUID,NAME, | grep sda1 >> ~/uuid.txt
+lsblk -o UUID,NAME | grep sda1 >> ~/uuid.txt
 # look up uuid of sda1 and make txt file with that value
 sed -i 's/ sda1//g' ~/uuid.txt
 # removes the text sda1 after the uuid in txt file
