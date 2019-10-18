@@ -1,4 +1,4 @@
-# Introduction
+# Advanced Dojo Setup
 **for ODROID N2**
 <sub><sup>by @GuerraMoneta</sup></sub>
 
@@ -7,22 +7,22 @@ This setup will be running bitcoind externally, which is a bit more advanced, ve
 **NEWBIE TIPS:** Each command has `$` before it, and the outputs of the command are marked `>` to avoid confusion. `#` is symbol for a comment. Do not enter these as part of a command. If you are not sure about commands, stuck, learning, etc. try visiting the information links and doing the Optional Reading. Look up terms that you do not know. The Dojo Telegram chat is also very active and helpful. I am trying my best to educate anyone new throughout this guide. 
  
 # Table of Contents
-* [**HARDWARE REQUIREMENTS**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#1-hardware-requirements) 
-* [**OPERATING SYSTEM**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#2-operating-system)
-* [**BLOCKCHAIN DATA**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#3-blockchain-data)
-* [**NETWORK**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#4-network)
-* [**SSH**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#5-ssh)
-* [**SYSTEM SETUP**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#6-system-setup)
-* [**UFW**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#7-ufw)
-* [**TOR**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#8-tor)
-* [**BITCOIN**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#9-bitcoin)
-* [**SCP**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#10-scp)
-* [**VALIDATION**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#11-validation)
-* [**PIP**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#12-pip)
-* [**DOCKER**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#13-docker)
-* [**DOJO**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#14-dojo)
-* [**PAIRING WALLET WITH DOJO**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#15-pairing-wallet-with-dojo)
-* [**BONUS**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#bonus-guides-under-construction)
+* [**1. HARDWARE REQUIREMENTS**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#1-hardware-requirements) 
+* [**2. OPERATING SYSTEM**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#2-operating-system)
+* [**3. BLOCKCHAIN DATA**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#3-blockchain-data)
+* [**4. NETWORK**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#4-network)
+* [**5. SSH**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#5-ssh)
+* [**6. SYSTEM SETUP**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#6-system-setup)
+* [**7. UFW**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#7-ufw)
+* [**8. TOR**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#8-tor)
+* [**9. BITCOIN**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#9-bitcoin)
+* [**10. SCP**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#10-scp)
+* [**11. VALIDATION**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#11-validation)
+* [**12. PIP**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#12-pip)
+* [**13. DOCKER**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#13-docker)
+* [**14. DOJO**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#14-dojo)
+* [**15. PAIRING WALLET WITH DOJO**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#15-pairing-wallet-with-dojo)
+* [**16. BONUS**](https://github.com/s2l1/Headless-Samourai-Dojo/blob/master/Advanced_Dojo_Setup.md#bonus-guides-under-construction)
 
 ```
 # My sources:
