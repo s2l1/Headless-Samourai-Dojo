@@ -263,8 +263,8 @@ echo "***"
 echo "Now configuring docker to use the external SSD"
 echo "***"
 echo ""
-echo "{ 
-                  "data-root": "/mnt/usb/docker" 
+echo "{
+                  "data-root": "/mnt/usb/docker"
 }" > /etc/docker/daemon.json
 
 echo -e "${CYAN}"
