@@ -176,7 +176,8 @@ apt-get install libssl-dev
 apt-get install build-essential
 # these are useful libs in general for your system
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-# this is a convenient script, be sure to check it before running!!!
+# EDIT 2
+# get-pip.py is a convenient script, be sure to check it out before running!!!
 python3 get-pip.py
 # pip setup ends
 
