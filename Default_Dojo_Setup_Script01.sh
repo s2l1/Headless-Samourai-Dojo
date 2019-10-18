@@ -1,4 +1,4 @@
-# Optional Convenience Script - Default Dojo Setup
+# Optional Convenience Script - Default Dojo Setup 01
 # By @GuerraMoneta
 # Please note these scripts are intended for those that have similar hardware/OS and some experience
 # ALWAYS analyze scripts before downloading and running them!!!
