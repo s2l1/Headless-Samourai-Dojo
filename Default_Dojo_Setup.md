@@ -361,8 +361,8 @@ Now to configure docker to use the external SSD. Create a new file in text edito
 
 Add the following 3 lines.
 ```
-{ 
-                  "data-root": "/mnt/usb/docker" 
+{
+                  "data-root": "/mnt/usb/docker"
 } 
 ```
 Save and exit Nano text editor.
