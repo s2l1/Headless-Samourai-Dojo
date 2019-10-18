@@ -1,4 +1,5 @@
 # Optional Convenience Script - Default Dojo Setup
+# By @GuerraMoneta
 # Please note these scripts are intended for those that have similar hardware/OS and some experience
 # ALWAYS analyze scripts before downloading and running them!!!
 
@@ -107,7 +108,7 @@ sleep 10s
 
 echo -e "${CYAN}"
 echo "***"
-echo "Installing fail2ban, git, curl, unzip, net-tools"
+echo "Installing fail2ban, git, curl, unzip, net-tools, and others recommended"
 echo "***"
 echo -e "${NC}"
 sleep 5s
@@ -140,8 +141,8 @@ ufw default allow outgoing
 # take note of the following lines that start with ufw allow from 192.168.0.0/24
 # these 2 lines assume that the IP address of your ODROID is something like 192.168.0.???
 # if your IP address is 12.34.56.78, you must adapt this line to ufw allow from 12.34.56.0/24
-ufw allow from 10.1.20.0/24 to any port 22 comment 'SSH access restricted to local LAN only'
-ufw allow from 10.1.20.0/24 to any port 8899 comment 'allow whirlpool-gui on local network to access whirlpool-cli on Odroid'
+ufw allow from 192.168.0.0/24 to any port 22 comment 'SSH access restricted to local LAN only'
+ufw allow from 192.168.0.0/24 to any port 8899 comment 'allow whirlpool-gui on local network to access whirlpool-cli on Odroid'
 
 echo -e "${CYAN}"
 echo "***"
@@ -210,23 +211,39 @@ curl -fsSL https://get.docker.com -o get-docker.sh
 
 echo -e "${CYAN}"
 echo "***"
-echo "Make sure to verify the contents of the script just you downloaded!!!"
-echo "Open a new window now to verify the authenticity of the scripts"
-echo "Press y if ready to proceed after verfying scripts, any other key to exit"
+echo "Verify the contents of the script just you downloaded!!!"
 echo "***"
 echo -e "${NC}"
-read input
-if [ $input != "Y" -o $input != "y" ]; then
+sleep 10s
 
+asksure() {
 echo -e "${CYAN}"
 echo "***"
-echo "Exiting now"
+echo "Press Y/y if you are ready to proceed"
+echo "Press N/n to exit"
 echo "***"
 echo -e "${NC}"
-fi
 
-if [ $input == "Y" -o $input == "y" ]; then
-echo -e "${CYAN}"
+while read -r -n 1 -s answer; do
+  if [[ $answer = [YyNn] ]]; then
+    [[ $answer = [Yy] ]] && retval=0
+    [[ $answer = [Nn] ]] && retval=1
+    break
+  fi
+done
+
+return $retval
+}
+
+# if Y/y then procees with install
+if asksure; then
+  echo -e "${CYAN}"
+  echo "***"
+  echo "Proceeding with install"
+  echo "***"
+  echo -e "${NC}"
+  
+  echo -e "${CYAN}"
 echo "***"
 echo "Proceeding with install"
 echo "***"
@@ -303,5 +320,14 @@ echo "***"
 echo -e "${NC}"
 sleep 10s
 setup-odroid
-fi
 #system setup ends
+
+else
+  echo -e "${CYAN}"
+  echo "***"
+  echo "Exiting now"
+  echo "***"
+  echo -e "${NC}"
+  # else exit script when N/n is pressed
+
+fi
