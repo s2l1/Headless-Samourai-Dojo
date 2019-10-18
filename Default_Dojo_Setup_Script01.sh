@@ -36,6 +36,7 @@ fdisk /dev/sda
 # Press '1'
 # Press 'enter'
 # Press 'enter'
+# May ask if you want to remove a signature? type yes
 # Press 'w'
 
 echo ""
