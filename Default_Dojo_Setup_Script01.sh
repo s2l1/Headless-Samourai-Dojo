@@ -196,7 +196,9 @@ echo "***"
 echo ""
 cd ~
 curl -fsSL https://get.docker.com -o get-docker.sh
+# EDIT 3
 # check git commit on line 19 here https://github.com/docker/docker-install/blob/master/install.sh
+# do not trust, always verify!
 
 echo ""
 echo "***"
