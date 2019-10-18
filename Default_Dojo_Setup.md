@@ -211,6 +211,7 @@ $ sudo fdisk /dev/sda
 # Press '1'
 # Press 'enter'
 # Press 'enter'
+# May ask if you want to remove a signature? type yes
 # Press 'w'
 ```
 Take note of the `NAME` for main partition on the external hard disk using the following command.
