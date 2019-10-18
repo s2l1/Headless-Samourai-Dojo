@@ -1,4 +1,4 @@
-# Introduction
+# Default Dojo Setup
 **for ODROID N2**
 <sub><sup>by @GuerraMoneta</sup></sub>
 
