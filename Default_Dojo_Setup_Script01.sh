@@ -14,8 +14,8 @@ echo "Installing Updates"
 echo "***"
 echo ""
 apt-get update
-apt-get upgrade
-apt-get dist-upgrade
+apt-get upgrade -y
+apt-get dist-upgrade -y
 
 echo ""
 echo "***"
@@ -105,6 +105,7 @@ echo "***"
 echo "Installing fail2ban, git, curl, unzip, net-tools"
 echo "***"
 echo ""
+sleep 5s
 apt-get install fail2ban
 apt-get install git
 apt-get install curl
@@ -126,6 +127,7 @@ echo "***"
 echo "Installing ufw and setting up rules"
 echo "***"
 echo ""
+sleep 5s
 apt-get install ufw
 ufw default deny incoming
 ufw default allow outgoing
@@ -149,7 +151,7 @@ systemctl enable ufw
 
 echo ""
 echo "***"
-echo "Running ufw status"
+echo "Check ufw status"
 echo "***"
 echo ""
 ufw status
@@ -171,10 +173,10 @@ echo "***"
 echo ""
 sleep 5s
 cd ~
-apt-get install python3-dev 
-apt-get install libffi-dev 
-apt-get install libssl-dev 
-apt-get install build-essential
+apt-get install python3-dev -y
+apt-get install libffi-dev -y
+apt-get install libssl-dev -y
+apt-get install build-essential -y
 # these are useful libs in general for your system
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 # EDIT 2
