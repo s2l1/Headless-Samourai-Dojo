@@ -58,7 +58,7 @@ sed -i '10i             ENV     BITCOIN_SHA256      88f343af72803b851c7da13874cc
 sleep 5s
 # method used with the sed command is to delete entire lines 9, 10 and add new lines 9, 10
 # double check ~/dojo_dir/docker/my-dojo/bitcoin/Dockerfile
-# check that the version and hash are up to date
+# make sure the version and hash are up to date
 
 echo -e "${CYAN}"
 echo "***"
@@ -85,6 +85,7 @@ sed -i '7d' ~/dojo_dir/docker/my-dojo/conf/docker-bitcoind.conf.tpl
 sed -i '7i BITCOIND_RPC_USER=XXX' ~/dojo_dir/docker/my-dojo/conf/docker-bitcoind.conf.tpl
 sed -i '11d' ~/dojo_dir/docker/my-dojo/conf/docker-bitcoind.conf.tpl
 sed -i '11i BITCOIND_RPC_PASSWORD=XXX' ~/dojo_dir/docker/my-dojo/conf/docker-bitcoind.conf.tpl
+# EDIT 1
 # replace the XXX in BITCOIND_RPC_USER=XXX and BITCOIND_RPC_PASSWORD=XXX
 # method used with the sed command is to delete lines 7, 11 and add new lines 7, 11
 # make it secure like any other password
@@ -96,6 +97,7 @@ sed -i '11d' ~/dojo_dir/docker/my-dojo/conf/docker-mysql.conf.tpl
 sed -i '11i MYSQL_USER=XXX' ~/dojo_dir/docker/my-dojo/conf/docker-mysql.conf.tpl
 sed -i '15d' ~/dojo_dir/docker/my-dojo/conf/docker-mysql.conf.tpl
 sed -i '15i MYSQL_PASSWORD=XXX' ~/dojo_dir/docker/my-dojo/conf/docker-mysql.conf.tpl
+# EDIT 2
 # replace each XXX with your desired value
 # method used with the sed command is to delete lines 7, 11, 15 and add new lines 7, 11, 15
 
@@ -105,6 +107,7 @@ sed -i '15d' ~/dojo_dir/docker/my-dojo/conf/docker-node.conf.tpl
 sed -i '15i NODE_ADMIN_KEY=XXX' ~/dojo_dir/docker/my-dojo/conf/docker-node.conf.tpl
 sed -i '21d' ~/dojo_dir/docker/my-dojo/conf/docker-node.conf.tpl
 sed -i '21i NODE_JWT_SECRET=XXX' ~/dojo_dir/docker/my-dojo/conf/docker-node.conf.tpl
+# EDIT 3
 # replace each XXX with your desired value
 # method used with the sed command is to delete lines 9, 15, 21 and add new lines 9, 15, 21
 
