@@ -7,22 +7,27 @@
 # Use command $ chmod 555 NAME.sh
 # Use command $ ./NAME.sh
 
+CYAN='\033[0;36m'
+# used for color with ${CYAN}
+NC='\033[0m' 
+# No Color
+
 # system setup starts
-echo ""
+echo -e "${CYAN}"
 echo "***"
 echo "Installing Updates"
 echo "***"
-echo ""
+echo -e "${NC}"
 apt-get update
 apt-get upgrade -y
 apt-get dist-upgrade -y
 
-echo ""
+echo -e "${CYAN}"
 echo "***"
 echo "Format the SSD"
 echo "See comments of this script for help"
 echo "***"
-echo ""
+echo -e "${NC}"
 sleep 10s
 fdisk /dev/sda
 # delete existing drive partition
@@ -39,29 +44,29 @@ fdisk /dev/sda
 # May ask if you want to remove a signature? type yes
 # Press 'w'
 
-echo ""
+echo -e "${CYAN}"
 echo "***"
 echo "Using ext4 format, partition1, /dev/sda1"
 echo "***"
-echo ""
+echo -e "${NC}"
 sleep 5s
 mkfs.ext4 /dev/sda1
 # format partion 1 to ext4
 
-echo ""
+echo -e "${CYAN}"
 echo "***"
 echo "Displaying the name on the external disk"
 echo "***"
-echo ""
+echo -e "${NC}"
 lsblk -o UUID,NAME,FSTYPE,SIZE,LABEL,MODEL
 # double-check that /dev/sda exists, and that its storage capacity is what you expected
 sleep 10s
 
-echo ""
+echo -e "${CYAN}"
 echo "***"
 echo "Editing /etc/fstab to input UUID for sda1 and settings"
 echo "***"
-echo ""
+echo -e "${NC}"
 sleep 5s
 lsblk -o UUID,NAME | grep sda1 >> ~/uuid.txt
 # this will look up uuid of sda1 and makes txt file with that value
@@ -76,101 +81,101 @@ cat ~/uuid.txt >> /etc/fstab
 rm ~/uuid.txt
 # delete txt file
 
-echo ""
+echo -e "${CYAN}"
 echo "***"
 echo "Creating /mnt/usb"
 echo "***"
-echo ""
+echo -e "${NC}"
 mkdir /mnt/usb
 sleep 3s
 
-echo ""
+echo -e "${CYAN}"
 echo "***"
 echo "Mounting all drives"
 echo "***"
-echo ""
+echo -e "${NC}"
 sleep 3s
 mount -a
 
-echo ""
+echo -e "${CYAN}"
 echo "***"
 echo "Check output for /dev/sda1"
 echo "***"
-echo ""
+echo -e "${NC}"
 df -h
 sleep 10s
 
-echo ""
+echo -e "${CYAN}"
 echo "***"
 echo "Installing fail2ban, git, curl, unzip, net-tools"
 echo "***"
-echo ""
+echo -e "${NC}"
 sleep 5s
-apt-get install fail2ban
-apt-get install git
-apt-get install curl
-apt-get install unzip
-apt-get install net-tools
+apt-get install fail2ban -y
+apt-get install git -y
+apt-get install curl -y
+apt-get install unzip -y
+apt-get install net-tools -y
 
-echo ""
+echo -e "${CYAN}"
 echo "***"
-echo "Set your timezone."
+echo "Set your timezone"
 echo "***"
-echo ""
+echo -e "${NC}"
 sleep 5s
 dpkg-reconfigure tzdata
 # system setup pauses here and resumes at the very end of this script
 
 # ufw setup starts
-echo ""
+echo -e "${CYAN}"
 echo "***"
 echo "Installing ufw and setting up rules"
 echo "***"
-echo ""
+echo -e "${NC}"
 sleep 5s
-apt-get install ufw
+apt-get install ufw -y
 ufw default deny incoming
 ufw default allow outgoing
 # EDIT 1
 # take note of the following lines that start with ufw allow from 192.168.0.0/24
 # these 2 lines assume that the IP address of your ODROID is something like 192.168.0.???
 # if your IP address is 12.34.56.78, you must adapt this line to ufw allow from 12.34.56.0/24
-ufw allow from 192.168.0.0/24 to any port 22 comment 'SSH access restricted to local LAN only'
-ufw allow from 192.168.0.0/24 to any port 8899 comment 'allow whirlpool-gui on local network to access whirlpool-cli on Odroid'
+ufw allow from 10.1.20.0/24 to any port 22 comment 'SSH access restricted to local LAN only'
+ufw allow from 10.1.20.0/24 to any port 8899 comment 'allow whirlpool-gui on local network to access whirlpool-cli on Odroid'
 
-echo ""
+echo -e "${CYAN}"
 echo "***"
 echo "Enabling ufw"
 echo "Check settings if connection failure"
 echo "See script comments for EDIT 1 if needed"
 echo "***"
-echo ""
+echo -e "${NC}"
 sleep 5s
 ufw enable
 systemctl enable ufw
 
-echo ""
+echo -e "${CYAN}"
 echo "***"
-echo "Check ufw status"
+echo "Checking ufw status"
 echo "***"
-echo ""
+echo -e "${NC}"
 ufw status
 sleep 5s
 
-echo ""
+echo -e "${CYAN}"
 echo "***"
 echo "Take a moment to look at the rules that were just created"
 echo "***"
-echo ""
+echo -e "${NC}"
 sleep 20s
 # ufw setup ends
 
 # pip setup starts
-echo ""
+echo -e "${CYAN}"
 echo "***"
 echo "Installing the Python Package Installer and its dependencies"
 echo "***"
-echo ""
+echo -e "${NC}"
 sleep 5s
 cd ~
 apt-get install python3-dev -y
@@ -185,116 +190,115 @@ python3 get-pip.py
 # pip setup ends
 
 # docker setup starts
-echo ""
+echo -e "${CYAN}"
 echo "***"
 echo "Installing docker and docker-compose"
 echo "***"
-echo ""
+echo -e "${NC}"
 
-echo ""
+echo -e "${CYAN}"
 echo "***"
 echo "Downloading docker install script"
 echo "Check git commit on line 19 https://github.com/docker/docker-install/blob/master/install.sh before executing"
 echo "***"
-echo ""
+echo -e "${NC}"
 cd ~
 curl -fsSL https://get.docker.com -o get-docker.sh
 # EDIT 3
 # check git commit on line 19 here https://github.com/docker/docker-install/blob/master/install.sh
 # do not trust, always verify!
 
-echo ""
+echo -e "${CYAN}"
 echo "***"
 echo "Make sure to verify the contents of the script just you downloaded!!!"
 echo "Open a new window now to verify the authenticity of the scripts"
-echo "Enter Y if ready to proceed after verfying scripts, any other key to exit"
+echo "Press y if ready to proceed after verfying scripts, any other key to exit"
 echo "***"
-echo ""
+echo -e "${NC}"
 read input
 if [ $input != "Y" -o $input != "y" ]; then
 
-echo ""
+echo -e "${CYAN}"
 echo "***"
 echo "Exiting now"
 echo "***"
-echo ""
+echo -e "${NC}"
 fi
 
 if [ $input == "Y" -o $input == "y" ]; then
-echo ""
+echo -e "${CYAN}"
 echo "***"
 echo "Proceeding with install"
 echo "***"
-echo ""
+echo -e "${NC}"
 
-echo ""
+echo -e "${CYAN}"
 echo "***"
 echo "Installing docker and docker-compose"
 echo "***"
-echo ""
+echo -e "${NC}"
 sh get-docker.sh
 sleep 5s
 python3 -m pip install --upgrade docker-compose
 sleep 5s
 
-echo ""
+echo -e "${CYAN}"
 echo "***"
 echo "Checking docker version"
 echo "***"
-echo ""
+echo -e "${NC}"
 docker -v
 sleep 5s
 
-echo ""
+echo -e "${CYAN}"
 echo "***"
 echo "Take a look at what PIP has installed on your system"
 echo "***"
-echo ""
+echo -e "${NC}"
 python3 -m pip list
 sleep 10s
 
-echo ""
+echo -e "${CYAN}"
 echo "***"
-echo "Now to configuring docker to use the external SSD"
+echo "Now configuring docker to use the external SSD"
 echo "***"
 echo ""
 echo "{ 
                   "data-root": "/mnt/usb/docker" 
 }" > /etc/docker/daemon.json
 
-echo ""
+echo -e "${CYAN}"
 echo "***"
 echo "Restarting docker"
 echo "***"
-echo ""
+echo -e "${NC}"
 systemctl daemon-reload
 systemctl start docker
 
-echo ""
+echo -e "${CYAN}"
 echo "***"
 echo "Check that docker is using the SSD"
 echo "***"
-echo ""
+echo -e "${NC}"
 docker info | grep "Docker Root Dir:"
 sleep 5s
 
-echo ""
+echo -e "${CYAN}"
 echo "***"
 echo "Try rebooting if you do not see your SSD listed"
 echo "***"
-echo ""
-fi
+echo -e "${NC}"
 # docker setup ends
 
 #system setup resumes here
-echo ""
+echo -e "${CYAN}"
 echo "***"
 echo "Running setup-odroid in 10 seconds"
 echo "Change root password, hostname" 
 echo "This tool may ask you to reboot to apply the changes once you are finished"
 echo "***"
-echo ""
+echo -e "${NC}"
 sleep 10s
 setup-odroid
+fi
 #system setup ends
-
