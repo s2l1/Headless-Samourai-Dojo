@@ -32,19 +32,19 @@ Pi 4 Dojo Guide - https://burcak-baskan.gitbook.io/workspace/
 **NEWBIE TIPS:** Each command has `$` before it, and the outputs of the command are marked `>` to avoid confusion. `#` is symbol fo a comment. Do not enter these as part of a command. If you are not sure about commands, stuck, learning, etc. try visiting the information links and doing the Optional Reading. Look up terms that you do not know. The Dojo Telegram chat is also very active and helpful. I am trying my best to educate anyone new throughout this guide. 
 
 ## 1. [HARDWARE REQUIREMENTS]
-- `https://forum.odroid.com/viewtopic.php?f=176&t=33781`
 
-You will need an ODROID N2 and I do suggest getting a case for it. I am using this with a 1tb Samsung Portable SSD, USB3.0, hardline ethernet connection, and SD card. You could also use an old 500gb HDD if you have a spare on hand to tinker with.
+You will need an [ODROID N2 4gb](https://forum.odroid.com/viewtopic.php?f=176&t=33781). Get a case for it too if you can. I am using this along with a 1tb Samsung Portable SSD via USB3.0, hardline ethernet connection, and SD card. You could also use an old 500gb HDD if you have a spare on hand to tinker with.
 
-You will also need a Windows / Linux / Mac with good specs that is on the same network as the ODROID. This setup will take up about as much room as a standard home router/modem and look clean clean once finished.
+You will also need a Windows, Linux, or Mac machine with good specs that is on the same network as the ODROID. This setup will take up about as much room as a standard home router/modem and look clean clean once finished.
 
-Add a UPS battery back up later on to be sure your ODROID wont lose power during bad weather etc. 
+I suggest adding a UPS battery back up later on to be sure your ODROID wont lose power during bad weather etc.
 
 
 ## 2. [OPERATING SYSTEM]
+
 - `https://forum.odroid.com/viewtopic.php?f=179&t=33865`
 
-By meveric » Tue Feb 19, 2019 8:29 AM: "This is the first version of my Debian Stretch image for the ODROID N2. It is uses the 4.9 LTS Kernel from Hardkernel. It's a headless server image only with user root. It has all my repositories included, which allows for easy installation and updates of packages such as Kernel and Headers and other packages. The image has my usual setup: means on first boot it's resizing the rootfs partition and configures SSH. It will automatically reboot after the initial setup after which this image is ready to use. Kernel and headers are already installed if you need to build your own drivers. A few basic tools such as htop, mc, vim and bash-completion are already installed."
+By meveric » Tue Feb 19, 2019: "This is the first version of my Debian Stretch image for the ODROID N2. It is uses the 4.9 LTS Kernel from Hardkernel. It's a headless server image only with user root. It has all my repositories included, which allows for easy installation and updates of packages such as Kernel and Headers and other packages. The image has my usual setup: means on first boot it's resizing the rootfs partition and configures SSH. It will automatically reboot after the initial setup after which this image is ready to use. Kernel and headers are already installed if you need to build your own drivers. A few basic tools such as htop, mc, vim and bash-completion are already installed."
 ```
 DOWNLOAD: https://oph.mdrjr.net/meveric/images/Stretch/Debian-Stretch64-1.0.1-20190519-N2.img.xz 
 MD5: https://oph.mdrjr.net/meveric/images/Stretch/Debian-Stretch64-1.0.1-20190519-N2.img.xz.md5
@@ -74,7 +74,7 @@ https://www.youtube.com/watch?v=plUQ3ZRBL54&list=PLmoQ11MXEmajkNPMvmc8OEeZ0zxOKb
 Optional Reading: How To gpg - https://www.dewinter.com/gnupg_howto/english/GPGMiniHowto-3.html
 Optional Reading: How To md5 - https://www.lifewire.com/validate-md5-checksum-file-4037391 
 ```
-It's ready to be used as a server image. Flash the image on to an SD card and boot up. Give the ODROID some time. As mentioned by meveric above "it will automatically reboot" then it is ready for use.
+Flash the image on to an SD card and boot up. Give the ODROID some time. As mentioned by meveric above "it will automatically reboot" then it is ready for use.
 
 ## 3. [BLOCKCHAIN DATA]
 
@@ -82,7 +82,7 @@ The Bitcoin blockchain records all transactions and basically defines who owns h
 
 The ODROID is up to the big task of downloading the blockchain so you may wonder why we are downloading on a faster machine, and copying over the data. The download is not the problem, but to initially process the whole blockchain would take a long time due to its computing power and memory. We need to download and verify the blockchain with Bitcoin Core on your regular computer, and then transfer the data to the ODROID. This needs to be done only once. After that the ODROID can easily keep up with new blocks.
 
-This guide assumes that many will use a Windows machine, but it should also work with most operating systems. I have done my best to provide linux or mac instructions where possible. You need to have about 250+ GB free disk space available, internally or on an external hard disk (but not the SSD reserved for the ODROID). As indexing creates heavy read/write traffic, the faster your hard disk the better. If you are using linux as a main machine I will assume that you are comfortable lookup up how to download Bitcoin Core.
+This guide assumes that many will use a Windows machine, but it should also work with most operating systems. I have done my best to provide Linux or Mac instructions where possible. As indexing creates heavy read/write traffic, the faster your hard disk the better. If you are using Linux as a main machine I will assume that you are comfortable with looking up how to download and sync Bitcoin Core.
 
 Using SCP, we will copy the blockchain from the Windows computer over the local network later in this guide.
 
