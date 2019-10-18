@@ -8,6 +8,8 @@
 # Use command $ chmod 555 NAME.sh
 # Use command $ ./NAME.sh
 
+YELLOW='\033[1;33m'
+# used for color with ${YELLOW}
 CYAN='\033[0;36m'
 # used for color with ${CYAN}
 NC='\033[0m' 
@@ -217,7 +219,7 @@ echo -e "${NC}"
 sleep 10s
 
 asksure() {
-echo -e "${CYAN}"
+echo -e "${YELLOW}"
 echo "***"
 echo "Press Y/y if you are ready to proceed"
 echo "Press N/n to exit"
