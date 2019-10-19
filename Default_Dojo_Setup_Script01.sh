@@ -290,9 +290,11 @@ echo "Restarting docker"
 echo "***"
 echo -e "${NC}"
 systemctl daemon-reload
-sleep 5s
+sleep5s
 # sleep here to avoid error systemd[1]: Failed to start Docker Application Container Engine
 # see systemctl status docker.service and journalctl -xe for details on error
+systemctl stop docker
+sleep 3s
 systemctl start docker
 
 echo -e "${CYAN}"
