@@ -247,21 +247,14 @@ if asksure; then
   echo "***"
   echo -e "${NC}"
   
-  echo -e "${CYAN}"
-echo "***"
-echo "Proceeding with install"
-echo "***"
-echo -e "${NC}"
-
 echo -e "${CYAN}"
 echo "***"
 echo "Installing docker and docker-compose"
 echo "***"
 echo -e "${NC}"
+sleep 5s
 sh get-docker.sh
-sleep 5s
 python3 -m pip install --upgrade docker-compose
-sleep 5s
 
 echo -e "${CYAN}"
 echo "***"
