@@ -302,6 +302,7 @@ echo "***"
 echo "Check that docker is using the SSD"
 echo "***"
 echo -e "${NC}"
+sleep 3s
 docker info | grep "Docker Root Dir:"
 sleep 5s
 
@@ -310,6 +311,7 @@ echo "***"
 echo "Try rebooting if you do not see your SSD listed"
 echo "***"
 echo -e "${NC}"
+sleep 3s
 # docker setup ends
 
 #system setup resumes here
