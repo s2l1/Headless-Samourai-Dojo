@@ -281,10 +281,14 @@ echo -e "${CYAN}"
 echo "***"
 echo "Now configuring docker to use the external SSD"
 echo "***"
-echo ""
-echo "{
-                  "data-root": "/mnt/usb/docker"
-}" > /etc/docker/daemon.json
+echo -e "${NC}"
+sleep 5s
+mkdir /etc/docker/
+echo "{" > /etc/docker/daemon.json
+echo '                  "data-root": "/mnt/usb/docker"' >> /etc/docker/daemon.json
+echo "}" >> /etc/docker/daemon.json
+# using echo > to create file with first line, then using echo >> to append following two lines
+
 
 echo -e "${CYAN}"
 echo "***"
