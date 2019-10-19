@@ -278,7 +278,6 @@ echo "Now configuring docker to use the external SSD"
 echo "***"
 echo -e "${NC}"
 sleep 5s
-mkdir /etc/docker/
 echo "{" > /etc/docker/daemon.json
 echo '                  "data-root": "/mnt/usb/docker"' >> /etc/docker/daemon.json
 echo "}" >> /etc/docker/daemon.json
