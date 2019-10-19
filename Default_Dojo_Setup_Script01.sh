@@ -198,6 +198,7 @@ echo "***"
 echo "Installing docker and docker-compose"
 echo "***"
 echo -e "${NC}"
+sleep 5s
 
 echo -e "${CYAN}"
 echo "***"
@@ -207,6 +208,7 @@ echo "***"
 echo -e "${NC}"
 cd ~
 curl -fsSL https://get.docker.com -o get-docker.sh
+sleep 5s
 # EDIT 3
 # check git commit on line 19 here https://github.com/docker/docker-install/blob/master/install.sh
 # do not trust, always verify!
@@ -216,7 +218,7 @@ echo "***"
 echo "Verify the contents of the script just you downloaded!!!"
 echo "***"
 echo -e "${NC}"
-sleep 10s
+sleep 5s
 
 asksure() {
 echo -e "${YELLOW}"
