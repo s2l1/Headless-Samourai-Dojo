@@ -62,11 +62,11 @@
 # Press 'w'
 
 # 8.
-# The script will take a few minutes to run from here.
-# You will need to select a timezone and have few Y/N to input, so you must be present while for the script to finish.
-# Find "EDIT 2" and "EDIT 3" and take note of the scripts used.
-# The installer will remind you to verify scripts. Answer Y/y once you are ready.
-# If you choose N/n to exit the script, the script will be modified to at docker/docker-compose install
+# The script will take a few minutes to run from here
+# You will need to select a timezone and have few Y/N to input, so you must be present for the script to finish
+# Find "EDIT 2" and "EDIT 3" and take note of the scripts used
+# The installer will remind you to verify scripts. Answer Y/y once you are ready
+# If you choose N/n to exit the script, the script will be modified to resume at docker/docker-compose install
 
 # 9.
 # Once Dojo is installed wait for bitcoind to sync or copy the data over from another machine
