@@ -1,7 +1,7 @@
 # Headless-Samourai-Dojo
 ## for Odroid N2
 
-This guide is out of date! Please see https://code.samourai.io/Ronin/RoninDojo
+This guide is out of date! Please see the Wiki here https://code.samourai.io/ronindojo/RoninDojo/
 
 First I must say thanks to @Nicholas @BTCxZelko @hashamadeus @laurentmt @PuraVlda from Dojo Telegram chat. This would not have been possible without @Nicholas + Burcak Baskan and the Dojo Pi4 guide.  @stadicus and his "Raspibolt" guide was my first bitcoin full node.
 
